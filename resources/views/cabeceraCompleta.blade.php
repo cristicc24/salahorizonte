@@ -7,7 +7,7 @@
             @if ($completo)
              <div class="text-text-color flex justify-around w-8/12 text-2xl">
                 <a href="{{ route('inicio') }}">Inicio</a>
-                <a href="#">Cartelera</a>
+                <a href="{{ 'cartelera' }}">Cartelera</a>
                 <a href="{{ route('contacto') }}">Contacto</a>
             </div>
             @endif

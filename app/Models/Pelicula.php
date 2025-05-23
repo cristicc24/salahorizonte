@@ -66,4 +66,10 @@ class Pelicula extends Model
         ->limit(8)        // máximo 8 resultados
         ->get();
     }
+
+    public static function cartelera(){
+        return DB::table('peliculas')
+                ->select('*')
+                ->get();
+    }
 }

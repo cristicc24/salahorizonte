@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\CarteleraController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\PeliculaController;
 use App\Models\TopPelicula;
@@ -29,4 +30,4 @@ Route::get('/footer', function () {
 
 Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
 
-
+Route::get('/cartelera', [CarteleraController::class, 'show']);
