@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\DB;
+use App\Models\Pelicula;
 use Carbon\Carbon;
+use function PHPUnit\Framework\returnArgument;
 
 class PeliculaController extends Controller
 {
     public function show(string $id) {
 
-        $pelicula = DB::table('peliculas')->where('id', $id)->first();
+        $pelicula = Pelicula::getPeliculaEspecifica($id);
+        $peliculasRelacionadas = Pelicula::getPeliculasRelacionadas($pelicula->genero);
+        
 
         if($pelicula == false) {
             return redirect('/');
@@ -32,8 +35,13 @@ class PeliculaController extends Controller
             'actores' => $pelicula->actores,
             'sinopsis' => $pelicula->sinopsis,
             'edad_recomendada' => $pelicula->edad_recomendada,
-            'trailer' => $pelicula->enlace_trailer
+            'trailer' => $pelicula->enlace_trailer,
+            'peliculasRelacionadas' => $peliculasRelacionadas
         ]);
     }
+
+
+
+
 
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Pelicula extends Model
 {
@@ -38,5 +39,31 @@ class Pelicula extends Model
         return $this->belongsToMany(Cliente::class, 'clientes_peliculas', 'pelicula_id', 'cliente_id')
                     ->withPivot('estrellas', 'comentario')
                     ->withTimestamps();
+    }
+
+    public static function getPeliculaEspecifica(string $id){
+        return DB::table('peliculas')
+                    ->where('id', $id)->first();
+    }
+
+    public static function getPeliculasRelacionadas(string $generos){
+        
+        $generosArray = explode(',', $generos);
+        $generosArrSinEspacios = array_map('trim', $generosArray);
+
+        $consulta = DB::table('peliculas')
+                    ->select(['id', 'titulo', 'foto_miniatura', 'enlace_trailer']);
+                
+        foreach($generosArrSinEspacios as $index => $genero){
+            if($index === 0){
+                $consulta->where('genero', 'like', "%$genero%");
+            } else{
+                $consulta->orWhere('genero', 'like', "%$genero%");
+            }
+        }
+
+        return $consulta->inRandomOrder() // orden aleatorio
+        ->limit(8)        // máximo 8 resultados
+        ->get();
     }
 }

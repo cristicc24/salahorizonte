@@ -27,7 +27,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Forrest Gump',
             'precio' => 7.00,
-            'genero' => 'Comedia-drama',
+            'genero' => 'Comedia, Drama',
             'directores' => 'Robert Zemeckis',
             'edad_recomendada' => 'mayores de 13 años',
             'duracion' => '2h 22m',
@@ -41,7 +41,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'El Señor de Los Anillos: la Comunidad del Anillo',
             'precio' => 7.00,
-            'genero' => 'Aventuras-fantasía Épica',
+            'genero' => 'Aventuras, Fantasía, Épica',
             'directores' => 'Peter Jackson',
             'edad_recomendada' => 'todos los públicos',
             'duracion' => '2h 58m',
@@ -111,7 +111,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Del Revés',
             'precio' => 7.00,
-            'genero' => 'Animación, Comedia Dramática, Aventura',
+            'genero' => 'Animación, Comedia, Dramática, Aventura',
             'directores' => 'Pete Docter',
             'edad_recomendada' => 'todos los públicos',
             'duracion' => '1h 34m',
@@ -266,7 +266,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Wall-E',
             'precio' => 7.00,
-            'genero' => 'Animación, Ciencia ficción, Comedia, Romance',
+            'genero' => 'Animación, Ciencia Ficción, Comedia, Romance',
             'directores' => 'Andrew Stanton',
             'edad_recomendada' => 'todos los públicos',
             'duracion' => '1h 38m',
@@ -322,7 +322,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Parásitos',
             'precio' => 7.00,
-            'genero' => 'Thriller, drama',
+            'genero' => 'Thriller, Drama',
             'directores' => 'Bong Joon-ho',
             'edad_recomendada' => 'mayores de 16 años',
             'duracion' => '2h 12m',
@@ -378,7 +378,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Coco',
             'precio' => 7.00,
-            'genero' => 'Animación, aventura, familiar',
+            'genero' => 'Animación, Aventura, Familiar',
             'directores' => 'Lee Unkrich, Adrian Molina',
             'edad_recomendada' => 'todos los públicos',
             'duracion' => '1h 45m',
@@ -392,7 +392,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Marcelino, Pan y Vino',
             'precio' => 7.00,
-            'genero' => 'Drama religioso',
+            'genero' => 'Drama, Religioso',
             'directores' => 'Ladislao Vajda',
             'edad_recomendada' => 'todos los públicos',
             'duracion' => '1h 31min',
@@ -406,7 +406,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Gladiator',
             'precio' => 7.00,
-            'genero' => 'Acción, drama, historia',
+            'genero' => 'Acción, Drama, Histórica',
             'directores' => 'Ridley Scott',
             'edad_recomendada' => 'mayores de 16 años',
             'duracion' => '2h 35m',
@@ -420,7 +420,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Capitán América 1',
             'precio' => 7.00,
-            'genero' => 'Acción, Aventura, Ciencia ficción, Superhéroes',
+            'genero' => 'Acción, Aventura, Ciencia Ficción, Superhéroes',
             'directores' => 'Joe Johnston',
             'edad_recomendada' => 'mayores de 7 años',
             'duracion' => '2h 4m',
@@ -448,7 +448,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'La lista de Schindler',
             'precio' => 7.00,
-            'genero' => 'Drama, Historia, Bélico',
+            'genero' => 'Drama, Histórica, Bélico',
             'directores' => 'Steven Spielberg',
             'edad_recomendada' => 'mayores de 16 años',
             'duracion' => '3h 15m',
@@ -560,7 +560,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'El Conjuro',
             'precio' => 7.00,
-            'genero' => 'Terror, Suspenso',
+            'genero' => 'Terror, Suspense',
             'directores' => 'James Wan',
             'edad_recomendada' => 'mayores de 16 años',
             'duracion' => '1h 52m',
@@ -574,7 +574,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Paranormal Activity 2',
             'precio' => 7.00,
-            'genero' => 'Terror, Suspenso',
+            'genero' => 'Terror, Suspense',
             'directores' => 'Tod Williams',
             'edad_recomendada' => 'mayores de 16 años',
             'duracion' => '1h 31m',
@@ -588,7 +588,7 @@ class PeliculasSeeder extends Seeder
         [
             'titulo' => 'Mamá',
             'precio' => 7.00,
-            'genero' => 'Terror, Suspenso, Fantasía',
+            'genero' => 'Terror, Suspense',
             'directores' => 'Andrés Muschietti',
             'edad_recomendada' => 'mayores de 16 años',
             'duracion' => '1h 40m',
@@ -670,18 +670,18 @@ class PeliculasSeeder extends Seeder
             'foto_miniatura' => '/images/films/47-jojo/fotominiatura.webp',
         ],
         [
-            'titulo' => 'Lady Bird',
+            'titulo' => 'Milagro en la celda 7',
             'precio' => 7.00,
-            'genero' => 'Drama, Coming-of-age',
-            'directores' => 'Greta Gerwig',
+            'genero' => 'Drama, Familiar',
+            'directores' => 'Mehmet Ada Öztekin',
             'edad_recomendada' => 'mayores de 13 años',
-            'duracion' => '1h 34m',
-            'fecha_estreno' => '2017/11/03',
-            'sinopsis' => 'Christine "Lady Bird" McPherson, una adolescente rebelde, navega los altibajos del último año de secundaria, su relación con su madre y sus aspiraciones artísticas en Sacramento, California.',
-            'foto_grande' => '/images/films/48-ladybird/fotogrande.webp',
-            'actores' => 'Saoirse Ronan, Laurie Metcalf, Timothée Chalamet',
-            'enlace_trailer' => 'https://www.youtube.com/watch?v=cNi_HC839Wo',
-            'foto_miniatura' => '/images/films/48-ladybird/fotominiatura.webp',
+            'duracion' => '2h 12m',
+            'fecha_estreno' => '2019/10/11',
+            'sinopsis' => 'Memo, un hombre con discapacidad intelectual, es injustamente acusado de asesinato. Desde la prisión, intenta demostrar su inocencia mientras mantiene viva la conexión con su hija pequeña en una historia profundamente emotiva.',
+            'foto_grande' => '/images/films/48-milagroenlacelda7/fotogrande.webp',
+            'actores' => 'Aras Bulut İynemli, Nisa Sofiya Aksongur, Deniz Baysal',
+            'enlace_trailer' => 'https://www.youtube.com/watch?v=4nC4VXHlys8',
+            'foto_miniatura' => '/images/films/48-milagroenlacelda7/fotominiatura.webp',
         ],
         [
             'titulo' => 'Los juegos del hambre',

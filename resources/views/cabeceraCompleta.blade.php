@@ -1,6 +1,5 @@
 <body class="bg-primary-color">
-    
-    <header class="container-fluid w-full bg-primary-color h-28 flex justify-between font-primary-font fixed top-0 z-999">
+    <header class="container-fluid w-full bg-primary-color h-28 flex justify-between font-primary-font fixed top-0 z-10 border-1 border-b-text-color">
         <div @class(['flex', 'items-center', 'w-full', 'mx-2', 'justify-center' => !$completo])>
             <div class="h-fit flex text-text-color w-4/12 max-w-[400px]">
                 <a class="w-full" href="{{ route('inicio') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full mx-2"></a>
@@ -9,12 +8,12 @@
              <div class="text-text-color flex justify-around w-8/12 text-2xl">
                 <a href="{{ route('inicio') }}">Inicio</a>
                 <a href="#">Cartelera</a>
-                <a href="#">Contacto</a>
+                <a href="{{ route('contacto') }}">Contacto</a>
             </div>
             @endif
        </div>
        @if ($completo)
-       <div class="text-text-color w-1/4 flex justify-around ">
+       <div class="text-text-color w-1/4 flex justify-around z-20">
             <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer" >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -25,7 +24,7 @@
     </header>
    
     @if ($completo)
-    <div id="modalLogin" class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div id="modalLogin" class="relative z-99 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
 
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto font-primary-font">
