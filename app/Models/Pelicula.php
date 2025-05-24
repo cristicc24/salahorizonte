@@ -67,7 +67,7 @@ class Pelicula extends Model
         ->get();
     }
 
-    public static function cartelera(){
+    public static function getCartelera(){
         return DB::table('peliculas')
                 ->select('*')
                 ->get();

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CarteleraController extends Controller
 {
     public function show(){
-        $cartelera = Pelicula::cartelera();
+        $cartelera = Pelicula::getCartelera();
 
         return view('cartelera', [
             'cartelera' => $cartelera

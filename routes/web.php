@@ -32,5 +32,5 @@ Route::get('/footer', function () {
 
 Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
 
-Route::get('/cartelera', [CarteleraController::class, 'show']);
+Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera');
 

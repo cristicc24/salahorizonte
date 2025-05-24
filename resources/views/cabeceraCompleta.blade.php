@@ -7,18 +7,30 @@
             @if ($completo)
              <div class="text-text-color flex justify-around w-8/12 text-2xl">
                 <a href="{{ route('inicio') }}">Inicio</a>
-                <a href="{{ 'cartelera' }}">Cartelera</a>
+                <a href="{{ route('cartelera') }}">Cartelera</a>
                 <a href="{{ route('contacto') }}">Contacto</a>
             </div>
             @endif
        </div>
        @if ($completo)
-       <div class="text-text-color w-1/4 flex justify-around z-20">
-            <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer" >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                </svg>
-            </button>
+       <div class="text-text-color w-1/4 flex justify-around items-center z-20">
+            @if (Auth::check())
+                <p class="text-2xl">Hola, {{ Auth::user()->name }}</p>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf <!-- {{ csrf_field() }} -->
+                    <button type="submit" class="cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                        </svg>
+                    </button>
+                </form>
+            @else
+                <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer" >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </button>
+            @endif
        </div>
        @endif
     </header>
