@@ -1,12 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\CarteleraController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\PeliculaController;
 use App\Models\TopPelicula;
-use Illuminate\Support\Facades\Route;
 use App\Models\Slider;
+
+require __DIR__.'/auth.php';
 
 Route::get('/', function () {
     $sliders = Slider::get();
@@ -31,3 +33,4 @@ Route::get('/footer', function () {
 Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
 
 Route::get('/cartelera', [CarteleraController::class, 'show']);
+
