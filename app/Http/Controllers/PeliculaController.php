@@ -21,7 +21,8 @@ class PeliculaController extends Controller
         }
 
         Carbon::setLocale('es');
-        $fecha = Carbon::parse($pelicula->fecha_estreno)->isoFormat('DD MMMM YYYY');
+        $fechaEstreno = Carbon::parse($pelicula->fecha_estreno)->isoFormat('DD MMMM YYYY');
+        $fechaEmision = Carbon::parse($pelicula->fecha_emision)->isoFormat('DD MMMM YYYY');
         return view('peliculaEspecifica', [
             'id' => $id,
             'nombrePelicula' => $pelicula->titulo,
@@ -30,7 +31,8 @@ class PeliculaController extends Controller
             'foto_miniatura' => $pelicula->foto_miniatura,
             'precio' => $pelicula->precio,
             'directores' => $pelicula->directores,
-            'fecha_estreno' => $fecha,
+            'fecha_estreno' => $fechaEstreno,
+            'fecha_emision' => $fechaEmision,
             'duracion' => $pelicula->duracion,
             'actores' => $pelicula->actores,
             'sinopsis' => $pelicula->sinopsis,

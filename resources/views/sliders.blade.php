@@ -7,7 +7,7 @@
           <p class="text-white absolute top-[10%] left-[5%] text-7xl overflow-ellipsis h-[350px] overflow-hidden w-[32%] font-carousel-font">{{ $slider->titulo }}</p>
           <img src="{{ $slider->foto_grande }}" alt="{{ $slider->titulo }}" class="w-full h-64 md:h-130 object-cover object-top">
           <button class="absolute right-20 bottom-14 border p-4 text-xl mt-4 text-white rounded-2xl bg-black/60 font-carousel-font">
-            <a href="/pelicula/{{ $slider->idPelicula }}" target="_blank" rel="noopener noreferrer">Comprar entradas</a>
+            <a href="/pelicula/{{ $slider->idPelicula }}" rel="noopener noreferrer">Comprar entradas</a>
           </button>
         </div>
       @endforeach

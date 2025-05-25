@@ -7,7 +7,7 @@
         <img src="{{ $foto_grande }}" alt="" class="w-full h-full object-cover object-top">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
         <img src="{{ $foto_miniatura }}" alt="" class="absolute top-[80%] left-[12%] w-[200px]">
-        <a href="{{ $trailer }}" target="_blank" rel="noopener noreferrer" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+        <a href="{{ $trailer }}" rel="noopener noreferrer" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
             <div class="w-14 h-14 bg-white/70 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
@@ -64,7 +64,7 @@
                 @foreach ($peliculasRelacionadas as $pelicula)
                     <div class="min-w-[23%] h-[400px] box-border relative mr-8">
                         <div class="rounded-lg shadow-lg overflow-hidden h-full">
-                            <a href="/pelicula/{{ $pelicula->id }}" target="_blank" rel="noopener noreferrer">
+                            <a href="/pelicula/{{ $pelicula->id }}" rel="noopener noreferrer">
                                 <img src="{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
                             </a>
                         </div>
@@ -74,7 +74,7 @@
                             </h2>
                         </div>
                         <div class="absolute top-0 left-0 w-full flex justify-start">
-                            <a href="{{ $pelicula->enlace_trailer }}" target="_blank" rel="noopener noreferrer"
+                            <a href="{{ $pelicula->enlace_trailer }}" rel="noopener noreferrer"
                                 class="bg-text-color hover:bg-text-color/80 text-white p-2 rounded-tl-lg transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
                                     <path d="M8 5v14l11-7z" />

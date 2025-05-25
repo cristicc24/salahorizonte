@@ -6,7 +6,7 @@
                 @foreach ($toppeliculas as $pelicula)
                     <div class="min-w-[23%] h-[400px] box-border relative mr-8">
                         <div class="rounded-lg shadow-lg overflow-hidden h-full">
-                            <a href="/pelicula/{{ $pelicula->id }}" target="_blank" rel="noopener noreferrer">
+                            <a href="/pelicula/{{ $pelicula->id }}" rel="noopener noreferrer">
                                 <img src="{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
                             </a>
                         </div>

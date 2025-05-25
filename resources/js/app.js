@@ -1,5 +1,6 @@
 import './bootstrap';
 
+
 const boton = document.getElementById("botonLogin");
 boton.addEventListener("click", () =>{
     const modalLogin = document.getElementById("modalLogin");

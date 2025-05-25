@@ -35,6 +35,7 @@
        @endif
     </header>
    
+    {{-- LOGIN --}}
     @if ($completo)
     <div id="modalLogin" class="relative z-99 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
@@ -53,9 +54,12 @@
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
-                    <!-- Modal body -->
+                  
                     <div class="p-4 md:p-5 bg-white">
-                        <form class="space-y-4" action="#">
+                        <form class="space-y-4" action="{{ route('login') }}" method="POST">
+                            @csrf <!-- {{ csrf_field() }} -->
+                            @csrf
+                            <input type="hidden" name="previous_url" value="{{ url()->current() }}">
                             <div>
                                 <label for="email" class="block mb-2 text-xl font-medium text-gray-900">Correo electrónico</label>
                                 <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg  block w-full p-2.5" placeholder="salahorizonte@gmail.com" required />

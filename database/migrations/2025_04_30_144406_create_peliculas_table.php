@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('edad_recomendada');
             $table->string('duracion');
             $table->date('fecha_estreno');
+            $table->date('fecha_emision');
             $table->text('sinopsis');
             $table->string('foto_miniatura')->nullable();
             $table->string('actores');
