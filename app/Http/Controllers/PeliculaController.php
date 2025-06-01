@@ -13,12 +13,11 @@ class PeliculaController extends Controller
     public function show(string $id) {
 
         $pelicula = Pelicula::getPeliculaEspecifica($id);
-        $peliculasRelacionadas = Pelicula::getPeliculasRelacionadas($pelicula->genero);
-        
-
         if($pelicula == false) {
             return redirect('/');
         }
+        $peliculasRelacionadas = Pelicula::getPeliculasRelacionadas($pelicula->genero);
+        
 
         Carbon::setLocale('es');
         $fechaEstreno = Carbon::parse($pelicula->fecha_estreno)->isoFormat('DD MMMM YYYY');
