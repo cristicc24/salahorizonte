@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [ 
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -65,6 +69,10 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Administrador::class, // Cambia la ruta si tu modelo está en otro namespace
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

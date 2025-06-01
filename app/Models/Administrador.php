@@ -2,24 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Administrador extends Model{
+class Administrador extends Authenticatable
+{
     use HasFactory;
 
-    // Nombre de la tabla
     protected $table = 'administradores';
     protected $primaryKey = 'idAdministrador';
 
     protected $fillable = [
         'nombre',
         'apellidos',
-        'correo'
+        'email',
+        'password' // Asegúrate de tener este campo en tu tabla
     ];
 
     protected $hidden = [
-        'contrasena'
+        'password', // Laravel espera este campo por defecto
     ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

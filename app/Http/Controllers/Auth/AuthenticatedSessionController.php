@@ -33,12 +33,9 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
+        // Solo eliminar la sesión del usuario, no invalidar toda la sesión (para no cerrar admin)
+        $request->session()->forget(['_login_web_'.Auth::id(), 'user']);
         $request->session()->regenerateToken();
-
-        // Redirige a la página anterior
         return redirect()->to(url()->previous());
     }
 }

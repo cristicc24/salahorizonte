@@ -10,8 +10,8 @@ return new class extends Migration {
             $table->id('idAdministrador');
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('contrasena');
-            $table->string('correo')->unique();
+            $table->string('password');
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

@@ -7,6 +7,8 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\PeliculaController;
 use App\Models\TopPelicula;
 use App\Models\Slider;
+use App\Http\Controllers\AdminAuth\AuthenticatedSessionController as AdminLogin;
+
 
 require __DIR__.'/auth.php';
 
@@ -34,3 +36,23 @@ Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.
 
 Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera');
 
+
+// Admin
+Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(function () {
+    Route::get('/', function () {
+        if (auth()->guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('admin.login');
+    })->name('home'); // Puedes nombrar esta ruta si quieres
+
+    Route::get('login', [AdminLogin::class, 'create'])->name('login');
+    Route::post('login', [AdminLogin::class, 'store']);
+    Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('dashboard');
+    });
+});
