@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sesion;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Pelicula;
@@ -17,6 +18,12 @@ class PeliculaController extends Controller
             return redirect('/');
         }
         $peliculasRelacionadas = Pelicula::getPeliculasRelacionadas($pelicula->genero);
+        $sesiones = Sesion::getSesionesPeliculaEspecifica($id);
+        if($sesiones->isEmpty()) {
+            $pelicula->fecha_emision = 'No hay sesiones disponibles';
+        } else {
+            $pelicula->fecha_emision = $sesiones[0]->fechaHora;
+        }
         
 
         Carbon::setLocale('es');
@@ -37,8 +44,11 @@ class PeliculaController extends Controller
             'sinopsis' => $pelicula->sinopsis,
             'edad_recomendada' => $pelicula->edad_recomendada,
             'trailer' => $pelicula->enlace_trailer,
-            'peliculasRelacionadas' => $peliculasRelacionadas
+            'peliculasRelacionadas' => $peliculasRelacionadas,
+            'sesiones' => $sesiones
         ]);
+        
+
     }
 
 

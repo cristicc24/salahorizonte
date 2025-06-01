@@ -55,6 +55,172 @@
     </div>
 </div>
 
+{{-- SESIONES --}}
+
+@php
+    use Carbon\Carbon;
+    $hoy = Carbon::today();
+@endphp
+
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold text-white mb-6 text-center">Sesiones de la película</h1>
+
+    <!-- Menú de días -->
+    <div class="flex justify-center space-x-4 mb-4">
+        @for($i = 0; $i < 5; $i++)
+            @php
+                $dia = $hoy->copy()->addDays($i);
+                $fecha = $dia->format('Y-m-d');
+                $etiqueta = $i == 0 ? 'Hoy' : $dia->format('D d/m');
+            @endphp
+            <button 
+                class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+                onclick="filtrarPorDia('{{ $fecha }}')">
+                {{ $etiqueta }}
+            </button>
+        @endfor
+    </div>
+
+    <!-- Sesiones -->
+    <div id="lista-sesiones" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach($sesiones as $sesion)
+            @php
+                $fechaSesion = Carbon::parse($sesion->fechaHora)->format('Y-m-d');
+                $horaSesion = Carbon::parse($sesion->fechaHora)->format('H:i');
+            @endphp
+            <div class="bg-gray-800 rounded-lg shadow-md p-4 hover:bg-gray-700 transition duration-300 sesion" data-dia="{{ $fechaSesion }}">
+                <h2 class="text-xl font-semibold text-white mb-2">Sala {{ $sesion->idSala }}</h2>
+                <p class="text-white"><strong>Hora:</strong> {{ $horaSesion }}</p>
+                <p class="text-white"><strong>Butacas Reservadas:</strong> {{ $sesion->numButacasReservadas }}</p>
+                <button 
+                    class="inline-block mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    onclick="mostrarMapa('{{ $sesion->idSala }}')">
+                    Ver Detalles
+                </button>
+            </div>
+        @endforeach
+    </div>
+      <!-- Definición del ícono de butaca -->
+<svg style="display: none;">
+    <symbol id="v-icon_standard-available" viewBox="0 0 35 35" fill="white" stroke="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill="transparent" d="M0 0h35v35H0z"></path>
+        <g transform="translate(5 4)" style="fill:#a1a7b1;stroke:#4e5a6c;stroke-miterlimit:10">
+            <rect width="25" height="27" rx="1"></rect>
+            <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+        <g transform="translate(28 11)" style="fill:#a1a7b1;stroke:#4e5a6c;stroke-miterlimit:10">
+            <rect width="3" height="15" rx="1"></rect>
+            <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+        <g transform="translate(4 11)" style="fill:#a1a7b1;stroke:#4e5a6c;stroke-miterlimit:10">
+            <rect width="3" height="15" rx="1"></rect>
+            <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+    </symbol>
+</svg>
+
+<symbol id="v-icon_standard-selected" viewBox="0 0 35 35" fill="none" stroke="none" xmlns="http://www.w3.org/2000/svg">
+  <path fill="transparent" data-name="icon/Seat Picker/Seat/Available Standard Copy 4 background" d="M0 0h35v35H0z"></path>
+  <g transform="translate(5 4)" style="fill:#0068c8;stroke:#023d75;stroke-miterlimit:10">
+    <rect width="25" height="27" rx="1" style="stroke:none" stroke="none"></rect>
+    <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+  </g>
+  <g data-name="Rectangle" transform="translate(28 11)" style="fill:#0068c8;stroke:#023d75;stroke-miterlimit:10">
+    <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
+    <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+  </g>
+  <g data-name="Rectangle Copy 6" transform="translate(4 11)" style="fill:#0068c8;stroke:#023d75;stroke-miterlimit:10">
+    <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
+    <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+  </g>
+</symbol>
+
+<div id="mapa-butacas" class="mt-4">
+    <!-- Contenedor principal -->
+    <div class="flex justify-center">
+        <div>
+
+            <div id='contenedor-mapa' class="grid grid-cols-8 gap-[2px] max-w-full text-white text-xs">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script>
+        function mostrarMapa(idSesion) {
+            const sesionId = idSesion;
+            const mapa = document.getElementById('mapa-butacas');
+            const contenedor = document.getElementById('contenedor-mapa');
+
+            if(sesionId) {
+                fetch(`/sesion/${sesionId}/ocupados`)
+                    .then(response => response.json())
+                    .then(ocupados => {
+                        mapa.classList.remove('hidden');
+                        contenedor.innerHTML = ''; // Limpiar mapa
+
+                        const columnas = 7, filas = 8, total = 56, filaLabels = ['A','B','C','D','E','F','G','H'];
+
+                        // Encabezados
+                        contenedor.innerHTML += `<div></div>`; 
+                        for(let c=1; c<=columnas; c++) {
+                            contenedor.innerHTML += `<div class="text-center">${c}</div>`;
+                        }
+
+                        for(let f=0; f<filas; f++) {
+                            contenedor.innerHTML += `<div class="text-center">${filaLabels[f]}</div>`;
+                            for(let c=1; c<=columnas; c++) {
+                                const numButaca = f*columnas + c;
+                                if(numButaca <= total) {
+                                    if(ocupados.includes(numButaca)) {
+                                        contenedor.innerHTML += `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 cursor-not-allowed"><use href="#v-icon_standard-selected"/></svg>`;
+                                    } else {
+                                        contenedor.innerHTML += `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 cursor-pointer"><use href="#v-icon_standard-available"/></svg>`;
+                                    }
+                                } else {
+                                    contenedor.innerHTML += `<div></div>`;
+                                }
+                            }
+                        }
+                    });
+            } else {
+                mapa.classList.add('hidden');
+                contenedor.innerHTML = '';
+            }
+        }
+
+        function cerrarMapa() {
+            document.getElementById('mapa-butacas').classList.add('hidden');
+        }
+    </script>
+
+
+</div>
+
+<script>
+    function filtrarPorDia(fecha) {
+        document.querySelectorAll('.sesion').forEach(el => {
+            el.style.display = el.dataset.dia === fecha ? 'block' : 'none';
+        });
+    }
+    // Mostrar solo las sesiones de hoy por defecto
+    document.addEventListener('DOMContentLoaded', function() {
+        filtrarPorDia('{{ $hoy->format('Y-m-d') }}');
+    });
+</script>
+
+
+
+
+
+
+
+
+
 <div class="text-white font-primary-font px-4 py-6">
     <p class="w-full text-center text-4xl my-8 font-bold">PELÍCULAS RELACIONADAS</p>
     <div class="relative flex justify-center items-center flex-col">
@@ -101,6 +267,7 @@
         @endif
     </div>
 </div>
+
 
 @if(count($peliculasRelacionadas) > 4)
 <script>

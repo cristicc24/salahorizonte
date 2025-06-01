@@ -56,3 +56,11 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         })->name('dashboard');
     });
 });
+
+// routes/web.php
+Route::get('/sesion/{id}/ocupados', function($id) {
+    $ocupados = \DB::table('lineas_pedido')
+        ->where('sesion_id', $id)
+        ->pluck('numButaca');
+    return response()->json($ocupados);
+});

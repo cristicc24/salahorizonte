@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Sesion extends Model
 {
@@ -34,5 +35,11 @@ class Sesion extends Model
     public function lineasPedido()
     {
         return $this->hasMany(LineaPedido::class, 'sesion_id', 'id');
+    }
+    public static function getSesionesPeliculaEspecifica(string $id){
+        return DB::table('sesiones')
+                    ->where('idPelicula', $id)
+                    ->select('idSala', 'fechaHora', 'numButacasReservadas', 'idPelicula')
+                    ->get();
     }
 }

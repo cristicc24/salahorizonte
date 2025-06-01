@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Sala extends Model
 {
@@ -21,4 +22,5 @@ class Sala extends Model
     {
         return $this->hasMany(Sesion::class, 'idSala', 'id');
     }
+
 }
