@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\PeliculaController;
 use App\Models\TopPelicula;
 use App\Models\Slider;
+use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController as AdminLogin;
 
 
@@ -56,6 +57,8 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         })->name('dashboard');
     });
 });
+
+Route::get('/admin/dashboard', [AdministradorController::class, 'show'])->name('admin.dashboard');
 
 // routes/web.php
 Route::get('/sesion/{id}/ocupados', function($id) {

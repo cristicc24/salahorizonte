@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Administrador extends Authenticatable
 {
@@ -26,4 +27,11 @@ class Administrador extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getAdministrador()
+    {
+        return DB::table('administradores')
+            ->select('*')
+            ->get();
+    }
 }
