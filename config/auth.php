@@ -71,7 +71,7 @@ return [
 
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Administrador::class, // Cambia la ruta si tu modelo está en otro namespace
+            'model' => App\Models\Administrador::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

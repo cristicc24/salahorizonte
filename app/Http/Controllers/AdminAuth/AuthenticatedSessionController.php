@@ -22,11 +22,11 @@ class AuthenticatedSessionController extends Controller
         ]);
 
         // Usar configuración de sesión separada para admin
-        config(['session.cookie' => config('admin_session.cookie')]);
+        //config(['session.cookie' => config('admin_session.cookie')]);
 
         if (Auth::guard('admin')->attempt($request->only('email', 'password'), $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('admin.home'));
         }
 
         throw ValidationException::withMessages([
@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request)
     {
         // Usar configuración de sesión separada para admin
-        config(['session.cookie' => config('admin_session.cookie')]);
+        //config(['session.cookie' => config('admin_session.cookie')]);
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

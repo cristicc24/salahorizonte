@@ -9,7 +9,7 @@ use App\Models\TopPelicula;
 use App\Models\Slider;
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController as AdminLogin;
-
+use App\Http\Controllers\Admin\AdminPeliculaController;
 
 require __DIR__.'/auth.php';
 
@@ -40,25 +40,21 @@ Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera'
 
 // Admin
 Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(function () {
-    Route::get('/', function () {
-        if (auth()->guard('admin')->check()) {
-            return redirect()->route('admin.dashboard');
-        }
-        return redirect()->route('admin.login');
-    })->name('home'); // Puedes nombrar esta ruta si quieres
-
     Route::get('login', [AdminLogin::class, 'create'])->name('login');
     Route::post('login', [AdminLogin::class, 'store']);
-    Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
 
+    
+    // Rutas privadas (requieren autenticación como admin)
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+        Route::get('/', [AdministradorController::class, 'show'])->name('home');
+        Route::get('/peliculas', [AdministradorController::class, 'showPeliculas'])->name('peliculas');
+        Route::get('/sesiones', [AdministradorController::class, 'showSesiones'])->name('sesiones');
+        Route::get('/salas', [AdministradorController::class, 'showSalas'])->name('salas');
+        Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
+
+        Route::resource('api/peliculas', AdminPeliculaController::class);
     });
 });
-
-Route::get('/admin/dashboard', [AdministradorController::class, 'show'])->name('admin.dashboard');
 
 // routes/web.php
 Route::get('/sesion/{id}/ocupados', function($id) {

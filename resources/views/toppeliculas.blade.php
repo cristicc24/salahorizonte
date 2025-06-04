@@ -45,7 +45,7 @@
 <div class="my-20 w-full h-[400px] relative overflow-hidden">
     <img src="/images/films/28-marcelinopanyvino/fotogrande.webp" alt="Foto de la película Marcelino, Pan y Vino (1955)" class="w-full h-full object-cover [object-position:center_40%]">
     <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/30 to-transparent"></div>
-    <div class="absolute left-48 top-1/4 p-4 w-60 font-primary-font text-3xl z-10 text-white">
+    <div class="absolute left-48 top-1/4 p-4 w-60 font-primary-font text-3xl z-9 text-white">
         <p>70 años del estreno de <span class="italic">Marcelino, Pan y Vino</span></p>
         <a href="/pelicula/28" class="border p-2 text-xl my-6 block text-center hover:bg-black/40">Comprar entradas</a>
     </div>
