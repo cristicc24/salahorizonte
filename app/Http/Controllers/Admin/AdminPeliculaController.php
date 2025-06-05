@@ -13,15 +13,28 @@ class AdminPeliculaController extends Controller
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
+            'precio' => 'required|numeric|min:0',
             'genero' => 'required|string|max:100',
-            'duracion' => 'required|integer|min:1',
-            'imagen' => 'nullable|image|max:2048'
+            'directores' => 'required|string|max:255',
+            'edad_recomendada' => 'required|string|max:20',
+            'duracion' => 'required|string|max:20',
+            'fecha_estreno' => 'required|date',
+            'fecha_emision' => 'required|date',
+            'sinopsis' => 'required|string',
+            'actores' => 'required|string|max:255',
+            'enlace_trailer' => 'nullable|url',
+            'foto_miniatura' => 'nullable|image|max:2048',
+            'foto_grande' => 'nullable|image|max:4096',
         ]);
 
-        $pelicula = new Pelicula($request->only('titulo', 'genero', 'duracion'));
+        $pelicula = new Pelicula($request->except('foto_miniatura', 'foto_grande'));
 
-        if ($request->hasFile('imagen')) {
-            $pelicula->imagen = $request->file('imagen')->store('peliculas', 'public');
+        if ($request->hasFile('foto_miniatura')) {
+            $pelicula->foto_miniatura = $request->file('foto_miniatura')->store('peliculas/miniaturas', 'public');
+        }
+
+        if ($request->hasFile('foto_grande')) {
+            $pelicula->foto_grande = $request->file('foto_grande')->store('peliculas/grandes', 'public');
         }
 
         $pelicula->save();
@@ -35,35 +48,55 @@ class AdminPeliculaController extends Controller
 
         $request->validate([
             'titulo' => 'required|string|max:255',
+            'precio' => 'required|numeric|min:0',
             'genero' => 'required|string|max:100',
-            'duracion' => 'required|integer|min:1',
-            'imagen' => 'nullable|image|max:2048'
+            'directores' => 'required|string|max:255',
+            'edad_recomendada' => 'required|string|max:20',
+            'duracion' => 'required|string|max:20',
+            'fecha_estreno' => 'required|date',
+            'fecha_emision' => 'required|date',
+            'sinopsis' => 'required|string',
+            'actores' => 'required|string|max:255',
+            'enlace_trailer' => 'nullable|url',
+            'foto_miniatura' => 'nullable|image|max:2048',
+            'foto_grande' => 'nullable|image|max:4096',
         ]);
 
-        $pelicula->fill($request->only('titulo', 'genero', 'duracion'));
+        $pelicula->fill($request->except('foto_miniatura', 'foto_grande'));
 
-        if ($request->hasFile('imagen')) {
-            if ($pelicula->imagen) {
-                Storage::disk('public')->delete($pelicula->imagen);
+        if ($request->hasFile('foto_miniatura')) {
+            if ($pelicula->foto_miniatura) {
+                Storage::disk('public')->delete($pelicula->foto_miniatura);
             }
-            $pelicula->imagen = $request->file('imagen')->store('peliculas', 'public');
+            $pelicula->foto_miniatura = $request->file('foto_miniatura')->store('peliculas/miniaturas', 'public');
+        }
+
+        if ($request->hasFile('foto_grande')) {
+            if ($pelicula->foto_grande) {
+                Storage::disk('public')->delete($pelicula->foto_grande);
+            }
+            $pelicula->foto_grande = $request->file('foto_grande')->store('peliculas/grandes', 'public');
         }
 
         $pelicula->save();
 
-        return redirect()->route('admin.peliculas')->with('success', 'Película actualizada.');
+        return redirect()->route('admin.peliculas')->with('success', 'Película actualizada correctamente.');
     }
 
     public function destroy($id)
     {
         $pelicula = Pelicula::findOrFail($id);
 
-        if ($pelicula->imagen) {
-            Storage::disk('public')->delete($pelicula->imagen);
+        if ($pelicula->foto_miniatura) {
+            Storage::disk('public')->delete($pelicula->foto_miniatura);
+        }
+
+        if ($pelicula->foto_grande) {
+            Storage::disk('public')->delete($pelicula->foto_grande);
         }
 
         $pelicula->delete();
 
-        return redirect()->route('admin.peliculas')->with('success', 'Película eliminada.');
+        return redirect()->route('admin.peliculas')->with('success', 'Película eliminada correctamente.');
     }
 }

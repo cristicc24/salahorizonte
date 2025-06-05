@@ -1,6 +1,6 @@
 @include('head', ['title' => 'Administración | Sala Horizonte'])
 
-<header class="w-full h-30 shadow-md flex items-center justify-between px-14 fixed top-0 bg-black text-white">
+<header class="w-full h-30 shadow-md flex items-center justify-between px-14 fixed top-0 z-99 bg-black text-white">
     <img src="{{ asset('images/logo.png') }}" alt="" class="w-60">
     <p class="text-center font-black text-2xl">Panel de Administración de Sala Horizonte</p>
     <p>Hola, {{$administrador->nombre}}</p>

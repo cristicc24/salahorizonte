@@ -20,6 +20,7 @@ class Pelicula extends Model
         'edad_recomendada',
         'duracion',
         'fecha_estreno',
+        'fecha_emision',
         'sinopsis',
         'foto_grande',
         'actores',

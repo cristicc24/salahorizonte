@@ -53,6 +53,9 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
 
         Route::resource('api/peliculas', AdminPeliculaController::class);
+        Route::post('/peliculas', [AdminPeliculaController::class, 'store'])->name('peliculas.store');
+        Route::put('/peliculas/{id}', [AdminPeliculaController::class, 'update'])->name('peliculas.update');
+        Route::delete('/peliculas/{id}', [AdminPeliculaController::class, 'destroy'])->name('peliculas.destroy');
     });
 });
 
