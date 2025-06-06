@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Sesion;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\CarteleraController;
@@ -60,9 +61,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
 });
 
 // routes/web.php
-Route::get('/sesion/{id}/ocupados', function($id) {
-    $ocupados = \DB::table('lineas_pedido')
-        ->where('sesion_id', $id)
-        ->pluck('numButaca');
-    return response()->json($ocupados);
+Route::get('/sesion/{id}/getMapa', function($id) {
+    $mapa = Sesion::getMapa($id);
+    return response()->json($mapa);
 });

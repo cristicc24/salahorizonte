@@ -8,8 +8,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('salas', function (Blueprint $table) {
-            $table->id(); // clave primaria estándar 'id'
+            $table->id();
             $table->integer('numButacasTotales');
+            $table->integer('cantidadColumnas');
+            $table->integer('cantidadFilas');
             $table->timestamps();
         });
     }

@@ -19,12 +19,6 @@ class PeliculaController extends Controller
         }
         $peliculasRelacionadas = Pelicula::getPeliculasRelacionadas($pelicula->genero);
         $sesiones = Sesion::getSesionesPeliculaEspecifica($id);
-        if($sesiones->isEmpty()) {
-            $pelicula->fecha_emision = 'No hay sesiones disponibles';
-        } else {
-            $pelicula->fecha_emision = $sesiones[0]->fechaHora;
-        }
-        
 
         Carbon::setLocale('es');
         $fechaEstreno = Carbon::parse($pelicula->fecha_estreno)->isoFormat('DD MMMM YYYY');

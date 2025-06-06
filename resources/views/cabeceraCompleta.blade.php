@@ -1,8 +1,8 @@
 <body class="bg-primary-color">
     <header class="container-fluid w-full bg-primary-color h-28 flex justify-between font-primary-font fixed top-0 z-10 border-1 border-b-text-color">
         <div @class(['flex', 'items-center', 'w-full', 'mx-2', 'justify-center' => !$completo])>
-            <div class="h-fit flex text-text-color w-4/12 max-w-[400px]">
-                <a class="w-full" href="{{ route('inicio') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full mx-2"></a>
+            <div class="h-fit flex text-text-color w-4/12">
+                <a class="w-full max-w-[350px]" href="{{ route('inicio') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full mx-2"></a>
             </div>
             @if ($completo)
              <div class="text-text-color flex justify-around w-8/12 text-2xl">

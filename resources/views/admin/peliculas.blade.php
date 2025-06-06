@@ -4,7 +4,7 @@
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Películas</h2>
         <button onclick="document.getElementById('modal-create').showModal()"
-                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
             + Nueva Película
         </button>
     </div>
@@ -226,6 +226,7 @@
 
 
     <!-- Modal Crear -->
+    <div id="backdrop-create" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" onclick="closeModal('create')"></div>
     <dialog id="modal-create"
             class="rounded-md w-full max-w-lg p-6 fixed top-1/2 left-1/2
                 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
@@ -318,7 +319,7 @@
 
             <!-- Acciones -->
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" onclick="closeModal('create')" class="px-4 py-2 bg-gray-300 rounded">
+                <button type="button" onclick="closeModal('create')" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">
                     Cancelar
                 </button>
                 <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">

@@ -28,13 +28,22 @@ class AdminPeliculaController extends Controller
         ]);
 
         $pelicula = new Pelicula($request->except('foto_miniatura', 'foto_grande'));
+        $pelicula->save();
+
+        $slug = \Str::lower(\Str::slug($pelicula->titulo, ''));
 
         if ($request->hasFile('foto_miniatura')) {
-            $pelicula->foto_miniatura = $request->file('foto_miniatura')->store('peliculas/miniaturas', 'public');
+            $ext = $request->file('foto_miniatura')->getClientOriginalExtension();
+            $filename = "miniatura.{$ext}";
+            $path = $request->file('foto_miniatura')->storeAs("images/films/{$pelicula->id}-{$slug}", $filename, 'public');
+            $pelicula->foto_miniatura = 'storage/'. $path;
         }
 
         if ($request->hasFile('foto_grande')) {
-            $pelicula->foto_grande = $request->file('foto_grande')->store('peliculas/grandes', 'public');
+            $ext = $request->file('foto_grande')->getClientOriginalExtension();
+            $filename = "fotogrande.{$ext}";
+            $path = $request->file('foto_grande')->storeAs("images/films/{$pelicula->id}-{$slug}", $filename, 'public');
+            $pelicula->foto_grande =  'storage/'. $path;
         }
 
         $pelicula->save();

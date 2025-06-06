@@ -16,7 +16,7 @@
 <div class="w-full flex mt-30">
     @include('admin.menulateral')
 
-    <div class="p-6">
+    <div class="p-6 w-full">
         @yield('contenido')
     </div>
 </div>    

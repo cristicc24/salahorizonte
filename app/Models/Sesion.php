@@ -14,6 +14,7 @@ class Sesion extends Model
 
     protected $fillable = [
         'fechaHora',
+        'butacasReservadas',
         'numButacasReservadas',
         'idSala',
         'idPelicula',
@@ -39,7 +40,15 @@ class Sesion extends Model
     public static function getSesionesPeliculaEspecifica(string $id){
         return DB::table('sesiones')
                     ->where('idPelicula', $id)
-                    ->select('idSala', 'fechaHora', 'numButacasReservadas', 'idPelicula')
+                    ->select('id','idSala', 'fechaHora', 'numButacasReservadas', 'idPelicula')
                     ->get();
     }
+
+    public static function getMapa(string $sesionId) {
+        return DB::table('sesiones')
+            ->where('id', $sesionId)
+            ->select('butacasReservadas')
+            ->get()[0]->butacasReservadas;
+    }
+   
 }

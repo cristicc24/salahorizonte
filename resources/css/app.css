@@ -15,3 +15,69 @@
     --font-primary-font: 'Oswald';
     --font-carousel-font: "Sigmar One", sans-serif;
 }
+
+
+.grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-cols-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-cols-8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-cols-9 {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-cols-10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-cols-11 {
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-cols-13 {
+    grid-template-columns: repeat(13, minmax(0, 1fr));
+}
+
+.col-end-6 {
+    grid-column-end: 6;
+}
+.col-end-7 {
+    grid-column-end: 7;
+}
+.col-end-8 {
+    grid-column-end: 8;
+}
+.col-end-9 {
+    grid-column-end: 9;
+}
+.col-end-10 {
+    grid-column-end: 10;
+}
+.col-end-11 {
+    grid-column-end: 11;
+}
+.col-end-12 {
+    grid-column-end: 12;
+}
+.col-end-13 {
+    grid-column-end: 13;
+}
+.col-end-14 {
+    grid-column-end: 14;
+}
+

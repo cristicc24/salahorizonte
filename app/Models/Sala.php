@@ -15,6 +15,8 @@ class Sala extends Model
 
     protected $fillable = [
         'numButacasTotales',
+        'cantidadColumnas',
+        'cantidadFilas',
     ];
 
     // Relación: una sala tiene muchas sesiones

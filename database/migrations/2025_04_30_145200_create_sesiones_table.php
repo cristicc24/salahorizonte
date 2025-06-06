@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('sesiones', function (Blueprint $table) {
             $table->id(); // id de la sesión
             $table->dateTime('fechaHora');
+            $table->text('butacasReservadas'); 
             $table->integer('numButacasReservadas')->default(0);
 
             // Relaciones corregidas
