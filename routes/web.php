@@ -11,6 +11,7 @@ use App\Models\Slider;
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\AdminAuth\AuthenticatedSessionController as AdminLogin;
 use App\Http\Controllers\Admin\AdminPeliculaController;
+use App\Http\Controllers\ProcesoCompraController;
 
 require __DIR__.'/auth.php';
 
@@ -65,3 +66,14 @@ Route::get('/sesion/{id}/getMapa', function($id) {
     $mapa = Sesion::getMapa($id);
     return response()->json($mapa);
 });
+
+//proceso de compra
+Route::get('/compra/asientos', [ProcesoCompraController::class, 'asientos'])->name('procesoCompra.paso1');
+
+Route::get('/compra/resumen', [ProcesoCompraController::class, 'resumen'])->name('procesoCompra.paso2');
+
+Route::get('/compra/pago', [ProcesoCompraController::class, 'pago'])->name('procesoCompra.paso3');
+
+Route::get('/compra/tpv', [ProcesoCompraController::class, 'tpv'])->name('procesoCompra.tpv');
+
+Route::get('/compra/confirmacion', [ProcesoCompraController::class, 'confirmacion'])->name('procesoCompra.paso4');

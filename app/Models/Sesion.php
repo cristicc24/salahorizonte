@@ -48,7 +48,16 @@ class Sesion extends Model
         return DB::table('sesiones')
             ->where('id', $sesionId)
             ->select('butacasReservadas')
-            ->get()[0]->butacasReservadas;
+            ->first()->butacasReservadas;
+    }
+
+    public static function getInfoSesion(string $sesionId) {
+        return DB::table('sesiones')
+            ->leftJoin('Peliculas', 'sesiones.idPelicula', '=', 'Peliculas.id')
+            ->leftJoin('Salas', 'sesiones.idSala', '=', 'Salas.id')
+            ->where('sesiones.id', $sesionId)
+            ->select('*')    
+            ->first();
     }
    
 }

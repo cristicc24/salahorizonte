@@ -52,6 +52,10 @@
                 <div>
                     <p>Apta para {{ $edad_recomendada }}</p>
                 </div>
+                <div>
+                    <h3>PRECIO ENTRADA</h3>
+                    <p>El precio es: {{ $precio }}€</p>
+                </div>
             </div>
         </div>
     </div>
@@ -68,7 +72,7 @@
     <h1 class="text-3xl font-bold text-white mb-6 text-center">Sesiones de la película</h1>
 
     <!-- Menú de días -->
-    <div class="flex justify-center space-x-4 mb-4">
+    <div id='contendor-dias' class="flex justify-center space-x-4 mb-4">
         @for($i = 0; $i < 5; $i++)
             @php
                 $dia = $hoy->copy()->addDays($i);
@@ -76,8 +80,8 @@
                 $etiqueta = $i == 0 ? 'Hoy' : $dia->format('D d/m');
             @endphp
             <button 
-                class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
-                onclick="filtrarPorDia('{{ $fecha }}')">
+                class="btn-dia px-4 py-2 rounded bg-text-color text-white hover:bg-text-color/80 transition duration-300"
+                onclick="filtrarPorDia('{{ $fecha }}', this)">
                 {{ $etiqueta }}
             </button>
         @endfor
@@ -123,7 +127,7 @@
     </svg>
 
     <svg style="display: none;">
-        <symbol id="v-icon_standard-selected" viewBox="0 0 35 35" fill="yellow" stroke="none" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="v-icon_standard-unavailable" viewBox="0 0 35 35" fill="yellow" stroke="none" xmlns="http://www.w3.org/2000/svg">
             <path fill="transparent" data-name="icon/Seat Picker/Seat/Available Standard Copy 4 background" d="M0 0h35v35H0z"></path>
             <g transform="translate(5 4)" style="fill:yellow;stroke:#023d75;stroke-miterlimit:10">
                 <rect width="25" height="27" rx="1" style="stroke:none" stroke="none"></rect>
@@ -144,7 +148,6 @@
         <!-- Contenedor principal -->
         <div class="flex justify-center">
             <div>
-
                 <div id='contenedor-mapa' class="grid gap-[2px] max-w-full text-white text-xl">
 
                 </div>
@@ -169,11 +172,9 @@
                         const columnas = Object.keys(mapaObjeto['A']).length;
                         
                         contenedor.classList.add('grid-cols-' + (+columnas + 1));
-                        // console.log(mapaObjeto);
-                        // console.log(Object.keys(mapaObjeto).length);
-                        // console.log(Object.values(mapaObjeto['A']).length);
 
                         // Encabezados
+                        contenedor.innerHTML += `<p class="text-white font-bold block col-start-1 col-end-${+columnas + 2} text-center my-4">VISTA PREVIA SALA</p>`;
                         contenedor.innerHTML += `<div id="pantalla" class="col-start-2 col-end-${+columnas + 2} text-center bg-gray-600 mb-1 px-2">Pantalla</div>`;
                         contenedor.innerHTML += `<div></div>`; 
                         for(let c=1; c<=columnas; c++) {
@@ -188,12 +189,15 @@
 
                             for(let c = 1; c <= columnas; c++) {
                                 if(mapaObjeto[letra][c]) {
-                                    contenedor.innerHTML += `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-selected"/></svg>`;
+                                    contenedor.innerHTML += `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-unavailable"/></svg>`;
                                 } else {
                                     contenedor.innerHTML += `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-available"/></svg>`;
                                 }
                             }
                         }
+                        contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color/80 mt-4 p-2"><button id='comprarEntrada' data-idsesion='${sesionId}' class="cursor-pointer">Comprar entradas</button></div>`;
+                        const comprarEntrada  = document.getElementById('comprarEntrada');
+                        comprarEntrada.addEventListener('click', comprarEntradas)
                     });
             } else {
                 mapa.classList.add('hidden');
@@ -204,18 +208,52 @@
         function cerrarMapa() {
             document.getElementById('mapa-butacas').classList.add('hidden');
         }
+
+        const usuarioAutenticado = {{ Auth::check() ? 'true' : 'false' }};
+        const rutaCompraBase = "{{ route('procesoCompra.paso1', ['idSesion' => '__ID__']) }}"; // marcador para reemplazar
+        
+        function comprarEntradas(){
+            const idSesion = this.dataset.idsesion;
+
+            if (usuarioAutenticado === true || usuarioAutenticado === 'true') {
+                // Reemplazar el marcador __ID__ por el ID real
+                const form = document.createElement('form');
+                form.method = 'GET';
+                form.action = '/compra/asientos';
+
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'idSesion';
+                input.value = idSesion;
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                // Redirige al login (asumiendo que tienes un botón oculto que lo hace)
+                document.getElementById('botonLogin').click();
+            }
+        }
     </script>
 </div>
 
 <script>
-    function filtrarPorDia(fecha) {
+    function filtrarPorDia(fecha, botonActivo) {
         document.querySelectorAll('.sesion').forEach(el => {
             el.style.display = el.dataset.dia === fecha ? 'block' : 'none';
         });
+
+        document.querySelectorAll('.btn-dia').forEach(btn => {
+            btn.classList.remove('bg-text-color/50', 'font-bold');
+            btn.classList.add('bg-text-color', 'hover:bg-text-color/80');
+        });
+
+        botonActivo.classList.remove('bg-text-color', 'hover:bg-text-color/80');
+        botonActivo.classList.add('bg-text-color/50', 'font-bold');
     }
     // Mostrar solo las sesiones de hoy por defecto
     document.addEventListener('DOMContentLoaded', function() {
-        filtrarPorDia('{{ $hoy->format('Y-m-d') }}');
+        filtrarPorDia('{{ $hoy->format('Y-m-d') }}', document.querySelector('#contendor-dias button:first-child'));
     });
 </script>
 
@@ -341,3 +379,4 @@
     </script>
 @endif
 
+@include('footer');

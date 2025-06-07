@@ -16,7 +16,6 @@
                 @endif
 
                 <form action="{{ route('contacto.enviar') }}" method="POST" class="space-y-4">
-                    @csrf
                     <input name="nombre" type="text" placeholder="Nombre" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
                     <input name="apellidos" type="text" placeholder="Apellidos" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
                     <input name="telefono" type="text" placeholder="Teléfono" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
