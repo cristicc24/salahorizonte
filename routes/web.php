@@ -77,3 +77,12 @@ Route::get('/compra/pago', [ProcesoCompraController::class, 'pago'])->name('proc
 Route::get('/compra/tpv', [ProcesoCompraController::class, 'tpv'])->name('procesoCompra.tpv');
 
 Route::get('/compra/confirmacion', [ProcesoCompraController::class, 'confirmacion'])->name('procesoCompra.paso4');
+
+Route::get('/check-php', function () {
+    return response()->json([
+        'php_version' => phpversion(),
+        'gd_enabled' => extension_loaded('gd'),
+        'imagecreatetruecolor' => function_exists('imagecreatetruecolor'),
+        'php_ini_loaded' => php_ini_loaded_file(),
+    ]);
+});

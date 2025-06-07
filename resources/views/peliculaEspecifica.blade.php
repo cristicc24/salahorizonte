@@ -71,7 +71,6 @@
 <div class="container mx-auto px-4 py-6 font-primary-font">
     <h1 class="text-3xl font-bold text-white mb-6 text-center">Sesiones de la película</h1>
 
-    <!-- Menú de días -->
     <div id='contendor-dias' class="flex justify-center space-x-4 mb-4">
         @for($i = 0; $i < 5; $i++)
             @php
@@ -88,18 +87,18 @@
     </div>
 
     <!-- Sesiones -->
-    <div id="lista-sesiones" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="lista-sesiones" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($sesiones as $sesion)
             @php
                 $fechaSesion = Carbon::parse($sesion->fechaHora)->format('Y-m-d');
                 $horaSesion = Carbon::parse($sesion->fechaHora)->format('H:i');
             @endphp
-            <div class="bg-gray-800 rounded-lg shadow-md p-4 hover:bg-gray-700 transition duration-300 sesion" data-dia="{{ $fechaSesion }}">
+            <div class="border-2 border-text-color/70 rounded-lg shadow-md p-4 my-4 hover:border-text-color transition duration-300 sesion " data-dia="{{ $fechaSesion }}">
                 <h2 class="text-xl font-semibold text-white mb-2">Sala {{ $sesion->idSala }}</h2>
                 <p class="text-white"><strong>Hora:</strong> {{ $horaSesion }}</p>
                 <p class="text-white"><strong>Butacas Reservadas:</strong> {{ $sesion->numButacasReservadas }}</p>
                 <button 
-                    class="inline-block mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    class="ml-auto w-full items-center mt-3 px-4 py-2 bg-white/50 text-black rounded hover:bg-white/80 transition duration-300 cursor-pointer"
                     onclick="mostrarMapa('{{ $sesion->id }}')">
                     Ver Detalles
                 </button>
@@ -111,15 +110,15 @@
     <svg style="display: none;">
         <symbol id="v-icon_standard-available" viewBox="0 0 35 35" fill="gray" stroke="none" xmlns="http://www.w3.org/2000/svg">
             <path fill="transparent" d="M0 0h35v35H0z"></path>
-            <g transform="translate(5 4)" style="fill:#a1a7b1;stroke:#4e5a6c;stroke-miterlimit:10">
+            <g transform="translate(5 4)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
                 <rect width="25" height="27" rx="1"></rect>
                 <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
             </g>
-            <g transform="translate(28 11)" style="fill:#a1a7b1;stroke:#4e5a6c;stroke-miterlimit:10">
+            <g transform="translate(28 11)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
                 <rect width="3" height="15" rx="1"></rect>
                 <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
             </g>
-            <g transform="translate(4 11)" style="fill:#a1a7b1;stroke:#4e5a6c;stroke-miterlimit:10">
+            <g transform="translate(4 11)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
                 <rect width="3" height="15" rx="1"></rect>
                 <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
             </g>
@@ -127,17 +126,17 @@
     </svg>
 
     <svg style="display: none;">
-        <symbol id="v-icon_standard-unavailable" viewBox="0 0 35 35" fill="yellow" stroke="none" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="v-icon_standard-unavailable" viewBox="0 0 35 35" fill="#555555" stroke="none" xmlns="http://www.w3.org/2000/svg">
             <path fill="transparent" data-name="icon/Seat Picker/Seat/Available Standard Copy 4 background" d="M0 0h35v35H0z"></path>
-            <g transform="translate(5 4)" style="fill:yellow;stroke:#023d75;stroke-miterlimit:10">
+            <g transform="translate(5 4)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
                 <rect width="25" height="27" rx="1" style="stroke:none" stroke="none"></rect>
                 <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
             </g>
-            <g data-name="Rectangle" transform="translate(28 11)" style="fill:yellow;stroke:#023d75;stroke-miterlimit:10">
+            <g data-name="Rectangle" transform="translate(28 11)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
                 <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
                 <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
             </g>
-            <g data-name="Rectangle Copy 6" transform="translate(4 11)" style="fill:yellow;stroke:#023d75;stroke-miterlimit:10">
+            <g data-name="Rectangle Copy 6" transform="translate(4 11)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
                 <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
                 <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
             </g>
@@ -145,7 +144,6 @@
     </svg>
 
     <div id="mapa-butacas" class="mt-4">
-        <!-- Contenedor principal -->
         <div class="flex justify-center">
             <div>
                 <div id='contenedor-mapa' class="grid gap-[2px] max-w-full text-white text-xl">
@@ -175,6 +173,16 @@
 
                         // Encabezados
                         contenedor.innerHTML += `<p class="text-white font-bold block col-start-1 col-end-${+columnas + 2} text-center my-4">VISTA PREVIA SALA</p>`;
+                        contenedor.innerHTML += `<div class="flex justify-center col-start-1 col-end-${+columnas + 2} gap-8 w-full mt-4">
+                                                    <div class="flex items-center gap-2">
+                                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-available"/></svg>
+                                                        <span class="text-white">Disponible</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-2">
+                                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-unavailable"/></svg></svg>
+                                                        <span class="text-white">Ocupado</span>
+                                                    </div>
+                                                </div>`;
                         contenedor.innerHTML += `<div id="pantalla" class="col-start-2 col-end-${+columnas + 2} text-center bg-gray-600 mb-1 px-2">Pantalla</div>`;
                         contenedor.innerHTML += `<div></div>`; 
                         for(let c=1; c<=columnas; c++) {
@@ -195,7 +203,7 @@
                                 }
                             }
                         }
-                        contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color/80 mt-4 p-2"><button id='comprarEntrada' data-idsesion='${sesionId}' class="cursor-pointer">Comprar entradas</button></div>`;
+                        contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 p-2 hover:bg-text-color/80"><button id='comprarEntrada' data-idsesion='${sesionId}' class="cursor-pointer">Comprar entradas</button></div>`;
                         const comprarEntrada  = document.getElementById('comprarEntrada');
                         comprarEntrada.addEventListener('click', comprarEntradas)
                     });
@@ -210,13 +218,12 @@
         }
 
         const usuarioAutenticado = {{ Auth::check() ? 'true' : 'false' }};
-        const rutaCompraBase = "{{ route('procesoCompra.paso1', ['idSesion' => '__ID__']) }}"; // marcador para reemplazar
+        const rutaCompraBase = "{{ route('procesoCompra.paso1', ['idSesion' => '__ID__']) }}"; 
         
         function comprarEntradas(){
             const idSesion = this.dataset.idsesion;
 
             if (usuarioAutenticado === true || usuarioAutenticado === 'true') {
-                // Reemplazar el marcador __ID__ por el ID real
                 const form = document.createElement('form');
                 form.method = 'GET';
                 form.action = '/compra/asientos';

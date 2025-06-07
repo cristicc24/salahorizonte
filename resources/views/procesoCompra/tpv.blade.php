@@ -10,11 +10,23 @@
             Estás realizando el pago con <strong>{{ ucfirst($metodo) }}</strong> para <strong>{{ $infoPelicula->titulo }}</strong>.
         </p>
 
-        <p class="text-gray-600 text-sm mb-6 text-center">Butacas: {{ implode(', ', $butacas) }}</p>
+        <p class="text-gray-600 text-sm mb-6 text-center">
+            Butacas: 
+            @php
+                $butacaArray = json_decode($butacas);
+            @endphp
+            @for ($i = 0; $i < count($butacaArray); $i++)
+                @if ($i < count($butacaArray) - 1)
+                    {{ $butacaArray[$i] . ","}}
+                @else
+                    {{ $butacaArray[$i] }}
+                @endif
+            @endfor
+        </p>
 
         <form method="GET" action="{{ route('procesoCompra.paso4') }}">
             <input type="hidden" name="idSesion" value="{{ $infoPelicula->id }}">
-            <input type="hidden" name="butacas" value="{{ implode(',', $butacas) }}">
+            <input type="hidden" name="butacas" value="{{ $butacas }}">
             <input type="hidden" name="metodo" value="{{ $metodo }}">
 
             @if($metodo === 'tarjeta')
@@ -47,7 +59,7 @@
         <div class="mt-6 text-center">
             <a href="{{ route('procesoCompra.paso3', [
                 'idSesion' => $infoPelicula->id,
-                'butacas' => implode(',', $butacas)
+                'butacas' => $butacas
             ]) }}"
             class="text-sm text-blue-600 hover:underline">
                 Cancelar y volver
