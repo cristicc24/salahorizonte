@@ -1,9 +1,9 @@
 @include('head', ['title' => 'Administración | Sala Horizonte'])
 
-<header class="w-full h-30 shadow-md flex items-center justify-between px-14 fixed top-0 z-99 bg-black text-white">
+<header class="w-full h-30 shadow-md flex items-center justify-between px-14 fixed top-0 z-99 bg-black text-white font-primary-font">
     <img src="{{ asset('images/logo.png') }}" alt="" class="w-60">
     <p class="text-center font-black text-2xl">Panel de Administración de Sala Horizonte</p>
-    <p>Hola, {{$administrador->nombre}}</p>
+    <p>Hola, {{ auth()->guard('admin')->user()->nombre }}</p>
     <form action="{{ route('admin.logout') }}" method="POST">
         @csrf
         <button type="submit" class="text-white cursor-pointer">

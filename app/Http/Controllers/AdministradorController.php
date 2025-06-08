@@ -26,13 +26,12 @@ class AdministradorController extends Controller
         ]);
     }
 
-
-    public function showSesiones()
+    public function showSalas()
     {
-        return view('admin.sesiones', [
-            'sesiones' => [], // 'peliculas' => Pelicula::all(),
-            'title' => 'Sesiones | Sala Horizonte',
-            'administrador' => auth()->guard('admin')->user(),
-        ]);
+        $salas = \App\Models\Sala::all();
+
+        return view('admin.salas', ['salas' => $salas]);
     }
+
+   
 }

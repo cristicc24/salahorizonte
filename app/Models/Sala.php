@@ -14,6 +14,7 @@ class Sala extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'idSala',
         'numButacasTotales',
         'cantidadColumnas',
         'cantidadFilas',

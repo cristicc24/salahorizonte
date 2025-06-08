@@ -27,12 +27,6 @@
                         </button>
                     </div>
                 </form>
-
-                <div class="mt-8">
-                    <h4 class="text-xl font-medium mb-2">Otras formas de contactarnos:</h4>
-                    <p>Teléfono: <a href="tel:952123456" class="underline hover:text-gray-200">952123456</a></p>
-                    <p>Email: <a href="mailto:contacto@salahorizonte.es" class="underline hover:text-gray-200">contacto@salahorizonte.es</a></p>
-                </div>
             </div>
 
             <!-- Mapa -->

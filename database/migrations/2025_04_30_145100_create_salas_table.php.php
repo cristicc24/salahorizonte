@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('salas', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('idSala')->unique();
             $table->integer('numButacasTotales');
             $table->integer('cantidadColumnas');
             $table->integer('cantidadFilas');

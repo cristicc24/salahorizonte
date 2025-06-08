@@ -20,17 +20,17 @@
             <div>
                 <h4 class="text-white text-2xl font-semibold mb-2">Contacto</h4>
                 <p class="text-lg flex items-center gap-2">
-                <svg class="w-4 h-4 text-text-color" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M2.01 6.27C2 6.18 2 6.09 2 6a2 2 0 012-2h16a2 2 0 012 2c0 .09 0 .18-.01.27L12 13 2.01 6.27zM2 8.4V18a2 2 0 002 2h16a2 2 0 002-2V8.4l-9.33 6.11a1 1 0 01-1.34 0L2 8.4z"/>
-                </svg>
-                contacto.salahorizonte@gmail.com
+                    <svg class="w-4 h-4 text-text-color" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M2.01 6.27C2 6.18 2 6.09 2 6a2 2 0 012-2h16a2 2 0 012 2c0 .09 0 .18-.01.27L12 13 2.01 6.27zM2 8.4V18a2 2 0 002 2h16a2 2 0 002-2V8.4l-9.33 6.11a1 1 0 01-1.34 0L2 8.4z"/>
+                    </svg>
+                    <a href="mailto:contacto@salahorizonte.es" class="underline hover:text-gray-200">contacto@salahorizonte.es</a>
                 </p>
 
                 <p class="text-lg flex items-center gap-2 mt-2">
-                <svg class="w-4 h-4 text-text-color" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M6.62 10.79a15.91 15.91 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.2.48 2.5.73 3.84.73a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.34.25 2.64.73 3.84a1 1 0 01-.21 1.11l-2.2 2.2z"/>
-                </svg>
-                +34 952123456
+                    <svg class="w-4 h-4 text-text-color" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79a15.91 15.91 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.2.48 2.5.73 3.84.73a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.34.25 2.64.73 3.84a1 1 0 01-.21 1.11l-2.2 2.2z"/>
+                    </svg>
+                    <a href="tel:952123456" class="underline hover:text-gray-200">952123456</a>
                 </p>
 
                 <p class="text-lg flex items-center gap-2 mt-2">

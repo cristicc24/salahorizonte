@@ -6,9 +6,9 @@
         <div class="w-full flex-shrink-0 relative">
           <p class="text-white absolute top-[10%] left-[5%] text-7xl overflow-ellipsis h-[350px] overflow-hidden w-[32%] font-carousel-font">{{ $slider->titulo }}</p>
           <img src="{{ $slider->foto_grande }}" alt="{{ $slider->titulo }}" class="w-full h-64 md:h-130 object-cover object-top">
-          <button class="absolute right-20 bottom-14 border p-4 text-xl mt-4 text-white rounded-2xl bg-black/60 font-carousel-font">
-            <a href="/pelicula/{{ $slider->idPelicula }}" rel="noopener noreferrer">Comprar entradas</a>
-          </button>
+          <a href="/pelicula/{{ $slider->idPelicula }}" rel="noopener noreferrer" class="absolute right-20 bottom-14 border p-4 text-xl mt-4 text-white rounded-2xl bg-black/60 font-carousel-font inline-block text-center">
+            Comprar entradas
+          </a>
         </div>
       @endforeach
     </div>
@@ -29,7 +29,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>  
     </button>
-    <button onclick="nextSlide()" class="absolute top-1/2 right-4 -translate-y-1/2 text-white p-3 z-9 hover:bg-text-color/50 rounded-full">
+    <button onclick="nextSlide()" class="absolute top-1/2 right-4 -translate-y-1/2 text-white p-3 z-9 hover:bg-text-color/50 rounded-full cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
           <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>

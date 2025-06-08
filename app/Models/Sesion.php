@@ -16,7 +16,7 @@ class Sesion extends Model
         'fechaHora',
         'butacasReservadas',
         'numButacasReservadas',
-        'idSala',
+        'idSalaForaneo',
         'idPelicula',
     ];
 

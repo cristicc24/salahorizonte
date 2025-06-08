@@ -12,7 +12,7 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
     --color-text-color: #aa8447;
     --color-primary-color: black;
-    --font-primary-font: 'Oswald';
+    --font-primary-font: "Playfair Display", sans-serif;
     --font-carousel-font: "Sigmar One", sans-serif;
 }
 
