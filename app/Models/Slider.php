@@ -12,8 +12,11 @@ class Slider extends Model
     protected $primaryKey = 'id';
    
     protected $fillable = [
-        'idPelicula',
-        'titulo', 
-        'foto_grande'
+        'idPelicula'
     ];
+
+    public function pelicula()
+    {
+        return $this->belongsTo(Pelicula::class, 'idPelicula', 'id');
+    }
 }

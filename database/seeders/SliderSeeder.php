@@ -15,7 +15,7 @@ class SliderSeeder extends Seeder
     public function run(): void
     {
         $peliculas = DB::table('peliculas')
-                        ->select('id', 'titulo', 'foto_grande')
+                        ->select('id', 'titulo')
                         ->limit(5)
                         ->get(); 
 
@@ -23,7 +23,6 @@ class SliderSeeder extends Seeder
             Slider::create([
                 'idPelicula' => $pelicula->id,
                 'titulo' => $pelicula->titulo,
-                'foto_grande' => $pelicula->foto_grande,
             ]);
         }
     }

@@ -1,4 +1,4 @@
-<div class="w-[20%] bg-white border-r-2 border-black py-10 px-6">
+<div class="w-[20%] bg-white border-r-2 border-black py-10 px-6 min-h-screen">
     <h2 class="text-2xl font-bold mb-6">Administración</h2>
 
     <ul class="space-y-4 text-lg">
@@ -37,5 +37,12 @@
                 Salas
             </a>
         </li>
+        <li class="flex items-center gap-2 {{ request()->routeIs('sliders.*') ? 'text-[#B99A5F] font-semibold' : 'text-black' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12h15M4.5 6h15M4.5 18h15" />
+            </svg>
+            <a href="{{ route('admin.sliders') }}">Sliders</a>
+        </li>
+
     </ul>
 </div>

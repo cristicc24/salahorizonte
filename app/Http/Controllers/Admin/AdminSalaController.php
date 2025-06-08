@@ -52,7 +52,6 @@ class AdminSalaController extends Controller
 
 
     // Actualizar una sala existente
-    
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [

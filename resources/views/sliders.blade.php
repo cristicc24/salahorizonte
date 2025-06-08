@@ -4,9 +4,9 @@
     <div id="carousel-slides" class="flex transition-transform duration-700 ease-in-out">
       @foreach($sliders as $slider)
         <div class="w-full flex-shrink-0 relative">
-          <p class="text-white absolute top-[10%] left-[5%] text-7xl overflow-ellipsis h-[350px] overflow-hidden w-[32%] font-carousel-font">{{ $slider->titulo }}</p>
-          <img src="{{ $slider->foto_grande }}" alt="{{ $slider->titulo }}" class="w-full h-64 md:h-130 object-cover object-top">
-          <a href="/pelicula/{{ $slider->idPelicula }}" rel="noopener noreferrer" class="absolute right-20 bottom-14 border p-4 text-xl mt-4 text-white rounded-2xl bg-black/60 font-carousel-font inline-block text-center">
+          <p class="text-white absolute top-[10%] left-[5%] text-7xl overflow-ellipsis h-[350px] overflow-hidden w-[32%] font-carousel-font">{{ $slider->pelicula->titulo }}</p>
+          <img src="{{ $slider->pelicula->foto_grande }}" alt="{{ $slider->pelicula->titulo }}" class="w-full h-64 md:h-130 object-cover object-top">
+          <a href="/pelicula/{{ $slider->pelicula->id }}" rel="noopener noreferrer" class="absolute right-20 bottom-14 border p-4 text-xl mt-4 text-white rounded-2xl bg-black/60 font-carousel-font inline-block text-center">
             Comprar entradas
           </a>
         </div>

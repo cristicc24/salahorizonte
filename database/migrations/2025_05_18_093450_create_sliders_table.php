@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('idPelicula');
             $table->string('titulo');
-            $table->string('foto_grande');
             $table->timestamps();
         });
     }

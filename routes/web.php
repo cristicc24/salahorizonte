@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Sesion;
 use App\Models\Slider;
 use App\Models\TopPelicula;
-use App\Http\Controllers\CardController;
 use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\CarteleraController;
 use App\Http\Controllers\ContactoController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\AdminAuth\AuthenticatedSessionController as AdminLogin;
 use App\Http\Controllers\Admin\AdminPeliculaController;
 use App\Http\Controllers\Admin\AdminSesionController;
 use App\Http\Controllers\Admin\AdminSalaController;
+use App\Http\Controllers\Admin\AdminSliderController;
 
 require __DIR__.'/auth.php';
 
@@ -23,7 +23,7 @@ require __DIR__.'/auth.php';
 // ==============================
 
 Route::get('/', function () {
-    $sliders = Slider::get();
+    $sliders = Slider::with('pelicula')->get();
     $topPeliculas = TopPelicula::get();
     return view('inicio', ['sliders' => $sliders, 'toppeliculas' => $topPeliculas]);
 })->name('inicio');
@@ -81,7 +81,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::get('/peliculas', [AdministradorController::class, 'showPeliculas'])->name('peliculas');
         Route::get('/sesiones', [AdminSesionController::class, 'index'])->name('sesiones'); 
         Route::get('/salas', [AdminSalaController::class, 'index'])->name('salas');
-
+    
 
         // LOGOUT
         Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
@@ -89,6 +89,8 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         // CRUD PELÍCULAS
         Route::resource('api/peliculas', AdminPeliculaController::class);
         Route::post('/peliculas', [AdminPeliculaController::class, 'store'])->name('peliculas.store');
+        Route::get('/peliculas', [AdminPeliculaController::class, 'index'])->name('peliculas');
+
         Route::put('/peliculas/{id}', [AdminPeliculaController::class, 'update'])->name('peliculas.update');
         Route::delete('/peliculas/{id}', [AdminPeliculaController::class, 'destroy'])->name('peliculas.destroy');
 
@@ -99,13 +101,19 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::delete('/sesiones/{id}', [AdminSesionController::class, 'destroy'])->name('sesiones.destroy');
 
         // CRUD SALAS
-        // CRUD SALAS
         Route::post('/salas', [AdminSalaController::class, 'store'])->name('salas.store');
         Route::put('/salas/{id}', [AdminSalaController::class, 'update'])->name('salas.update');
         Route::delete('/salas/{id}', [AdminSalaController::class, 'destroy'])->name('salas.destroy');
 
 
+        // CRUD SLIDERS (Carrusel)
         
+        Route::get('/sliders', [AdminSliderController::class, 'show'])->name('sliders');
+        Route::post('/sliders', [AdminSliderController::class, 'store'])->name('sliders.store');
+        Route::put('/sliders/{id}', [AdminSliderController::class, 'update'])->name('sliders.update');
+        Route::delete('/sliders/{id}', [AdminSliderController::class, 'destroy'])->name('sliders.destroy');
+
+
 
     });
 });

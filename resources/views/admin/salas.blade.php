@@ -3,12 +3,39 @@
 @section('contenido')
 <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl font-bold">Salas</h2>
-    <button onclick="openModal('create')" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-        Nueva Sala
+    <button onclick="openModal('create')" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
+        + Nueva Sala
     </button>
+
+    @if(session('success') || session('createError') || session('editError'))
+        <div id="flash-message"
+            class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
+                    {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
+            
+            @if(session('success'))
+                <!-- Icono de éxito -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            @else
+                <!-- Icono de error -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            @endif
+
+            <span class="text-sm font-medium flex-1">
+                {{ session('success') ?? session('createError') ?? session('editError') }}
+            </span>
+
+            <!-- Botón para cerrar -->
+            <button onclick="document.getElementById('flash-message').remove()"
+                    class="text-lg font-bold leading-none text-gray-500 hover:text-black focus:outline-none"
+                    aria-label="Cerrar notificación">
+                &times;
+            </button>
+        </div>
+    @endif
 </div>
 
 @if($salas->isEmpty())
@@ -37,7 +64,7 @@
                     <td class="p-2 flex gap-2">
                         <!-- Editar -->
                         @if($sala->sesiones_count == 0)
-                        <button onclick="openModal('edit-{{ $sala->id }}')" class="bg-yellow-400 text-white px-2 py-1 rounded">
+                        <button onclick="openModal('edit-{{ $sala->id }}')" class="bg-yellow-400 text-white px-2 py-1 rounded cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6">
@@ -61,7 +88,7 @@
                         @endif
 
                         <!-- Eliminar -->
-                        <button onclick="openModal('delete-{{ $sala->id }}')" class="bg-red-600 text-white px-2 py-1 rounded">
+                        <button onclick="openModal('delete-{{ $sala->id }}')" class="bg-red-600 text-white px-2 py-1 rounded cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
@@ -70,14 +97,15 @@
                 </tr>
 
                 <!-- Modal editar -->
-                <dialog id="modal-edit-{{ $sala->id }}" class="...">
+
+                <dialog id="modal-edit-{{ $sala->id }}" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
                     <form method="POST" action="{{ route('admin.salas.update', $sala->id) }}">
                         @csrf
                         @method('PUT')
 
                         <h3 class="text-lg font-bold mb-4">Editar Sala</h3>
 
-                        {{-- NUEVO: alerta si hay error de validación --}}
+                        {{-- Mostrar error si viene de validación --}}
                         @if (session('editError') && session('openModal') === 'edit-' . $sala->id)
                             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
                                 {{ session('editError') }}
@@ -88,19 +116,36 @@
                         @endif
 
                         <label class="block mb-2">Cantidad de filas (máx 13):
-                            <input type="number" name="cantidadFilas" value="{{ old('cantidadFilas', $sala->cantidadFilas) }}" class="w-full border rounded px-2 py-1" required min="1" max="13">
+                            <input
+                                type="number"
+                                name="cantidadFilas"
+                                value="{{ old('cantidadFilas', $sala->cantidadFilas) }}"
+                                class="w-full border rounded px-2 py-1"
+                                required
+                                min="1"
+                                max="13"
+                            >
                         </label>
 
                         <label class="block mb-4">Cantidad de columnas (máx 13):
-                            <input type="number" name="cantidadColumnas" value="{{ old('cantidadColumnas', $sala->cantidadColumnas) }}" class="w-full border rounded px-2 py-1" required min="1" max="13">
+                            <input
+                                type="number"
+                                name="cantidadColumnas"
+                                value="{{ old('cantidadColumnas', $sala->cantidadColumnas) }}"
+                                class="w-full border rounded px-2 py-1"
+                                required
+                                min="1"
+                                max="13"
+                            >
                         </label>
 
                         <div class="flex justify-end gap-2">
                             <button type="button" onclick="closeModal('edit-{{ $sala->id }}')" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
-                            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Actualizar</button>
+                            <button type="submit" class="bg-yellow-400 text-white px-4 py-2 rounded cursor-pointer">Actualizar</button>
                         </div>
                     </form>
                 </dialog>
+
 
                 <!-- Modal eliminar -->
                 <dialog id="modal-delete-{{ $sala->id }}" class="rounded-md w-full max-w-sm p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
@@ -126,8 +171,8 @@
                         @endif
 
                         <div class="flex justify-end gap-2 mt-6">
-                            <button type="button" onclick="closeModal('delete-{{ $sala->id }}')" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
-                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Eliminar</button>
+                            <button type="button" onclick="closeModal('delete-{{ $sala->id }}')" class="bg-gray-300 px-4 py-2 rounded cursor-pointer">Cancelar</button>
+                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded cursor-pointer">Eliminar</button>
                         </div>
                     </form>
                 </dialog>
@@ -141,9 +186,7 @@
 <dialog id="modal-create" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
     <form method="POST" action="{{ route('admin.salas.store') }}">
         @csrf
-
         <h3 class="text-lg font-bold mb-4">Crear Sala</h3>
-
         @if (session('createError'))
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
                 {{ session('createError') }}
@@ -195,8 +238,6 @@
 </dialog>
 
 
-
-<!-- Scripts -->
 <script>
     function openModal(id) {
         const modal = document.getElementById('modal-' + id);
@@ -208,14 +249,45 @@
         if (modal) modal.close();
     }
 
-    // document.addEventListener('DOMContentLoaded', () => {
-    //     document.querySelectorAll('input[name="cantidadFilas"], input[name="cantidadColumnas"]').forEach(input => {
-    //         input.addEventListener('input', () => {
-    //             const val = parseInt(input.value);
-    //             if (val > 13) input.value = 13;
-    //             if (val < 1) input.value = 1;
-    //         });
-    //     });
-    // });
+    //validación del formulario
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('input[name="cantidadFilas"], input[name="cantidadColumnas"]').forEach(input => {
+            input.addEventListener('input', () => {
+                const val = parseInt(input.value);
+                if (val > 13) input.value = 13;
+                if (val < 1) input.value = 1;
+            });
+        });
+    });
+
+    // Permitir cerrar modales con ESC o clic fuera del contenido
+    document.querySelectorAll("dialog").forEach(dialog => {
+        // Cierre con clic fuera del modal
+        dialog.addEventListener("click", e => {
+            const rect = dialog.getBoundingClientRect();
+            if (
+                e.clientX < rect.left || e.clientX > rect.right ||
+                e.clientY < rect.top || e.clientY > rect.bottom
+            ) {
+                dialog.close();
+            }
+        });
+
+        // Cierre con tecla ESC
+        dialog.addEventListener("keydown", e => {
+            if (e.key === "Escape") {
+                dialog.close();
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const flash = document.getElementById('flash-message');
+        if (flash) {
+            setTimeout(() => {
+                flash.remove();
+            }, 3000); 
+        }
+    });
 </script>
 @endsection

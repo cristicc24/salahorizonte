@@ -3,12 +3,36 @@
 @section('contenido')
 <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl font-bold">Sesiones</h2>
-    <button onclick="openModal('create')" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+    <button onclick="openModal('create')" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
         Nueva Sesión
     </button>
+
+    @if(session('success') || session('createError') || session('editError'))
+        <div id="flash-message"
+            class="fixed bottom-5 right-5 px-4 py-3 rounded shadow-lg z-50 flex items-start gap-2 w-96
+                   {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
+            <div class="shrink-0 pt-1">
+                @if(session('success'))
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                @endif
+            </div>
+            <div class="flex-1 text-sm">
+                {{ session('success') ?? session('createError') ?? session('editError') }}
+            </div>
+            <button onclick="document.getElementById('flash-message').remove()" class="ml-2 text-xl leading-none">
+                &times;
+            </button>
+        </div>
+    @endif
 </div>
 
 @if($sesiones->isEmpty())
@@ -33,8 +57,8 @@
                     <td class="p-2">{{ $sesion->numButacasReservadas }}</td>
                     <td class="p-2">{{ \Carbon\Carbon::parse($sesion->fechaHora)->format('d/m/Y H:i') }}</td>
                     <td class="p-2 flex gap-2">
-                        <!-- Editar -->
-                        <button onclick="openModal('edit-{{ $sesion->id }}')" class="bg-yellow-400 text-white px-2 py-1 rounded">
+                        <!-- Botón Editar -->
+                        <button onclick="openModal('edit-{{ $sesion->id }}')" class="bg-yellow-400 text-white px-2 py-1 rounded cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6">
@@ -44,20 +68,11 @@
                                     1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
                             </svg>
                         </button>
-                        <!-- Eliminar -->
-                        <button onclick="openModal('delete-{{ $sesion->id }}')" class="bg-red-600 text-white px-2 py-1 rounded">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107
-                                    1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0
-                                    1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772
-                                    5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12
-                                    .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0
-                                    0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964
-                                    51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5
-                                    0a48.667 48.667 0 0 0-7.5 0"/>
+
+                        <!-- Botón Eliminar -->
+                        <button onclick="openModal('delete-{{ $sesion->id }}')" class="bg-red-600 text-white px-2 py-1 rounded cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </td>
@@ -71,10 +86,17 @@
 
                         <h3 class="text-lg font-bold mb-4">Editar Sesión</h3>
 
+                        @if (session('editError') && session('openModal') === 'edit-' . $sesion->id)
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
+                                {{ session('editError') }}
+                            </div>
+                            <script>window.onload = () => openModal('edit-{{ $sesion->id }}');</script>
+                        @endif
+
                         <label class="block mb-2">Película:
-                            <select name="idPelicula" class="w-full border rounded px-2 py-1">
+                            <select name="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer">
                                 @foreach($peliculas as $pelicula)
-                                    <option value="{{ $pelicula->id }}" @selected($pelicula->id == $sesion->idPelicula)>
+                                    <option value="{{ $pelicula->id }}" @selected(old('idPelicula', $sesion->idPelicula) == $pelicula->id)>
                                         {{ $pelicula->titulo }}
                                     </option>
                                 @endforeach
@@ -82,20 +104,20 @@
                         </label>
 
                         <label class="block mb-2">Sala:
-                            <select name="idSala" class="w-full border rounded px-2 py-1">
+                            <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer">
                                 @foreach($salas as $sala)
-                                    <option value="{{ $sala->id }}">Sala {{ $sala->id }}</option>
+                                    <option value="{{ $sala->id }}" @selected(old('idSala', $sesion->idSala) == $sala->id)>Sala {{ $sala->id }}</option>
                                 @endforeach
                             </select>
                         </label>
 
                         <label class="block mb-4">Fecha y hora:
-                            <input type="datetime-local" name="fechaHora" value="{{ \Carbon\Carbon::parse($sesion->fechaHora)->format('Y-m-d\TH:i') }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="datetime-local" name="fechaHora" value="{{ old('fechaHora', \Carbon\Carbon::parse($sesion->fechaHora)->format('Y-m-d\TH:i')) }}" class="w-full border rounded px-2 py-1 cursor-pointer" required>
                         </label>
 
                         <div class="flex justify-end gap-2">
-                            <button type="button" onclick="closeModal('edit-{{ $sesion->id }}')" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
-                            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Actualizar</button>
+                            <button type="button" onclick="closeModal('edit-{{ $sesion->id }}')" class="bg-gray-300 px-4 py-2 rounded cursor-pointer">Cancelar</button>
+                            <button type="submit" class="bg-yellow-400 text-white px-4 py-2 rounded cursor-pointer">Actualizar</button>
                         </div>
                     </form>
                 </dialog>
@@ -112,8 +134,8 @@
                         <p>Fecha: {{ \Carbon\Carbon::parse($sesion->fechaHora)->format('d/m/Y H:i') }}</p>
 
                         <div class="flex justify-end gap-2 mt-4">
-                            <button type="button" onclick="closeModal('delete-{{ $sesion->id }}')" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
-                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Eliminar</button>
+                            <button type="button" onclick="closeModal('delete-{{ $sesion->id }}')" class="bg-gray-300 px-4 py-2 rounded cursor-pointer">Cancelar</button>
+                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded cursor-pointer">Eliminar</button>
                         </div>
                     </form>
                 </dialog>
@@ -130,34 +152,44 @@
 
         <h3 class="text-lg font-bold mb-4">Crear Sesión</h3>
 
+        @if (session('createError') && session('openModal') === 'create')
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
+                {{ session('createError') }}
+            </div>
+            <script>window.onload = () => openModal('create');</script>
+        @endif
+
         <label class="block mb-2">Película:
-            <select name="idPelicula" class="w-full border rounded px-2 py-1">
+            <select name="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer">
                 @foreach($peliculas as $pelicula)
-                    <option value="{{ $pelicula->id }}">{{ $pelicula->titulo }}</option>
+                    <option value="{{ $pelicula->id }}" @selected(old('idPelicula') == $pelicula->id)>
+                        {{ $pelicula->titulo }}
+                    </option>
                 @endforeach
             </select>
         </label>
 
         <label class="block mb-2">Sala:
-            <select name="idSala" class="w-full border rounded px-2 py-1">
+            <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer">
                 @foreach($salas as $sala)
-                    <option value="{{ $sala->id }}">{{ $sala->id }}</option>
+                    <option value="{{ $sala->id }}" @selected(old('idSala') == $sala->id)>
+                        Sala {{ $sala->id }}
+                    </option>
                 @endforeach
             </select>
         </label>
 
         <label class="block mb-4">Fecha y hora:
-            <input type="datetime-local" name="fechaHora" class="w-full border rounded px-2 py-1" required>
+            <input type="datetime-local" name="fechaHora" value="{{ old('fechaHora') }}" class="w-full border rounded px-2 py-1 cursor-pointer" required>
         </label>
 
         <div class="flex justify-end gap-2">
-            <button type="button" onclick="closeModal('create')" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
-            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Guardar</button>
+            <button type="button" onclick="closeModal('create')" class="bg-gray-300 px-4 py-2 rounded cursor-pointer">Cancelar</button>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded cursor-pointer">Guardar</button>
         </div>
     </form>
 </dialog>
 
-<!-- Scripts -->
 <script>
     function openModal(id) {
         const modal = document.getElementById('modal-' + id);
@@ -168,5 +200,36 @@
         const modal = document.getElementById('modal-' + id);
         if (modal) modal.close();
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('dialog').forEach(dialog => {
+            dialog.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    const id = dialog.id.replace('modal-', '');
+                    closeModal(id);
+                }
+            });
+
+            dialog.addEventListener('click', e => {
+                const rect = dialog.getBoundingClientRect();
+                if (
+                    e.clientX < rect.left || e.clientX > rect.right ||
+                    e.clientY < rect.top || e.clientY > rect.bottom
+                ) {
+                    const id = dialog.id.replace('modal-', '');
+                    closeModal(id);
+                }
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const flash = document.getElementById('flash-message');
+        if (flash) {
+            setTimeout(() => {
+                flash.remove();
+            }, 3000); 
+        }
+    });
 </script>
 @endsection

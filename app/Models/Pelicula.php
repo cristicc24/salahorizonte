@@ -34,6 +34,7 @@ class Pelicula extends Model
         return $this->hasMany(Sesion::class, 'idPelicula', 'id');
     }
 
+    
     // Relación: una película puede ser valorada por muchos clientes
     public function clientes()
     {
@@ -72,5 +73,19 @@ class Pelicula extends Model
         return DB::table('peliculas')
                 ->select('*')
                 ->get();
+    }
+
+   public function setDuracionAttribute($value)
+    {
+        $value = trim($value);
+
+        if (is_numeric($value)) {
+            $horas = floor($value / 60);
+            $min = $value % 60;
+            $this->attributes['duracion'] = "{$horas}h {$min}m";
+            return;
+        }
+
+        $this->attributes['duracion'] = $value;
     }
 }
