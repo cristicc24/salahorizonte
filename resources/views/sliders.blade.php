@@ -4,9 +4,11 @@
     <div id="carousel-slides" class="flex transition-transform duration-700 ease-in-out">
       @foreach($sliders as $slider)
         <div class="w-full flex-shrink-0 relative">
-          <p class="text-white absolute top-[10%] left-[5%] text-7xl overflow-ellipsis h-[350px] overflow-hidden w-[32%] font-carousel-font">{{ $slider->pelicula->titulo }}</p>
-          <img src="{{ $slider->pelicula->foto_grande }}" alt="{{ $slider->pelicula->titulo }}" class="w-full h-64 md:h-130 object-cover object-top">
-          <a href="/pelicula/{{ $slider->pelicula->id }}" rel="noopener noreferrer" class="absolute right-20 bottom-14 border p-4 text-xl mt-4 text-white rounded-2xl bg-black/60 font-carousel-font inline-block text-center">
+          <p class="text-white absolute top-[8%] left-[5%] w-[90%] md:w-[60%] xl:w-[40%] text-2xl md:text-5xl xl:text-7xl font-carousel-font overflow-hidden h-[12rem]">
+            {{ $slider->pelicula->titulo }}
+          </p>
+          <img src="{{ $slider->pelicula->foto_grande }}" alt="{{ $slider->pelicula->titulo }}" class="w-full aspect-video md:h-[520px] object-cover object-top">
+          <a href="/pelicula/{{ $slider->pelicula->id }}" class="absolute right-6 md:right-20  bottom-6 md:bottom-14 px-5 py-3 text-base md:text-xl text-white rounded-2xl bg-black/60 font-carousel-font hover:bg-black/80">
             Comprar entradas
           </a>
         </div>
@@ -14,28 +16,30 @@
     </div>
 
     <!-- Indicators -->
-    <div class="absolute z-9 flex bottom-10 left-1/2 -translate-x-1/2 space-x-3">
+    <div class="absolute z-9 flex bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 space-x-3">
       @foreach($sliders as $index => $slider)
         <button 
           onclick="goToSlide({{ $index }})" 
-          class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all" 
+          class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-white/50 hover:bg-white transition-all focus:outline-none" 
           id="indicator-{{ $index }}">
         </button>
       @endforeach
     </div>
 
-    <button onclick="prevSlide()" class="absolute top-1/2 left-4 -translate-y-1/2 text-white p-3 z-9 hover:bg-text-color/50 rounded-full cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-9">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+    <!-- Controls -->
+    <button onclick="prevSlide()" class="absolute top-1/2 left-4 -translate-y-1/2 text-white p-2 md:p-3 z-9 hover:bg-text-color/50 rounded-full cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-8 h-6 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 19.5 8.25 12l7.5-7.5" />
       </svg>  
     </button>
-    <button onclick="nextSlide()" class="absolute top-1/2 right-4 -translate-y-1/2 text-white p-3 z-9 hover:bg-text-color/50 rounded-full cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-        </svg>
+    <button onclick="nextSlide()" class="absolute top-1/2 right-4 -translate-y-1/2 text-white p-2 md:p-3 z-9 hover:bg-text-color/50 rounded-full cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-10 h-6 md:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+      </svg>
     </button>
   </div>
 </div>
+
 
 <script>
     const carousel = document.getElementById('carousel');
