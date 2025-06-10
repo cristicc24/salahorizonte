@@ -22,27 +22,17 @@
 
     {{-- Buscador y filtros --}}
     <form method="GET" action="{{ route('admin.peliculas') }}" class="mb-6 flex flex-wrap gap-4 items-center">
-        <input
-            type="text"
-            name="search"
-            placeholder="Buscar título..."
-            value="{{ request('search') }}"
-            class="border border-gray-300 rounded px-3 py-2 w-64"
-        />
+        <input type="text" id="search-input" name="search" placeholder="Buscar título..." value="{{ request('search') }}" class="border border-gray-300 rounded px-3 py-2 w-64"/>
         <select name="genero" class="border border-gray-300 rounded px-3 py-2">
             <option value="">-- Género --</option>
             @foreach($generos as $genero)
-                <option value="{{ $genero }}" {{ request('genero') == $genero ? 'selected' : '' }}>
-                    {{ $genero }}
-                </option>
+            <option value="{{ $genero }}" {{ request('genero') == $genero ? 'selected' : '' }}>{{ $genero }}</option>
             @endforeach
         </select>
         <select name="anio_estreno" class="border border-gray-300 rounded px-3 py-2">
             <option value="">-- Año Estreno --</option>
             @foreach($anios as $anio)
-                <option value="{{ $anio }}" {{ request('anio_estreno') == $anio ? 'selected' : '' }}>
-                    {{ $anio }}
-                </option>
+            <option value="{{ $anio }}" {{ request('anio_estreno') == $anio ? 'selected' : '' }}>{{ $anio }}</option>
             @endforeach
         </select>
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Filtrar</button>
@@ -54,10 +44,8 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             @foreach($peliculas as $pelicula)
-                <div class="relative bg-gray-100 rounded shadow overflow-hidden group">
-                    <img src="{{ asset($pelicula->foto_miniatura) }}"
-                         alt="{{ $pelicula->titulo }}"
-                         class="w-full h-70 object-cover group-hover:brightness-75 transition duration-300">
+                <div class="relative bg-gray-100 rounded shadow overflow-hidden group"><img src="{{ asset($pelicula->foto_miniatura) }}"
+                         alt="{{ $pelicula->titulo }}" class="w-full h-70 object-cover group-hover:brightness-75 transition duration-300">
 
                     <div class="absolute inset-0 flex items-start justify-end p-2 gap-1">
                         <!-- Botón Editar -->
@@ -107,20 +95,13 @@
                             </svg>
                         </button>
                     </div>
-
-                    <!-- Título -->
-                    <div
-                        class="absolute bottom-0 left-0 right-0 h-12 bg-black bg-opacity-60 text-white text-sm flex items-center justify-center text-center">
+                    <div class="absolute bottom-0 left-0 right-0 h-12 bg-black bg-opacity-60 text-white text-sm flex items-center justify-center text-center">
                         {{ $pelicula->titulo }}
                     </div>
                 </div>
 
-                <!-- Backdrop del modal editar -->
-                <div id="backdrop-edit-{{ $pelicula->id }}"
-                     class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40"
-                     onclick="closeModal('edit-{{ $pelicula->id }}')"></div>
-
                 <!-- Modal Editar -->
+                <div id="backdrop-edit-{{ $pelicula->id }}" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" onclick="closeModal('edit-{{ $pelicula->id }}')"></div>
                 <dialog id="modal-edit-{{ $pelicula->id }}"
                         class="rounded-md w-full max-w-lg p-6 fixed top-1/2 left-1/2
                     transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
@@ -135,61 +116,42 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Título -->
                         <label class="block mb-2">
                             Título:
                             <input type="text" name="titulo" value="{{ $pelicula->titulo }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Precio -->
                         <label class="block mb-2">
                             Precio:
                             <input type="number" name="precio" step="0.01" value="{{ $pelicula->precio }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Género -->
                         <label class="block mb-2">
                             Género:
                             <input type="text" name="genero" value="{{ $pelicula->genero }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Directores -->
                         <label class="block mb-2">
                             Directores:
                             <input type="text" name="directores" value="{{ $pelicula->directores }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Edad recomendada -->
                         <label class="block mb-2">
                             Edad recomendada:
                             <input type="text" name="edad_recomendada" value="{{ $pelicula->edad_recomendada }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Duración -->
                         <label class="block mb-2">
                             Duración (min):
                             <input type="text" name="duracion" value="{{ old('duracion', $pelicula->duracion) }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Fecha de estreno -->
                         <label class="block mb-2">
                             Fecha de estreno:
                             <input type="date" name="fecha_estreno" value="{{ $pelicula->fecha_estreno }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Fecha de emisión -->
                         <label class="block mb-2">
                             Fecha de emisión:
                             <input type="date" name="fecha_emision" value="{{ $pelicula->fecha_emision }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Sinopsis -->
                         <label class="block mb-2">
                             Sinopsis:
                             <textarea name="sinopsis" rows="4" class="w-full border rounded px-2 py-1" required>{{ $pelicula->sinopsis }}</textarea>
                         </label>
-
-                        <!-- Foto miniatura -->
                         <label class="block mb-2">
                             Foto miniatura:
                             <input type="file" name="foto_miniatura" accept="image/*" class="w-full">
@@ -197,20 +159,14 @@
                                 <img src="{{ asset($pelicula->foto_miniatura) }}" class="h-20 mt-2">
                             @endif
                         </label>
-
-                        <!-- Actores -->
                         <label class="block mb-2">
                             Actores:
                             <input type="text" name="actores" value="{{ $pelicula->actores }}" class="w-full border rounded px-2 py-1" required>
                         </label>
-
-                        <!-- Enlace trailer -->
                         <label class="block mb-2">
                             Enlace del tráiler:
                             <input type="url" name="enlace_trailer" value="{{ $pelicula->enlace_trailer }}" class="w-full border rounded px-2 py-1">
                         </label>
-
-                        <!-- Foto grande -->
                         <label class="block mb-2">
                             Foto grande:
                             <input type="file" name="foto_grande" accept="image/*" class="w-full">
@@ -233,9 +189,7 @@
             @endforeach
 
             @foreach($peliculas as $pelicula)
-                <!-- Backdrop del modal eliminar -->
                 <div id="backdrop-delete-{{ $pelicula->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40" onclick="closeModal('delete-{{ $pelicula->id }}')"></div>
-
                 <!-- Modal Eliminar -->
                 <dialog id="modal-delete-{{ $pelicula->id }}" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2
                     transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
@@ -266,7 +220,6 @@
 
          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         @foreach($peliculas as $pelicula)
-            <!-- Aquí tu código de cada película -->
         @endforeach
         </div>
 

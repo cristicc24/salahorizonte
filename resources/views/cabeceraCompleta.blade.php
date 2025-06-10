@@ -2,7 +2,7 @@
     <header class="container-fluid w-full bg-primary-color h-28 flex justify-between font-primary-font fixed top-0 z-10 border-1 border-b-text-color">
         <div @class(['flex', 'items-center', 'w-full', 'mx-2', 'justify-center' => !$completo])>
             <div class="h-fit flex text-text-color w-4/12 justify-center ">
-                <a class="w-full max-w-[350px] sm:w-7/12" href="{{ route('inicio') }}">
+                <a class="w-full max-w-[400px] sm:w-9/12" href="{{ route('inicio') }}">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full mx-2">
                 </a>
             </div>
@@ -14,12 +14,26 @@
                         d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
-            
-            <div id="navLinks" class="text-text-color flex-col md:flex md:flex-row justify-around w-full md:w-8/12 text-2xl hidden">
-                <a href="{{ route('inicio') }}" class="my-2 md:my-0">Inicio</a>
-                <a href="{{ route('cartelera') }}" class="my-2 md:my-0">Cartelera</a>
-                <a href="{{ route('contacto') }}" class="my-2 md:my-0">Contacto</a>
-            </div>
+            <nav id="navLinks" class="md:static md:inset-auto md:transform-none md:transition-none md:translate-none md:justify-evenly md:flex md:flex-row md:space-y-0 md:space-x-8
+                    md:pt-0 md:px-0 md:max-w-none md:opacity-100 md:pointer-events-auto opacity-0 pointer-events-none fixed inset-y-0 left-0 z-50 w-4/5 max-w-xs bg-primary-color                     transition-transform duration-300 ease-in-out
+                    flex flex-col pt-28 space-y-4 px-6" >
+                    <!-- botón cerrar -->
+                    <button id="closeBtn" class="absolute top-4 right-4 md:hidden text-text-color focus:outline-none" aria-label="Cerrar menú">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <a href="{{ route('inicio') }}"    class="text-2xl text-text-color">Inicio</a>
+                    <a href="{{ route('cartelera') }}" class="text-2xl text-text-color">Cartelera</a>
+                    <a href="{{ route('contacto') }}"  class="text-2xl text-text-color">Contacto</a>
+                </nav>
+            <div
+                id="backdrop"
+                class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none
+                        transition-opacity duration-300 ease-in-out md:hidden"
+            ></div>
             @endif
         </div>
 
@@ -102,10 +116,38 @@
     </div>
     @endif
 <script>
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const navLinks = document.getElementById('navLinks');
+    const btn = document.getElementById('hamburgerBtn');
+    const menu = document.getElementById('navLinks');
+    const backdrop = document.getElementById('backdrop');
+    const closeBtn  = document.getElementById('closeBtn');
 
-    hamburgerBtn?.addEventListener('click', () => {
-        navLinks.classList.toggle('hidden');
+    function openMenu() {
+        menu.classList.remove('-translate-x-full');
+        menu.classList.add('translate-x-0');
+        menu.classList.remove('opacity-0', 'pointer-events-none');
+        menu.classList.add('opacity-100', 'pointer-events-auto');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+    }
+
+    function closeMenu() {
+        menu.classList.add('-translate-x-full');
+        menu.classList.remove('translate-x-0');
+        menu.classList.remove('opacity-0', 'pointer-events-none');
+        menu.classList.add('opacity-100', 'pointer-events-auto');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+    }
+
+    btn.addEventListener('click', () => {
+        if (menu.classList.contains('translate-x-0')) {
+            closeMenu();    
+        } else {
+            openMenu();
+        }
     });
+
+    backdrop.addEventListener('click', closeMenu);
+
+    closeBtn.addEventListener('click', closeMenu);
 </script>

@@ -3,59 +3,40 @@
 
 
 <div class="bg-primary-color w-full font-primary-font mt-28">
-    <div class="relative w-full h-100">
+    <div class="relative w-full h-[240px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[480px]">
         <img src="{{ $foto_grande }}" alt="Foto de portada de la película" class="w-full h-full object-cover object-top">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-        <a href="{{ $trailer }}" rel="noopener noreferrer" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-9">
+        <a href="{{ $trailer }}" rel="noopener noreferrer"
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-9">
             <div class="w-14 h-14 bg-white/70 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
             </div>
         </a>
-        <p class="text-5xl font-bold absolute left-[31%] bottom-[-20px] text-white">{{$nombrePelicula}}</p>
+        <p class="text-white text-2xl sm:text-3xl md:text-4xl font-bold text-center absolute bottom-[-1rem]  md:bottom-[-1rem] w-[90%] left-1/2 -translate-x-1/2">
+            {{ $nombrePelicula }}
+        </p>
     </div>
-    <div class="">
-        <div class="flex justify-between text-white mt-10 text-lg text-justify hyphens-auto 
-                    [&_div]:flex [&_div]:flex-col
-                    [&_div_>_h3]:text-2xl [&_div_>_h3]:text-text-color">
-            <div class="md:w-[27%] gap-y-6 relative">
-                <img src="../{{ $foto_miniatura }}" alt="Foto de la miniatura de la pelicula" class="absolute top-[-40%] right-[0%] w-[140px] sm:w-[160px] md:w-[180px] lg:w-[200px] xl:w-[220px]">
+
+    <div class="flex flex-col md:flex-row gap-6 text-white mt-3 md:mt-10 px-4 md:mr-1">
+        <div class="w-full md:w-1/4 relative">
+            <img src="../{{ $foto_miniatura }}" alt="Foto miniatura"
+                class="hidden md:block absolute top-[-40%] right-0 w-[180px] lg:w-[200px] xl:w-[220px]">
+        </div>
+
+        <div class="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div><h3 class="text-text-color text-2xl">DIRECTOR/ES</h3><p>{{ $directores }}</p></div>
+                <div><h3 class="text-text-color text-2xl">ACTORES</h3><p>{{ $actores }}</p></div>
+                <div><h3 class="text-text-color text-2xl">SINOPSIS</h3><p>{{ $sinopsis }}</p></div>
             </div>
-            <div class="md:w-[38%] gap-y-6 ">
-                <div>
-                    <h3>DIRECTOR/ES</h3>
-                    <p>{{$directores}}</p>
-                </div>
-                <div>
-                    <h3>ACTORES</h3>
-                    <p>{{$actores}}</p>
-                </div>
-                <div>
-                    <h3>SINOPSIS</h3>
-                    <p>{{$sinopsis}}</p>
-                </div>
-            </div>
-            <div class="md:w-[27%] gap-y-6">
-                <div>
-                    <h3>DURACIÓN</h3>
-                    <p>{{$duracion}}</p>
-                </div>
-                <div>
-                    <h3>FECHA DE ESTRENO</h3>
-                    <p>{{$fecha_estreno}}</p>
-                </div>
-                <div>
-                    <h3>GÉNERO/S</h3>
-                    <p>{{ $genero }}</p>
-                </div>
-                <div>
-                    <p>Apta para {{ $edad_recomendada }}</p>
-                </div>
-                <div>
-                    <h3>PRECIO ENTRADA</h3>
-                    <p>El precio es: {{ $precio }}€</p>
-                </div>
+            <div class="space-y-4">
+                <div><h3 class="text-text-color text-2xl">DURACIÓN</h3><p>{{ $duracion }}</p></div>
+                <div><h3 class="text-text-color text-2xl">FECHA DE ESTRENO</h3><p>{{ $fecha_estreno }}</p></div>
+                <div><h3 class="text-text-color text-2xl">GÉNERO/S</h3><p>{{ $genero }}</p></div>
+                <div><p>Apta para {{ $edad_recomendada }}</p></div>
+                <div><h3 class="text-text-color text-2xl">PRECIO ENTRADA</h3><p>{{ $precio }}€</p></div>
             </div>
         </div>
     </div>
@@ -86,7 +67,6 @@
         @endfor
     </div>
 
-    <!-- Sesiones -->
     <div id="lista-sesiones" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($sesiones as $sesion)
             @php
@@ -152,7 +132,6 @@
             </div>
         </div>
     </div>
-
 
     <script>
         function mostrarMapa(idSesion) {
@@ -267,11 +246,11 @@
 <div class="text-white font-primary-font px-4 py-6">
     <p class="w-full text-center text-4xl my-8 font-bold">PELÍCULAS RELACIONADAS</p>
     <div class="relative flex justify-center items-center flex-col">
-        <div id="carousel-container" class="overflow-hidden max-w-7xl w-full">
+        <div id="carousel-container" class="overflow-x-auto lg:overflow-hidden max-w-7xl w-full">
 
             <div id="carousel-inner" @class(['flex', 'transition-transform', 'duration-500', 'ease-in-out', 'justify-center' => count($peliculasRelacionadas) <= 4])>
                 @foreach ($peliculasRelacionadas as $pelicula)
-                    <div class="min-w-[23%] h-[400px] box-border relative mr-8">
+                    <div class="min-w-[80%] sm:min-w-[45%] md:min-w-[30%] lg:min-w-[23%] h-[400px] box-border relative mr-8">
                         <div class="rounded-lg shadow-lg overflow-hidden h-full">
                             <a href="/pelicula/{{ $pelicula->id }}" rel="noopener noreferrer">
                                 <img src="{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
@@ -294,96 +273,116 @@
                 @endforeach
             </div>
         </div>
+
         @if(count($peliculasRelacionadas) > 4)
         <div class="p-8 gap-4">
             <button id="prev" class="hover:bg-text-color/80 text-white p-2 rounded-full cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                 </svg>
             </button>
             <button id="next" class="hover:bg-text-color/80 text-white p-2 rounded-full cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
             </button>
         </div>
         @endif
     </div>
 </div>
-
-
 @if(count($peliculasRelacionadas) > 4)
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // 1. Obtenemos los elementos del carrusel y los botones
-        const contenedor = document.getElementById("carousel-container");
-        const carrusel = document.getElementById("carousel-inner");
-        const botonIzquierda = document.getElementById("prev");
-        const botonDerecha = document.getElementById("next");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const contenedor = document.getElementById("carousel-container");
+    const carrusel = document.getElementById("carousel-inner");
+    const botonIzquierda = document.getElementById("prev");
+    const botonDerecha = document.getElementById("next");
 
-        // 2. Guardamos las tarjetas originales del carrusel
-        const tarjetas = Array.from(carrusel.children);
+    let anchoTarjeta;
+    let visibles;
+    let posicion;
+    let actual;
 
-        // 3. Calculamos el ancho de cada tarjeta (incluye margen derecho)
+    function calcularMedidas() {
+        const tarjetas = Array.from(carrusel.children).filter(el => !el.classList.contains('clon'));
+        if (!tarjetas.length) return;
         const estilo = getComputedStyle(tarjetas[0]);
-        const anchoTarjeta = tarjetas[0].offsetWidth + parseInt(estilo.marginRight);
+        anchoTarjeta = tarjetas[0].offsetWidth + parseInt(estilo.marginRight);
+        visibles = Math.floor(contenedor.offsetWidth / anchoTarjeta) || 1;
+    }
 
-        // 4. Cuántas tarjetas se ven al mismo tiempo
-        const visibles = Math.floor(contenedor.offsetWidth / anchoTarjeta);
-        const total = tarjetas.length;
+    function inicializarCarrusel() {
+        const tarjetasOriginales = Array.from(carrusel.children).filter(el => !el.classList.contains('clon'));
 
-        // 5. Iniciamos desde la primera tarjeta real (después de clonar)
-        let actual = visibles;
+        // Limpiar carrusel y quitar clones
+        carrusel.innerHTML = '';
+        tarjetasOriginales.forEach(t => carrusel.appendChild(t));
 
-        // 6. Clonamos algunas tarjetas al principio y al final para hacer el bucle infinito
-        const clonesInicio = tarjetas.slice(-visibles).map(t => t.cloneNode(true));
-        const clonesFinal = tarjetas.slice(0, visibles).map(t => t.cloneNode(true));
+        calcularMedidas();
+
+        // Clonar
+        const clonesInicio = tarjetasOriginales.slice(-visibles).map(t => {
+            const clon = t.cloneNode(true);
+            clon.classList.add('clon');
+            return clon;
+        });
+
+        const clonesFinal = tarjetasOriginales.slice(0, visibles).map(t => {
+            const clon = t.cloneNode(true);
+            clon.classList.add('clon');
+            return clon;
+        });
 
         clonesInicio.forEach(clon => carrusel.prepend(clon));
-        clonesFinal.forEach(clon => carrusel.append(clon));
+        clonesFinal.forEach(clon => carrusel.appendChild(clon));
 
-        // 7. Posicionamos el carrusel en la primera tarjeta real
-        let posicion = -actual * anchoTarjeta;
+        actual = visibles;
+        posicion = -actual * anchoTarjeta;
+        carrusel.style.transition = "none";
         carrusel.style.transform = `translateX(${posicion}px)`;
+    }
 
-        // 8. Función para mover el carrusel con animación
-        function mover() {
-            carrusel.style.transition = "transform 0.5s ease";
-            carrusel.style.transform = `translateX(${posicion}px)`;
+    function mover() {
+        carrusel.style.transition = "transform 0.5s ease";
+        carrusel.style.transform = `translateX(${posicion}px)`;
+    }
+
+    function saltar(nuevoIndice) {
+        carrusel.style.transition = "none";
+        posicion = -nuevoIndice * anchoTarjeta;
+        carrusel.style.transform = `translateX(${posicion}px)`;
+        actual = nuevoIndice;
+    }
+
+    carrusel.addEventListener("transitionend", function () {
+        const total = Array.from(carrusel.children).filter(el => !el.classList.contains('clon')).length;
+        if (actual >= total + visibles) {
+            saltar(visibles);
+        } else if (actual < visibles) {
+            saltar(total + visibles - 1);
         }
-
-        // 9. Función para saltar (sin animación) cuando llegamos a un clon
-        function saltar(nuevoIndice) {
-            carrusel.style.transition = "none";
-            posicion = -nuevoIndice * anchoTarjeta;
-            carrusel.style.transform = `translateX(${posicion}px)`;
-            actual = nuevoIndice;
-        }
-
-        // 10. Detecta si llegamos a un clon y vuelve al original sin que se note
-        carrusel.addEventListener("transitionend", function () {
-            if (actual >= total + visibles) {
-                saltar(visibles); // Volver al principio real
-            } else if (actual < visibles) {
-                saltar(total + visibles - 1); // Ir al final real
-            }
-        });
-
-        // 11. Botón ← para ir hacia atrás
-        botonIzquierda.addEventListener("click", function () {
-            actual--;
-            posicion = -actual * anchoTarjeta;
-            mover();
-        });
-
-        // 12. Botón → para ir hacia adelante
-        botonDerecha.addEventListener("click", function () {
-            actual++;
-            posicion = -actual * anchoTarjeta;
-            mover();
-        });
     });
-    </script>
+
+    botonIzquierda.addEventListener("click", function () {
+        actual--;
+        posicion = -actual * anchoTarjeta;
+        mover();
+    });
+
+    botonDerecha.addEventListener("click", function () {
+        actual++;
+        posicion = -actual * anchoTarjeta;
+        mover();
+    });
+
+    window.addEventListener('resize', () => {
+        inicializarCarrusel();
+    });
+
+    inicializarCarrusel();
+});
+</script>
 @endif
+
 
 @include('footer');

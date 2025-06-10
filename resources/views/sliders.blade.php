@@ -4,23 +4,21 @@
     <div id="carousel-slides" class="flex transition-transform duration-700 ease-in-out">
       @foreach($sliders as $slider)
         <div class="w-full flex-shrink-0 relative">
-          <p class="text-white absolute top-[8%] left-[5%] w-[90%] md:w-[60%] xl:w-[40%] text-2xl md:text-5xl xl:text-7xl font-carousel-font overflow-hidden h-[12rem]">
+          <p class="hidden text-white absolute sm:line-clamp-2 md:line-clamp-3 lg:line-clamp-4 top-[8%] left-[5%] sm:w-[40%] xl:w-[40%] text-2xl md:text-5xl xl:text-7xl font-carousel-font ">
             {{ $slider->pelicula->titulo }}
           </p>
           <img src="{{ $slider->pelicula->foto_grande }}" alt="{{ $slider->pelicula->titulo }}" class="w-full aspect-video md:h-[520px] object-cover object-top">
-          <a href="/pelicula/{{ $slider->pelicula->id }}" class="absolute right-6 md:right-20  bottom-6 md:bottom-14 px-5 py-3 text-base md:text-xl text-white rounded-2xl bg-black/60 font-carousel-font hover:bg-black/80">
+          <a href="/pelicula/{{ $slider->pelicula->id }}" class="absolute left-1/2 transform -translate-x-1/2 text-center right-auto md:left-auto md:right-10  bottom-6 md:bottom-14 px-5 py-3 text-xs md:text-xl text-white rounded-2xl bg-black/60 font-carousel-font hover:bg-black/80">
             Comprar entradas
           </a>
         </div>
       @endforeach
     </div>
 
-    <!-- Indicators -->
-    <div class="absolute z-9 flex bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 space-x-3">
+    <!-- Indicadores del carrousel -->
+    <div class="absolute z-9 md:flex hidden bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 space-x-3">
       @foreach($sliders as $index => $slider)
-        <button 
-          onclick="goToSlide({{ $index }})" 
-          class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-white/50 hover:bg-white transition-all focus:outline-none" 
+        <button onclick="goToSlide({{ $index }})" class="lg:w-2.5 lg:h-2.5 md:w-1.5 md:h-1.5 rounded-full bg-white hover:bg-white transition-all focus:outline-none" 
           id="indicator-{{ $index }}">
         </button>
       @endforeach
