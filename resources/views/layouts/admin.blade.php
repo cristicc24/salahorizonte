@@ -20,6 +20,8 @@
         @yield('contenido')
     </div>
 </div>    
+
+@yield('scripts')
    
 
    

@@ -6,7 +6,7 @@
     <div class="relative w-full h-[240px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[480px]">
         <img src="{{ $foto_grande }}" alt="Foto de portada de la película" class="w-full h-full object-cover object-top">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-        <a href="{{ $trailer }}" rel="noopener noreferrer"
+        <a href="{{ $trailer }}" rel="noopener noreferrer" target="_blank"
         class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-9">
             <div class="w-14 h-14 bg-white/70 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
@@ -50,24 +50,23 @@
 @endphp
 
 <div class="container mx-auto px-4 py-6 font-primary-font">
-    <h1 class="text-3xl font-bold text-white mb-6 text-center">Sesiones de la película</h1>
+    <h1 class="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">Sesiones de la película</h1>
 
-    <div id='contendor-dias' class="flex justify-center space-x-4 mb-4">
+    <div id='contendor-dias' class="flex sm:justify-center space-x-4 mb-4 overflow-x-scroll sm:overflow-auto">
         @for($i = 0; $i < 5; $i++)
             @php
                 $dia = $hoy->copy()->addDays($i);
                 $fecha = $dia->format('Y-m-d');
                 $etiqueta = $i == 0 ? 'Hoy' : $dia->format('D d/m');
             @endphp
-            <button 
-                class="btn-dia px-4 py-2 rounded bg-text-color text-white hover:bg-text-color/80 transition duration-300"
-                onclick="filtrarPorDia('{{ $fecha }}', this)">
+            <button class="btn-dia px-4 py-2 rounded bg-text-color text-white hover:bg-text-color/80 transition duration-300"
+                data-fecha="{{ $fecha }}">
                 {{ $etiqueta }}
             </button>
         @endfor
     </div>
 
-    <div id="lista-sesiones" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div id="lista-sesiones" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         @foreach($sesiones as $sesion)
             @php
                 $fechaSesion = Carbon::parse($sesion->fechaHora)->format('Y-m-d');
@@ -77,10 +76,17 @@
                 <h2 class="text-xl font-semibold text-white mb-2">Sala {{ $sesion->idSala }}</h2>
                 <p class="text-white"><strong>Hora:</strong> {{ $horaSesion }}</p>
                 <p class="text-white"><strong>Butacas Reservadas:</strong> {{ $sesion->numButacasReservadas }}</p>
+                @php
+                    $total = $sesion->numButacasTotales;
+                    $ocupadas = $sesion->numButacasReservadas;
+                    $completa = $ocupadas >= $total;
+                @endphp
+
                 <button 
-                    class="ml-auto w-full items-center mt-3 px-4 py-2 bg-white/50 text-black rounded hover:bg-white/80 transition duration-300 cursor-pointer"
-                    onclick="mostrarMapa('{{ $sesion->id }}')">
-                    Ver Detalles
+                    class="ml-auto w-full items-center mt-3 px-4 py-2 {{ $completa ? 'bg-gray-400 cursor-not-allowed' : 'bg-white/50 hover:bg-white/80 cursor-pointer' }} text-black rounded transition duration-300"
+                    onclick="{{ $completa ? '' : "mostrarMapa('{$sesion->id}')" }}"
+                    {{ $completa ? 'disabled' : '' }}>
+                    {{ $completa ? 'Sala Completa' : 'Ver Detalles' }}
                 </button>
             </div>
         @endforeach
@@ -132,119 +138,10 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function mostrarMapa(idSesion) {
-            const sesionId = idSesion;
-         
-
-            if(sesionId) {
-                fetch(`/sesion/${sesionId}/getMapa`)
-                    .then(response => response.json())
-                    .then(mapa => {
-                        const contenedor = document.getElementById('contenedor-mapa');
-                        contenedor.innerHTML = '';
-                        const mapaObjeto = JSON.parse(mapa);
-                        const filas = Object.keys(mapaObjeto).length;
-                        const columnas = Object.keys(mapaObjeto['A']).length;
-                        
-                        contenedor.classList.add('grid-cols-' + (+columnas + 1));
-
-                        // Encabezados
-                        contenedor.innerHTML += `<p class="text-white font-bold block col-start-1 col-end-${+columnas + 2} text-center my-4">VISTA PREVIA SALA</p>`;
-                        contenedor.innerHTML += `<div class="flex justify-center col-start-1 col-end-${+columnas + 2} gap-8 w-full mt-4">
-                                                    <div class="flex items-center gap-2">
-                                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-available"/></svg>
-                                                        <span class="text-white">Disponible</span>
-                                                    </div>
-                                                    <div class="flex items-center gap-2">
-                                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-unavailable"/></svg></svg>
-                                                        <span class="text-white">Ocupado</span>
-                                                    </div>
-                                                </div>`;
-                        contenedor.innerHTML += `<div id="pantalla" class="col-start-2 col-end-${+columnas + 2} text-center bg-gray-600 mb-1 px-2">Pantalla</div>`;
-                        contenedor.innerHTML += `<div></div>`; 
-                        for(let c=1; c<=columnas; c++) {
-                            contenedor.innerHTML += `<div class="text-center">${c}</div>`;
-                        }
-
-                        let mapaNumerico = Object.values(mapaObjeto);
-                        let mapaLetras = Object.keys(mapaObjeto);
-                        for(let f = 0; f < filas; f++) {
-                            const letra = mapaLetras[f];
-                            contenedor.innerHTML += `<div class="text-center">${letra}</div>`;
-
-                            for(let c = 1; c <= columnas; c++) {
-                                if(mapaObjeto[letra][c]) {
-                                    contenedor.innerHTML += `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-unavailable"/></svg>`;
-                                } else {
-                                    contenedor.innerHTML += `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-available"/></svg>`;
-                                }
-                            }
-                        }
-                        contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 p-2 hover:bg-text-color/80"><button id='comprarEntrada' data-idsesion='${sesionId}' class="cursor-pointer">Comprar entradas</button></div>`;
-                        const comprarEntrada  = document.getElementById('comprarEntrada');
-                        comprarEntrada.addEventListener('click', comprarEntradas)
-                    });
-            } else {
-                mapa.classList.add('hidden');
-                contenedor.innerHTML = '';
-            }
-        }
-
-        function cerrarMapa() {
-            document.getElementById('mapa-butacas').classList.add('hidden');
-        }
-
-        const usuarioAutenticado = {{ Auth::check() ? 'true' : 'false' }};
-        const rutaCompraBase = "{{ route('procesoCompra.paso1', ['idSesion' => '__ID__']) }}"; 
-        
-        function comprarEntradas(){
-            const idSesion = this.dataset.idsesion;
-
-            if (usuarioAutenticado === true || usuarioAutenticado === 'true') {
-                const form = document.createElement('form');
-                form.method = 'GET';
-                form.action = '/compra/asientos';
-
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'idSesion';
-                input.value = idSesion;
-
-                form.appendChild(input);
-                document.body.appendChild(form);
-                form.submit();
-            } else {
-                // Redirige al login (asumiendo que tienes un botón oculto que lo hace)
-                document.getElementById('botonLogin').click();
-            }
-        }
-    </script>
 </div>
 
-<script>
-    function filtrarPorDia(fecha, botonActivo) {
-        document.querySelectorAll('.sesion').forEach(el => {
-            el.style.display = el.dataset.dia === fecha ? 'block' : 'none';
-        });
-
-        document.querySelectorAll('.btn-dia').forEach(btn => {
-            btn.classList.remove('bg-text-color/50', 'font-bold');
-            btn.classList.add('bg-text-color', 'hover:bg-text-color/80');
-        });
-
-        botonActivo.classList.remove('bg-text-color', 'hover:bg-text-color/80');
-        botonActivo.classList.add('bg-text-color/50', 'font-bold');
-    }
-    // Mostrar solo las sesiones de hoy por defecto
-    document.addEventListener('DOMContentLoaded', function() {
-        filtrarPorDia('{{ $hoy->format('Y-m-d') }}', document.querySelector('#contendor-dias button:first-child'));
-    });
-</script>
-
 <div class="text-white font-primary-font px-4 py-6">
-    <p class="w-full text-center text-4xl my-8 font-bold">PELÍCULAS RELACIONADAS</p>
+    <p class="w-full text-center text-2xl sm:text-3xl lg:text-4xl my-8 font-bold">PELÍCULAS RELACIONADAS</p>
     <div class="relative flex justify-center items-center flex-col">
         <div id="carousel-container" class="overflow-x-auto lg:overflow-hidden max-w-7xl w-full">
 
@@ -290,99 +187,6 @@
         @endif
     </div>
 </div>
-@if(count($peliculasRelacionadas) > 4)
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const contenedor = document.getElementById("carousel-container");
-    const carrusel = document.getElementById("carousel-inner");
-    const botonIzquierda = document.getElementById("prev");
-    const botonDerecha = document.getElementById("next");
-
-    let anchoTarjeta;
-    let visibles;
-    let posicion;
-    let actual;
-
-    function calcularMedidas() {
-        const tarjetas = Array.from(carrusel.children).filter(el => !el.classList.contains('clon'));
-        if (!tarjetas.length) return;
-        const estilo = getComputedStyle(tarjetas[0]);
-        anchoTarjeta = tarjetas[0].offsetWidth + parseInt(estilo.marginRight);
-        visibles = Math.floor(contenedor.offsetWidth / anchoTarjeta) || 1;
-    }
-
-    function inicializarCarrusel() {
-        const tarjetasOriginales = Array.from(carrusel.children).filter(el => !el.classList.contains('clon'));
-
-        // Limpiar carrusel y quitar clones
-        carrusel.innerHTML = '';
-        tarjetasOriginales.forEach(t => carrusel.appendChild(t));
-
-        calcularMedidas();
-
-        // Clonar
-        const clonesInicio = tarjetasOriginales.slice(-visibles).map(t => {
-            const clon = t.cloneNode(true);
-            clon.classList.add('clon');
-            return clon;
-        });
-
-        const clonesFinal = tarjetasOriginales.slice(0, visibles).map(t => {
-            const clon = t.cloneNode(true);
-            clon.classList.add('clon');
-            return clon;
-        });
-
-        clonesInicio.forEach(clon => carrusel.prepend(clon));
-        clonesFinal.forEach(clon => carrusel.appendChild(clon));
-
-        actual = visibles;
-        posicion = -actual * anchoTarjeta;
-        carrusel.style.transition = "none";
-        carrusel.style.transform = `translateX(${posicion}px)`;
-    }
-
-    function mover() {
-        carrusel.style.transition = "transform 0.5s ease";
-        carrusel.style.transform = `translateX(${posicion}px)`;
-    }
-
-    function saltar(nuevoIndice) {
-        carrusel.style.transition = "none";
-        posicion = -nuevoIndice * anchoTarjeta;
-        carrusel.style.transform = `translateX(${posicion}px)`;
-        actual = nuevoIndice;
-    }
-
-    carrusel.addEventListener("transitionend", function () {
-        const total = Array.from(carrusel.children).filter(el => !el.classList.contains('clon')).length;
-        if (actual >= total + visibles) {
-            saltar(visibles);
-        } else if (actual < visibles) {
-            saltar(total + visibles - 1);
-        }
-    });
-
-    botonIzquierda.addEventListener("click", function () {
-        actual--;
-        posicion = -actual * anchoTarjeta;
-        mover();
-    });
-
-    botonDerecha.addEventListener("click", function () {
-        actual++;
-        posicion = -actual * anchoTarjeta;
-        mover();
-    });
-
-    window.addEventListener('resize', () => {
-        inicializarCarrusel();
-    });
-
-    inicializarCarrusel();
-});
-</script>
-@endif
 
 
 @include('footer');

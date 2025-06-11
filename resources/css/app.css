@@ -16,6 +16,9 @@
     --font-carousel-font: "Sigmar One", sans-serif;
 }
 
+.grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 
 .grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -53,6 +56,9 @@
     grid-template-columns: repeat(13, minmax(0, 1fr));
 }
 
+.col-end-5 {
+    grid-column-end: 5;
+}
 .col-end-6 {
     grid-column-end: 6;
 }

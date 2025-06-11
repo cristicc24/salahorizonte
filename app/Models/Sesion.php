@@ -16,7 +16,7 @@ class Sesion extends Model
         'fechaHora',
         'butacasReservadas',
         'numButacasReservadas',
-        'idSalaForaneo',
+        'idSala',
         'idPelicula',
     ];
 
@@ -37,11 +37,20 @@ class Sesion extends Model
     {
         return $this->hasMany(LineaPedido::class, 'sesion_id', 'id');
     }
-    public static function getSesionesPeliculaEspecifica(string $id){
+    public static function getSesionesPeliculaEspecifica(string $id)
+    {
         return DB::table('sesiones')
-                    ->where('idPelicula', $id)
-                    ->select('id','idSala', 'fechaHora', 'numButacasReservadas', 'idPelicula')
-                    ->get();
+            ->join('salas', 'sesiones.idSala', '=', 'salas.id')
+            ->where('idPelicula', $id)
+            ->select(
+                'sesiones.id',
+                'sesiones.idSala',
+                'sesiones.fechaHora',
+                'sesiones.numButacasReservadas',
+                'sesiones.idPelicula',
+                'salas.numButacasTotales'
+            )
+            ->get();
     }
 
     public static function getMapa(string $sesionId) {

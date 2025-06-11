@@ -10,11 +10,11 @@ return new class extends Migration {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id(); // clave primaria estándar
             $table->decimal('totalPedido', 8, 2);
-            $table->string('metodoPago');
+            $table->string('metodoPago')->nullable();
             $table->date('fechaPago');
 
-            // Clave foránea a clientes
-            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            // Clave foránea a users
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
             $table->timestamps();
         });

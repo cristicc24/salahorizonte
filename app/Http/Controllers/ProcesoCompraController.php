@@ -8,6 +8,8 @@ use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Pedido;
+use App\Models\LineaPedido;
 
 class ProcesoCompraController extends Controller
 {
@@ -39,9 +41,12 @@ class ProcesoCompraController extends Controller
             abort(404);
         }
 
+        $total = count(json_decode($butacas)) * $infoPelicula->precio;
+
         return view('procesoCompra.paso2', [
             'infoPelicula' => $infoPelicula,
             'butacas' => $butacas,
+            'total' => $total
         ]);
     }
 
@@ -66,10 +71,33 @@ class ProcesoCompraController extends Controller
         $metodo = $request->query('metodo', 'tarjeta');
         $infoPelicula = Sesion::getInfoSesion($idSesion);
 
+        // SE CREAN EL PEDIDO Y LAS LINEAS DE PEDIDO
+        $usuario = auth()->user();
+        $total = count(json_decode($butacas))* $infoPelicula->precio;
+        
+        $pedido = Pedido::create([
+            'totalPedido' => $total,
+            'metodoPago' => null,
+            'fechaPago' => now(),
+            'user_id' => $usuario->id,
+        ]);
+
+        // Guardar líneas de pedido por butaca
+        foreach (json_decode($butacas) as $butaca) {
+            LineaPedido::create([
+                'pedido_id' => $pedido->id,
+                'numButaca' => $butaca, 
+                'sesion_id' => $idSesion,
+            ]);
+        }
+
+        $orderID = $pedido->id;
+
         return view('procesoCompra.tpv', [
             'infoPelicula' => $infoPelicula,
             'butacas' => $butacas,
             'metodo' => $metodo,
+            'orderID' => $orderID
         ]);
     }
 
@@ -77,7 +105,10 @@ class ProcesoCompraController extends Controller
     {
         $idSesion = $request->query('idSesion');
         $butacas = $request->input('butacas');
+        $orderID = $request->input('orderID');
+        
         $metodo = $request->query('metodo');
+
         $usuario = auth()->user();
 
         $infoPelicula = Sesion::getInfoSesion($idSesion);
@@ -88,9 +119,8 @@ class ProcesoCompraController extends Controller
         }
 
         $qrContent = "Película: {$infoPelicula->titulo}\nSesión: {$infoPelicula->fechaHora}\n";
-        if ($usuario) {
-            $qrContent .= "Usuario: {$usuario->name} ({$usuario->email})\n";
-        }
+        $qrContent .= "Usuario: {$usuario->name} ({$usuario->email})\n";
+
 
         try {
             $result = Builder::create()
@@ -109,17 +139,48 @@ class ProcesoCompraController extends Controller
             'infoPelicula' => $infoPelicula,
             'butacas' => $butacas,
             'usuario' => $usuario,
-            'qrCode' => $qrBase64,//$qrCode
+            'qrCode' => $qrBase64,
         ]);
 
         $filename = 'entrada_' . uniqid() . '.pdf';
         Storage::disk('public')->put($filename, $pdf->output());
+
+        //Actualizar el metodo de pago del pedido
+        if ($orderID && $metodo) {
+            $pedido = Pedido::find($orderID);
+            if ($pedido) {
+                $pedido->metodoPago = $metodo;
+                $pedido->save();
+            }
+        }
+
+        $total = count($butacas) * $infoPelicula->precio;
+
+        // Actualizar mapa de butacas reservadas
+        $sesion = Sesion::find($idSesion);
+
+        if ($sesion && is_array($butacas)) {
+            $mapa = json_decode($sesion->butacasReservadas, true);
+
+            foreach ($butacas as $butaca) {
+                [$fila, $col] = explode('-', $butaca); // por ejemplo "A-5"
+                if (!isset($mapa[$fila])) {
+                    $mapa[$fila] = [];
+                }
+                $mapa[$fila][$col] = true;
+            }
+
+            $sesion->butacasReservadas = json_encode($mapa);
+            $sesion->numButacasReservadas += count($butacas);
+            $sesion->save();
+        }
 
         return view('procesoCompra.paso4', [
             'infoPelicula' => $infoPelicula,
             'butacas' => $butacas,
             'metodo' => $metodo,
             'pdfPath' => asset('storage/' . $filename),
+            'total' => $total
         ]);
     }
 }

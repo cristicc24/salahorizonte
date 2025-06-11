@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+
 class Pedido extends Model
 {
     use HasFactory;
@@ -15,13 +17,13 @@ class Pedido extends Model
         'totalPedido',
         'metodoPago',
         'fechaPago',
-        'cliente_id',
+        'user_id',
     ];
 
-    // Relación: un pedido pertenece a un cliente
-    public function cliente()
+    // Relación: un pedido pertenece a un user
+    public function user()
     {
-        return $this->belongsTo(Cliente::class, 'cliente_id', 'id');
+        return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
     // Relación: un pedido tiene muchas líneas

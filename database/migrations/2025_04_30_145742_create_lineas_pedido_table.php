@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('lineas_pedido', function (Blueprint $table) {
             $table->id();
-            $table->integer('numButaca');
+            $table->string('numButaca');
 
             $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
             $table->foreignId('sesion_id')->constrained('sesiones')->onDelete('cascade');

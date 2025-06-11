@@ -1,9 +1,9 @@
-<body class="bg-primary-color">
-    <header class="container-fluid w-full bg-primary-color h-28 flex justify-between font-primary-font fixed top-0 z-10 border-1 border-b-text-color">
+<body class="bg-primary-color" data-usuario-autenticado="{{ Auth::check() ? 'true' : 'false' }}">
+    <header class="container-fluid w-full bg-primary-color h-20 sm:h-28 flex justify-between font-primary-font fixed top-0 z-10 border-1 border-b-text-color">
         <div @class(['flex', 'items-center', 'w-full', 'mx-2', 'justify-center' => !$completo])>
-            <div class="h-fit flex text-text-color w-4/12 justify-center ">
-                <a class="w-full max-w-[400px] sm:w-9/12" href="{{ route('inicio') }}">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full mx-2">
+            <div class="flex justify-center text-text-color w-6/12 sm:w-4/12 h-fit">
+                <a href="{{ route('inicio') }}" class="w-full max-w-[300px] sm:max-w-[400px] px-2">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full h-auto">
                 </a>
             </div>
 
@@ -19,28 +19,22 @@
                     flex flex-col pt-28 space-y-4 px-6" >
                     <!-- botón cerrar -->
                     <button id="closeBtn" class="absolute top-4 right-4 md:hidden text-text-color focus:outline-none" aria-label="Cerrar menú">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
-                    <a href="{{ route('inicio') }}"    class="text-2xl text-text-color">Inicio</a>
-                    <a href="{{ route('cartelera') }}" class="text-2xl text-text-color">Cartelera</a>
-                    <a href="{{ route('contacto') }}"  class="text-2xl text-text-color">Contacto</a>
+                    <a href="{{ route('inicio') }}"    class="text-xl xl:text-2xl text-text-color">Inicio</a>
+                    <a href="{{ route('cartelera') }}" class="text-xl xl:text-2xl text-text-color">Cartelera</a>
+                    <a href="{{ route('contacto') }}"  class="text-xl xl:text-2xl text-text-color">Contacto</a>
                 </nav>
-            <div
-                id="backdrop"
-                class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none
-                        transition-opacity duration-300 ease-in-out md:hidden"
-            ></div>
+                <div id="backdrop" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out md:hidden"></div>
             @endif
         </div>
 
         @if ($completo)
         <div class="text-text-color w-1/4 flex justify-around items-center z-20">
             @if (Auth::check())
-                <p class="text-2xl hidden md:block">Hola, {{ Auth::user()->name }}</p>
+                <p class="text-xl xl:text-2xl hidden md:block"><span class="text-lg xl:text-xl">Hola,</span> {{ Auth::user()->name }}</p>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="cursor-pointer">
@@ -115,39 +109,3 @@
         </div>
     </div>
     @endif
-<script>
-    const btn = document.getElementById('hamburgerBtn');
-    const menu = document.getElementById('navLinks');
-    const backdrop = document.getElementById('backdrop');
-    const closeBtn  = document.getElementById('closeBtn');
-
-    function openMenu() {
-        menu.classList.remove('-translate-x-full');
-        menu.classList.add('translate-x-0');
-        menu.classList.remove('opacity-0', 'pointer-events-none');
-        menu.classList.add('opacity-100', 'pointer-events-auto');
-        backdrop.classList.remove('opacity-0', 'pointer-events-none');
-        backdrop.classList.add('opacity-100', 'pointer-events-auto');
-    }
-
-    function closeMenu() {
-        menu.classList.add('-translate-x-full');
-        menu.classList.remove('translate-x-0');
-        menu.classList.remove('opacity-0', 'pointer-events-none');
-        menu.classList.add('opacity-100', 'pointer-events-auto');
-        backdrop.classList.add('opacity-0', 'pointer-events-none');
-        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
-    }
-
-    btn.addEventListener('click', () => {
-        if (menu.classList.contains('translate-x-0')) {
-            closeMenu();    
-        } else {
-            openMenu();
-        }
-    });
-
-    backdrop.addEventListener('click', closeMenu);
-
-    closeBtn.addEventListener('click', closeMenu);
-</script>

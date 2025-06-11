@@ -30,7 +30,7 @@ Route::get('/', function () {
 
 Route::get('/registro', fn () => view('registro'))->name('registro');
 
-Route::get('/pelicula/{id}', [PeliculaController::class, 'show']);
+Route::get('/pelicula/{id}', [PeliculaController::class, 'show'])->name('pelicula');
 
 Route::get('/contacto', fn () => view('contacto'))->name('contacto');
 Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');

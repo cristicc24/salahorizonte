@@ -3,18 +3,17 @@
 @section('contenido')
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Películas</h2>
-        <button onclick="document.getElementById('modal-create').showModal()"
-                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
+        <button id="buttonNuevaPelicula" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
             + Nueva Película
         </button>
         @if(session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded my-4">
+            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded my-4 absolute bottom-5 right-5 z-50">
                 {{ session('success') }}
             </div>
         @endif
 
         @if(session('createError') || session('editError'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded my-4">
+            <div id="flash-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded my-4 absolute bottom-5 right-5 z-50">
                 {{ session('createError') ?? session('editError') }}
             </div>
         @endif
@@ -49,8 +48,8 @@
 
                     <div class="absolute inset-0 flex items-start justify-end p-2 gap-1">
                         <!-- Botón Editar -->
-                        <button onclick="openModal('edit-{{ $pelicula->id }}')"
-                                class="bg-yellow-400 text-white px-2 py-1 rounded text-sm hover:bg-yellow-500 cursor-pointer">
+                        <button data-idpelicula="{{ $pelicula->id }}"
+                                class="edit bg-yellow-400 text-white px-2 py-1 rounded text-sm hover:bg-yellow-500 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                  viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="size-6">
@@ -78,8 +77,8 @@
                         </a>
 
                         <!-- Botón Eliminar -->
-                        <button onclick="document.getElementById('modal-delete-{{ $pelicula->id }}').showModal()"
-                                class="bg-red-600 text-white px-2 py-1 rounded text-sm hover:bg-red-700 cursor-pointer">
+                        <button data-idpelicula="{{ $pelicula->id }}"
+                                class="delete bg-red-600 text-white px-2 py-1 rounded text-sm hover:bg-red-700 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                  viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="size-6">
@@ -186,10 +185,8 @@
                         </div>
                     </form>
                 </dialog>
-            @endforeach
-
-            @foreach($peliculas as $pelicula)
                 <div id="backdrop-delete-{{ $pelicula->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40" onclick="closeModal('delete-{{ $pelicula->id }}')"></div>
+
                 <!-- Modal Eliminar -->
                 <dialog id="modal-delete-{{ $pelicula->id }}" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2
                     transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
@@ -336,55 +333,3 @@
         </form>
     </dialog>
 @endsection
-
-<script>
-    function openModal(id) {
-        const modal = document.getElementById('modal-' + id);
-        const backdrop = document.getElementById('backdrop-' + id);
-        if (modal && backdrop) {
-            modal.showModal();
-            backdrop.classList.remove('hidden');
-        }
-    }
-
-    function closeModal(id) {
-        const modal = document.getElementById('modal-' + id);
-        const backdrop = document.getElementById('backdrop-' + id);
-        if (modal && backdrop) {
-            modal.close();
-            backdrop.classList.add('hidden');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('dialog').forEach(dialog => {
-            dialog.addEventListener('keydown', e => {
-                if (e.key === 'Escape') {
-                    const id = dialog.id.replace('modal-', '');
-                    closeModal(id);
-                }
-            });
-
-            dialog.addEventListener('click', e => {
-                const rect = dialog.getBoundingClientRect();
-                if (
-                    e.clientX < rect.left || e.clientX > rect.right ||
-                    e.clientY < rect.top || e.clientY > rect.bottom
-                ) {
-                    const id = dialog.id.replace('modal-', '');
-                    closeModal(id);
-                }
-            });
-        });
-    });
-
-    // Se oculta a los 5 segundos
-    document.addEventListener('DOMContentLoaded', () => {
-        const flash = document.getElementById('flash-message');
-        if (flash) {
-            setTimeout(() => {
-                flash.remove();
-            }, 5000);
-        }
-    });
-</script>

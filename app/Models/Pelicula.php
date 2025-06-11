@@ -34,14 +34,7 @@ class Pelicula extends Model
         return $this->hasMany(Sesion::class, 'idPelicula', 'id');
     }
 
-    
-    // Relación: una película puede ser valorada por muchos clientes
-    public function clientes()
-    {
-        return $this->belongsToMany(Cliente::class, 'clientes_peliculas', 'pelicula_id', 'cliente_id')
-                    ->withPivot('estrellas', 'comentario')
-                    ->withTimestamps();
-    }
+
 
     public static function getPeliculaEspecifica(string $id){
         return DB::table('peliculas')
