@@ -17,7 +17,7 @@
         </p>
 
         <form method="GET" action="{{ route('procesoCompra.paso4') }}">
-            <input type="hidden" name="idSesion" value="{{ $infoPelicula->id }}">
+            <input type="hidden" name="idSesion" value="{{ $idSesion }}">
             <input type="hidden" name="butacas" value="{{ $butacas }}">
             <input type="hidden" name="metodo" value="{{ $metodo }}">
             <input type="hidden" name="orderID" value="{{ $orderID }}">
@@ -49,7 +49,7 @@
         </form>
 
         <div class="mt-6 text-center">
-            <a href="{{ route('procesoCompra.paso3', ['idSesion' => $infoPelicula->id, 'butacas' => $butacas]) }}"
+            <a href="{{ route('procesoCompra.paso3', ['idSesion' => $idSesion, 'butacas' => $butacas]) }}"
                class="text-sm text-blue-600 hover:underline">
                 Cancelar y volver
             </a>

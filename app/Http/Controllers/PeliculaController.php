@@ -41,12 +41,5 @@ class PeliculaController extends Controller
             'peliculasRelacionadas' => $peliculasRelacionadas,
             'sesiones' => $sesiones
         ]);
-        
-
     }
-
-
-
-
-
 }

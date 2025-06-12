@@ -6,34 +6,49 @@
         <button id="buttonNuevaPelicula" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
             + Nueva Película
         </button>
-        @if(session('success'))
-            <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded my-4 absolute bottom-5 right-5 z-50">
-                {{ session('success') }}
-            </div>
-        @endif
+        @if(session('success') || session('createError') || session('editError'))
+            <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
+                        {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
 
-        @if(session('createError') || session('editError'))
-            <div id="flash-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded my-4 absolute bottom-5 right-5 z-50">
-                {{ session('createError') ?? session('editError') }}
+                @if(session('success'))
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                @endif
+
+                <span class="text-sm font-medium flex-1">{{ session('success') ?? session('createError') ?? session('editError') }}</span>
+
+                <button type="button" data-close-flash class="text-lg font-bold leading-none text-gray-500 hover:text-black focus:outline-none" aria-label="Cerrar notificación">
+                    &times;
+                </button>
             </div>
         @endif
     </div>
 
     {{-- Buscador y filtros --}}
     <form method="GET" action="{{ route('admin.peliculas') }}" class="mb-6 flex flex-wrap gap-4 items-center">
-        <input type="text" id="search-input" name="search" placeholder="Buscar título..." value="{{ request('search') }}" class="border border-gray-300 rounded px-3 py-2 w-64"/>
+        <input type="text" name="search" placeholder="Buscar título..." value="{{ request('search') }}"
+               class="border border-gray-300 rounded px-3 py-2 w-64"/>
         <select name="genero" class="border border-gray-300 rounded px-3 py-2">
             <option value="">-- Género --</option>
             @foreach($generos as $genero)
-            <option value="{{ $genero }}" {{ request('genero') == $genero ? 'selected' : '' }}>{{ $genero }}</option>
+                <option value="{{ $genero }}" @selected(request('genero')==$genero)>{{ $genero }}</option>
             @endforeach
         </select>
         <select name="anio_estreno" class="border border-gray-300 rounded px-3 py-2">
             <option value="">-- Año Estreno --</option>
             @foreach($anios as $anio)
-            <option value="{{ $anio }}" {{ request('anio_estreno') == $anio ? 'selected' : '' }}>{{ $anio }}</option>
+                <option value="{{ $anio }}" @selected(request('anio_estreno')==$anio)>{{ $anio }}</option>
             @endforeach
         </select>
+        <input type="number" name="duracion_min" value="{{ request('duracion_min') }}" placeholder="Duración mínima (min)"
+               class="border border-gray-300 rounded px-3 py-2 w-40"/>
+        <input type="number" name="duracion_max" value="{{ request('duracion_max') }}" placeholder="Duración máxima (min)"
+               class="border border-gray-300 rounded px-3 py-2 w-40"/>
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Filtrar</button>
         <a href="{{ route('admin.peliculas') }}" class="ml-2 text-gray-600 underline hover:text-gray-900">Limpiar</a>
     </form>
@@ -100,15 +115,11 @@
                 </div>
 
                 <!-- Modal Editar -->
-                <div id="backdrop-edit-{{ $pelicula->id }}" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" onclick="closeModal('edit-{{ $pelicula->id }}')"></div>
-                <dialog id="modal-edit-{{ $pelicula->id }}"
-                        class="rounded-md w-full max-w-lg p-6 fixed top-1/2 left-1/2
-                    transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
-
+                <div id="backdrop-edit-{{ $pelicula->id }}" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" data-close-modal="edit-{{ $pelicula->id }}"></div>
+                <dialog id="modal-edit-{{ $pelicula->id }}" class="rounded-md w-full max-w-lg p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
                     <div class="flex justify-between items-center mb-3">
                         <h3 class="text-xl font-bold">Editar Película</h3>
-                        <button type="button" onclick="closeModal('edit-{{ $pelicula->id }}')" class="text-gray-500 cursor-pointer">X
-                        </button>
+                        <button type="button" data-close-modal="edit-{{ $pelicula->id }}" class="text-gray-500 cursor-pointer">X</button>
                     </div>
 
                     <form method="POST" action="{{ route('admin.peliculas.update', $pelicula->id) }}" enctype="multipart/form-data">
@@ -176,24 +187,20 @@
 
                         <!-- Acciones -->
                         <div class="flex justify-end gap-2 mt-4">
-                            <button type="button" onclick="closeModal('edit-{{ $pelicula->id }}')" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded cursor-pointer">
-                                Actualizar
-                            </button>
+                            {{-- <button type="button" onclick="closeModal('edit-{{ $pelicula->id }}')" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button> --}}
+                            <button type="button" data-close-modal="edit-{{ $pelicula->id }}" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button>
+                            <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded cursor-pointer">Actualizar</button>
                         </div>
                     </form>
                 </dialog>
-                <div id="backdrop-delete-{{ $pelicula->id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40" onclick="closeModal('delete-{{ $pelicula->id }}')"></div>
 
+
+                <div id="backdrop-delete-{{ $pelicula->id }}" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" data-close-modal="delete-{{ $pelicula->id }}"></div>
                 <!-- Modal Eliminar -->
-                <dialog id="modal-delete-{{ $pelicula->id }}" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2
-                    transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
-
+                <dialog id="modal-delete-{{ $pelicula->id }}" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
                     <div class="flex justify-between items-center mb-3">
                         <h3 class="text-lg font-bold">¿Eliminar película?</h3>
-                        <button type="button" onclick="closeModal('delete-{{ $pelicula->id }}')" class="text-gray-500 cursor-pointer">X</button>
+                        <button type="button" data-close-modal="delete-{{ $pelicula->id }}" class="text-gray-500 cursor-pointer">X</button>
                     </div>
 
                     <p>¿Estás seguro de que deseas eliminar <strong>{{ $pelicula->titulo }}</strong>?</p>
@@ -203,21 +210,12 @@
                         @method('DELETE')
 
                         <div class="flex justify-end gap-2 mt-4">
-                            <button type="button" onclick="closeModal('delete-{{ $pelicula->id }}')" class="px-4 py-2 bg-gray-300 rounded">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">
-                                Eliminar
-                            </button>
+                            <button type="button" data-close-modal="delete-{{ $pelicula->id }}" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+                            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">Eliminar</button>
                         </div>
                     </form>
                 </dialog>
             @endforeach
-        </div>
-
-         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        @foreach($peliculas as $pelicula)
-        @endforeach
         </div>
 
         @if($peliculas->total() > 0)
@@ -230,105 +228,85 @@
     @endif
 
     <!-- Modal Crear -->
-    <div id="backdrop-create" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" onclick="closeModal('create')"></div>
-    <dialog id="modal-create"
-            class="rounded-md w-full max-w-lg p-6 fixed top-1/2 left-1/2
-                transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
-
+    <div id="backdrop-create" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" data-close-modal="create"></div>
+    <dialog id="modal-create" class="rounded-md w-full max-w-lg p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
         <div class="flex justify-between items-center mb-3">
             <h3 class="text-xl font-bold">Agregar Película</h3>
-            <button type="button" onclick="closeModal('create')" class="text-gray-500 cursor-pointer">X</button>
+            <button type="button" data-close-modal="create" class="text-gray-500 cursor-pointer">X</button>
         </div>
 
         <form method="POST" action="{{ route('admin.peliculas.store') }}" enctype="multipart/form-data">
             @csrf
-
-            <!-- Título -->
+        
             <label class="block mb-2">
                 Título:
                 <input type="text" name="titulo" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Precio -->
+        
             <label class="block mb-2">
                 Precio:
                 <input type="number" name="precio" step="0.01" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Género -->
+        
             <label class="block mb-2">
                 Género:
                 <input type="text" name="genero" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Directores -->
+        
             <label class="block mb-2">
                 Directores:
                 <input type="text" name="directores" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Edad recomendada -->
+        
             <label class="block mb-2">
                 Edad recomendada:
                 <input type="text" name="edad_recomendada" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Duración -->
+        
             <label class="block mb-2">
                 Duración (min):
                 <input type="text" name="duracion" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Fecha de estreno -->
+        
             <label class="block mb-2">
                 Fecha de estreno:
                 <input type="date" name="fecha_estreno" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Fecha de emisión -->
+        
             <label class="block mb-2">
                 Fecha de emisión:
                 <input type="date" name="fecha_emision" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Sinopsis -->
+        
             <label class="block mb-2">
                 Sinopsis:
                 <textarea name="sinopsis" rows="4" class="w-full border rounded px-2 py-1" required></textarea>
             </label>
-
-            <!-- Actores -->
+        
             <label class="block mb-2">
                 Actores:
                 <input type="text" name="actores" class="w-full border rounded px-2 py-1" required>
             </label>
-
-            <!-- Enlace tráiler -->
+        
             <label class="block mb-2">
                 Enlace del tráiler:
                 <input type="url" name="enlace_trailer" class="w-full border rounded px-2 py-1">
             </label>
-
-            <!-- Foto miniatura -->
+        
             <label class="block mb-2">
                 Foto miniatura:
                 <input type="file" name="foto_miniatura" accept="image/*" class="w-full">
             </label>
-
-            <!-- Foto grande -->
+        
             <label class="block mb-2">
                 Foto grande:
                 <input type="file" name="foto_grande" accept="image/*" class="w-full">
-            </label>
+            </label>        
 
             <!-- Acciones -->
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" onclick="closeModal('create')" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">
-                    Cancelar
-                </button>
-                <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded cursor-pointer">
-                    Guardar
-                </button>
+                <button type="button" data-close-modal="create" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button>                
+                <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded cursor-pointer">Guardar</button>
             </div>
         </form>
     </dialog>

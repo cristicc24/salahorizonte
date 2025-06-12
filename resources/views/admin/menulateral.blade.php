@@ -37,12 +37,18 @@
                 Salas
             </a>
         </li>
-        <li class="flex items-center gap-2 {{ request()->routeIs('sliders.*') ? 'text-[#B99A5F] font-semibold' : 'text-black' }}">
+        <li class="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12h15M4.5 6h15M4.5 18h15" />
             </svg>
-            <a href="{{ route('admin.sliders') }}">Sliders</a>
+            <a href="{{ route('admin.sliders') }}" class="{{ request()->routeIs('admin.sliders') ? 'font-bold text-text-color' : 'text-black' }}">Sliders</a>
         </li>
 
+        <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/>
+            </svg>
+            <a href="{{ route('admin.smtp.edit') }}" class="{{ request()->routeIs('admin.smtp.edit') ? 'font-bold text-text-color' : 'text-black' }}">Configuración SMTP</a>
+        </li>
     </ul>
 </div>

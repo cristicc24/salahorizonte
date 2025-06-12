@@ -14,10 +14,12 @@ use App\Http\Controllers\Admin\AdminPeliculaController;
 use App\Http\Controllers\Admin\AdminSesionController;
 use App\Http\Controllers\Admin\AdminSalaController;
 use App\Http\Controllers\Admin\AdminSliderController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\Admin\AdminSmtpController;
+
 
 require __DIR__.'/auth.php';
-
-
+     
 // ==============================
 // RUTAS PÚBLICAS
 // ==============================
@@ -38,6 +40,10 @@ Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.
 Route::get('/footer', fn () => view('footer'))->name('footer');
 
 Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera');
+
+// RECUPERACIÓN DE CONTRASEÑA
+//Auth::routes(['reset' => true]);
+
 
 
 // ==============================
@@ -81,7 +87,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::get('/peliculas', [AdministradorController::class, 'showPeliculas'])->name('peliculas');
         Route::get('/sesiones', [AdminSesionController::class, 'index'])->name('sesiones'); 
         Route::get('/salas', [AdminSalaController::class, 'index'])->name('salas');
-    
+        Route::get('/sliders', [AdminSliderController::class, 'show'])->name('sliders');
 
         // LOGOUT
         Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
@@ -104,18 +110,21 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::post('/salas', [AdminSalaController::class, 'store'])->name('salas.store');
         Route::put('/salas/{id}', [AdminSalaController::class, 'update'])->name('salas.update');
         Route::delete('/salas/{id}', [AdminSalaController::class, 'destroy'])->name('salas.destroy');
-
+        Route::get('/admin/sesiones/{idSala?}', [AdminSesionController::class, 'index'])->name('admin.sesiones');
 
         // CRUD SLIDERS (Carrusel)
-        
-        Route::get('/sliders', [AdminSliderController::class, 'show'])->name('sliders');
         Route::post('/sliders', [AdminSliderController::class, 'store'])->name('sliders.store');
         Route::put('/sliders/{id}', [AdminSliderController::class, 'update'])->name('sliders.update');
         Route::delete('/sliders/{id}', [AdminSliderController::class, 'destroy'])->name('sliders.destroy');
+        
 
-
+        // RU SMTP
+        Route::get('/smtp', [AdminSmtpController::class, 'edit'])->name('smtp.edit');
+        Route::put('/smtp', [AdminSmtpController::class, 'update'])->name('smtp.update');
 
     });
 });
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/usuario/perfil', [UsuarioController::class, 'index'])->name('usuario.perfil');
+});

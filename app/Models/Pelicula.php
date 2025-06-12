@@ -81,4 +81,25 @@ class Pelicula extends Model
 
         $this->attributes['duracion'] = $value;
     }
+
+    // AÑADIDO AMBOS MÉTODOS
+    public static function getGenerosDisponibles()
+    {
+        return self::select('genero')
+            ->distinct()
+            ->orderBy('genero')
+            ->pluck('genero')
+            ->filter()
+            ->values();
+    }
+
+    public static function getEdadesDisponibles()
+    {
+        return self::select('edad_recomendada')
+            ->distinct()
+            ->orderBy('edad_recomendada')
+            ->pluck('edad_recomendada')
+            ->filter()
+            ->values();
+    }
 }

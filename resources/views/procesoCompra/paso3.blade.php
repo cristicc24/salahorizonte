@@ -11,7 +11,7 @@
             'googlepay' => ['label' => 'Google Pay', 'icon' => 'globe-alt']
         ] as $metodo => $data)
         <li>
-            <a href="{{ route('procesoCompra.tpv', ['idSesion' => $infoPelicula->id, 'butacas' => $butacas, 'metodo' => $metodo]) }}"
+            <a href="{{ route('procesoCompra.tpv', ['idSesion' => $idSesion, 'butacas' => $butacas, 'metodo' => $metodo]) }}"
                class="flex items-center gap-3 hover:bg-text-color/80 px-2 py-3 rounded transition duration-200">
                 @switch($data['icon'])
                     @case('credit-card')

@@ -12,18 +12,25 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminSesionController extends Controller
 {
-    public function index()
+    public function index($idSala = null)
     {
-        $sesiones = Sesion::with(['pelicula', 'sala'])->get();
+        $query = Sesion::with(['pelicula', 'sala']);
+
+        if ($idSala) {
+            $query->where('idSala', $idSala);
+        }
+
+        $sesiones = $query->get();
         $peliculas = Pelicula::all();
         $salas = Sala::all();
 
         return view('admin.sesiones', [
-            'sesiones' => $sesiones, 
-            'peliculas' => Pelicula::all(),
-            'salas' => Sala::all(),
+            'sesiones' => $sesiones,
+            'peliculas' => $peliculas,
+            'salas' => $salas,
             'title' => 'Sesiones | Sala Horizonte',
             'administrador' => auth()->guard('admin')->user(),
+            'salaSeleccionada' => $idSala,
         ]);
     }
 

@@ -91,11 +91,8 @@
                                 <label for="password" class="block mb-2 text-xl font-medium text-gray-900">Contraseña</label>
                                 <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg block w-full p-2.5 " required />
                             </div>
-                            <div class="flex justify-between">
-                                <div class="flex items-start">
-                                
-                                </div>
-                                <a href="#" class="text-md text-text-color hover:underline">Recuperar contraseña</a>
+                            <div class="flex justify-end">
+                                {{-- <a href="{{ route('password.request') }}" class="text-md text-text-color hover:underline">¿Olvidaste tu contraseña?</a> --}}
                             </div>
                             <button type="submit" class="w-full text-white bg-text-color hover:bg-[#a7926d] cursor-pointer font-medium rounded-lg text-lg px-5 py-2.5 text-center">Iniciar sesión</button>
                             <div class="text-md font-medium text-gray-500 ">

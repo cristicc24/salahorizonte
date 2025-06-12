@@ -261,3 +261,28 @@ document.addEventListener("DOMContentLoaded", () => {
         inicializarCarrusel();
     }
 });
+
+// CARTELERA
+document.addEventListener('DOMContentLoaded', () => {
+    const resetBtn = document.getElementById('resetFiltros');
+    const form = resetBtn?.closest('form');
+
+    if (resetBtn && form) {
+        resetBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Limpiar todos los campos del formulario
+            form.querySelectorAll('input, select').forEach(el => {
+                if (el.tagName === 'SELECT') {
+                    el.selectedIndex = 0;
+                } else {
+                    el.value = '';
+                }
+            });
+
+            // Enviar el formulario limpio (sin parámetros)
+            form.submit();
+        });
+    }
+    
+});

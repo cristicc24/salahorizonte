@@ -22,12 +22,14 @@ class AdminSalaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'idSala' => 'required|integer|min:1|unique:salas,idSala',
-            'cantidadFilas' => 'required|integer|min:1|max:13',
-            'cantidadColumnas' => 'required|integer|min:1|max:13',
+            'cantidadFilas' => 'required|integer|min:5|max:13',
+            'cantidadColumnas' => 'required|integer|min:5|max:13',
         ], [
             'idSala.unique' => 'El ID de sala ya existe.',
             'idSala.min' => 'El ID de sala debe ser mayor que cero.',
+            'cantidadFilas.min' => 'Mínimo 5 filas.',
             'cantidadFilas.max' => 'Máximo 13 filas.',
+            'cantidadColumnas.min' => 'Mínimo 5 columnas.',
             'cantidadColumnas.max' => 'Máximo 13 columnas.',
         ]);
 
@@ -50,15 +52,16 @@ class AdminSalaController extends Controller
         return redirect()->route('admin.salas')->with('success', 'Sala creada correctamente.');
     }
 
-
     // Actualizar una sala existente
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'cantidadFilas' => 'required|integer|min:1|max:13',
-            'cantidadColumnas' => 'required|integer|min:1|max:13',
+            'cantidadFilas' => 'required|integer|min:5|max:13',
+            'cantidadColumnas' => 'required|integer|min:5|max:13',
         ], [
+            'cantidadFilas.min' => 'Mínimo 5 filas.',
             'cantidadFilas.max' => 'Máximo 13 filas.',
+            'cantidadColumnas.min' => 'Mínimo 5 columnas.',
             'cantidadColumnas.max' => 'Máximo 13 columnas.',
         ]);
 
@@ -81,11 +84,8 @@ class AdminSalaController extends Controller
     // Eliminar una sala
     public function destroy($id)
     {
-        $sala = Sala::findOrFail($id); // Ya no necesitas `withCount`
-
-        $sala->delete(); // Esto eliminará también sus sesiones por cascada
-
+        $sala = Sala::findOrFail($id);
+        $sala->delete(); 
         return redirect()->route('admin.salas')->with('success', 'Sala eliminada correctamente.');
     }
-
 }

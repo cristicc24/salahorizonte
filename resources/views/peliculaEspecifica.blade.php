@@ -4,7 +4,7 @@
 
 <div class="bg-primary-color w-full font-primary-font mt-28">
     <div class="relative w-full h-[240px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[480px]">
-        <img src="{{ $foto_grande }}" alt="Foto de portada de la película" class="w-full h-full object-cover object-top">
+        <img src="../{{ $foto_grande }}" alt="Foto de portada de la película" class="w-full h-full object-cover object-top">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
         <a href="{{ $trailer }}" rel="noopener noreferrer" target="_blank"
         class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-9">
@@ -83,8 +83,8 @@
                 @endphp
 
                 <button 
-                    class="ml-auto w-full items-center mt-3 px-4 py-2 {{ $completa ? 'bg-gray-400 cursor-not-allowed' : 'bg-white/50 hover:bg-white/80 cursor-pointer' }} text-black rounded transition duration-300"
-                    onclick="{{ $completa ? '' : "mostrarMapa('{$sesion->id}')" }}"
+                    class="btnMostrarMapa ml-auto w-full items-center mt-3 px-4 py-2 {{ $completa ? 'bg-gray-400 cursor-not-allowed' : 'bg-white/50 hover:bg-white/80 cursor-pointer' }} text-black rounded transition duration-300"
+                    data-idsesion="{{ $completa ? '' : $sesion->id }}"
                     {{ $completa ? 'disabled' : '' }}>
                     {{ $completa ? 'Sala Completa' : 'Ver Detalles' }}
                 </button>
@@ -150,7 +150,7 @@
                     <div class="min-w-[80%] sm:min-w-[45%] md:min-w-[30%] lg:min-w-[23%] h-[400px] box-border relative mr-8">
                         <div class="rounded-lg shadow-lg overflow-hidden h-full">
                             <a href="/pelicula/{{ $pelicula->id }}" rel="noopener noreferrer">
-                                <img src="{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
+                                <img src="../{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
                             </a>
                         </div>
                         <div class="absolute bottom-0 w-full bg-black/45 h-[64px] flex items-center justify-center">

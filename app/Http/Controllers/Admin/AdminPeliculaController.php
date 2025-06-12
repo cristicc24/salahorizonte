@@ -12,41 +12,51 @@ use Illuminate\Support\Str;
 class AdminPeliculaController extends Controller
 {
 
-    public function index(Request $request)
+   public function index(Request $request)
     {
         $query = Pelicula::query();
 
-        // Filtro por búsqueda de título
+        // Filtro por título
         if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where('titulo', 'like', "%$search%");
+            $query->where('titulo', 'like', '%' . $request->search . '%');
         }
 
         // Filtro por género
         if ($request->filled('genero')) {
-            $query->where('genero', $request->input('genero'));
+            $query->where('genero', $request->genero);
         }
 
-        // Filtro por año de estreno
+        // Filtro por año
         if ($request->filled('anio_estreno')) {
-            $query->whereYear('fecha_estreno', $request->input('anio_estreno'));
+            $query->whereYear('fecha_estreno', $request->anio_estreno);
         }
 
-        // Obtener lista única de géneros y años para filtro
-        $generos = Pelicula::select('genero')->distinct()->pluck('genero')->flatMap(function($genero) {
-            return array_map('trim', explode(',', $genero));
+        // Filtro por duración mínima
+        if ($request->filled('duracion_min')) {
+            $query->whereRaw('CAST(SUBSTRING_INDEX(duracion, "h", 1) AS UNSIGNED) * 60 + CAST(TRIM(TRAILING "m" FROM SUBSTRING_INDEX(duracion, " ", -1)) AS UNSIGNED) >= ?', [(int)$request->duracion_min]);
+        }
+
+        // Filtro por duración máxima
+        if ($request->filled('duracion_max')) {
+            $query->whereRaw('CAST(SUBSTRING_INDEX(duracion, "h", 1) AS UNSIGNED) * 60 + CAST(TRIM(TRAILING "m" FROM SUBSTRING_INDEX(duracion, " ", -1)) AS UNSIGNED) <= ?', [(int)$request->duracion_max]);
+        }
+
+        // Listado de géneros y años
+        $generos = Pelicula::select('genero')->distinct()->pluck('genero')->flatMap(function($g){
+            return array_map('trim', explode(',', $g));
         })->unique()->sort()->values();
 
         $anios = Pelicula::selectRaw('YEAR(fecha_estreno) as anio')
             ->distinct()
-            ->orderBy('anio', 'asc')
+            ->orderBy('anio')
             ->pluck('anio');
 
-        // Paginación, 12 por página
-        $peliculas = $query->orderBy('fecha_estreno', 'desc')->paginate(15)->withQueryString();
+        $peliculas = $query->orderByDesc('fecha_estreno')->paginate(15)->withQueryString();
 
         return view('admin.peliculas', compact('peliculas', 'generos', 'anios'));
     }
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

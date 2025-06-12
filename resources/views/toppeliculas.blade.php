@@ -7,7 +7,7 @@
                     <div class="min-w-[100%] h-[400px] box-border relative mr-8 sm:min-w-[45%] md:min-w-[30%] lg:min-w-[23%]">
                         <div class="rounded-lg shadow-lg overflow-hidden h-full">
                             <a href="/pelicula/{{ $pelicula->id }}" rel="noopener noreferrer">
-                                <img src="{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
+                                <img src="../{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
                             </a>
                         </div>
                         <div class="absolute bottom-0 w-full bg-black/45 h-[64px] flex items-center justify-center">
@@ -43,7 +43,7 @@
 </div>
 
 <div class="my-20 w-full min-h-[200px] h-[400px] relative overflow-hidden">
-    <img src="/images/films/28-marcelinopanyvino/fotogrande.webp" alt="Foto de la película Marcelino, Pan y Vino (1955)" class="w-full h-full object-cover [object-position:center_40%]">
+    <img src="storage/images/films/28-marcelinopanyvino/fotogrande.webp" alt="Foto de la película Marcelino, Pan y Vino (1955)" class="w-full h-full object-cover [object-position:center_40%]">
     <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/30 to-transparent"></div>
     <div class="absolute md:left-48 top-1/4 p-4 w-60 font-primary-font text-3xl z-9 text-white left-1/2 transform -translate-x-1/2 text-center ">
         <p>70 años del estreno de <span class="italic">Marcelino, Pan y Vino</span></p>

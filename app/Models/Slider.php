@@ -12,7 +12,8 @@ class Slider extends Model
     protected $primaryKey = 'id';
    
     protected $fillable = [
-        'idPelicula'
+        'idPelicula',
+        'titulo'
     ];
 
     public function pelicula()

@@ -56,7 +56,7 @@
         </a>
 
         <form action="{{ route('procesoCompra.paso3') }}" method="GET" class="flex-1">
-            <input type="hidden" name="idSesion" value="{{ $infoPelicula->id }}">
+            <input type="hidden" name="idSesion" value="{{ $idSesion }}">
             <input type="hidden" name="butacas" value="{{ $butacas }}">
             <button type="submit" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 px-6 py-2 rounded text-white font-semibold transition">Confirmar y pagar</button>
         </form>

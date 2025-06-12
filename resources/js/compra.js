@@ -1,11 +1,8 @@
-//FALTA POR INCLUIR PASO 4
-
-
 // Mapa de butacas y navegación al proceso de compra
 document.addEventListener('DOMContentLoaded', () => {
     const usuarioAutenticado = document.body.dataset.usuarioAutenticado === "true";
 
-    window.mostrarMapa = function (idSesion) {
+    const mostrarMapa = function (idSesion) {
         fetch(`/sesion/${idSesion}/getMapa`)
             .then(response => response.json())
             .then(mapa => {
@@ -49,6 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('comprarEntrada').addEventListener('click', comprarEntradas);
             });
     };
+
+    document.querySelectorAll('.btnMostrarMapa').forEach(button => {
+        button.addEventListener('click', (e) => {
+            if(e.currentTarget.dataset.idsesion)
+                mostrarMapa(e.currentTarget.dataset.idsesion)
+        })
+    });
 
     function comprarEntradas() {
         const idSesion = this.dataset.idsesion;
@@ -103,9 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // PASO 1
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function () {
     const seleccionadas = [];
     let butacasSeleccionadas = document.getElementById('butacasSeleccionadas');
+    let mensajeError = document.getElementById('mensaje-error-butacas');
 
     document.querySelectorAll('.butaca-disponible').forEach(el => {
         el.addEventListener('click', function () {
@@ -120,29 +125,28 @@ document.addEventListener('DOMContentLoaded', function(){
                 seleccionadas.push(id);
                 this.querySelector('use').setAttribute('href', '#v-icon_standard-selected');
             }
-            butacasSeleccionadas.innerHTML = seleccionadas.length > 0 ? `<strong>Butacas seleccionadas:&nbsp;</strong><i> ${seleccionadas.join(', ')}</i>` : '';
+
+            butacasSeleccionadas.innerHTML = seleccionadas.length > 0 
+                ? `<strong>Butacas seleccionadas:&nbsp;</strong><i>${seleccionadas.join(', ')}</i>`
+                : '';
+
+            // Oculta el mensaje de error si se selecciona una
+            if (mensajeError && seleccionadas.length > 0) {
+                mensajeError.classList.add('hidden');
+            }
         });
     });
 
     const formContinuar = document.getElementById('formContinuar');
-    if(formContinuar) {
-        formContinuar.addEventListener('submit', function(e) {
+    if (formContinuar) {
+        formContinuar.addEventListener('submit', function (e) {
             if (seleccionadas.length === 0) {
                 e.preventDefault();
-                alert('Debes seleccionar al menos una butaca.');
+                if (mensajeError) mensajeError.classList.remove('hidden');
                 return;
             }
 
             document.getElementById('inputButacas').value = JSON.stringify(seleccionadas);
         });
-    };
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const link = document.createElement('a');
-    link.href = linkDownload;
-    link.download = '';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    }
 });

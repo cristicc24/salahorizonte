@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EntradaPedidoMail;
 use Illuminate\Http\Request;
 use App\Models\Sesion;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Pedido;
 use App\Models\LineaPedido;
@@ -46,7 +48,8 @@ class ProcesoCompraController extends Controller
         return view('procesoCompra.paso2', [
             'infoPelicula' => $infoPelicula,
             'butacas' => $butacas,
-            'total' => $total
+            'total' => $total,
+            'idSesion' => $idSesion
         ]);
     }
 
@@ -60,6 +63,7 @@ class ProcesoCompraController extends Controller
         return view('procesoCompra.paso3', [
             'infoPelicula' => $infoPelicula,
             'butacas' => $butacas,
+            'idSesion' => $idSesion
         ]);
     }
 
@@ -97,7 +101,8 @@ class ProcesoCompraController extends Controller
             'infoPelicula' => $infoPelicula,
             'butacas' => $butacas,
             'metodo' => $metodo,
-            'orderID' => $orderID
+            'orderID' => $orderID,
+            'idSesion' => $idSesion
         ]);
     }
 
@@ -154,6 +159,9 @@ class ProcesoCompraController extends Controller
             }
         }
 
+        // Enviar PDF por correo con el pedido
+        Mail::to($usuario->email)->send(new EntradaPedidoMail($pedido, $infoPelicula, $butacas, $usuario, $qrBase64));
+
         $total = count($butacas) * $infoPelicula->precio;
 
         // Actualizar mapa de butacas reservadas
@@ -180,7 +188,8 @@ class ProcesoCompraController extends Controller
             'butacas' => $butacas,
             'metodo' => $metodo,
             'pdfPath' => asset('storage/' . $filename),
-            'total' => $total
+            'total' => $total,
+            'idSesion' => $idSesion
         ]);
     }
 }
