@@ -41,9 +41,6 @@ Route::get('/footer', fn () => view('footer'))->name('footer');
 
 Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera');
 
-// RECUPERACIÓN DE CONTRASEÑA
-//Auth::routes(['reset' => true]);
-
 
 
 // ==============================
@@ -66,6 +63,13 @@ Route::get('/sesion/{id}/getMapa', function($id) {
     return response()->json($mapa);
 });
 
+Route::get('/sesion/{id}/estado', function ($id) {
+    $sesion = Sesion::find($id);
+    if (!$sesion) return response()->json(['estado' => 'No encontrada'], 404);
+
+    $estado = $sesion->estado;
+    return response()->json(['estado' => $estado]);
+});
 
 // ==============================
 // RUTAS ADMINISTRATIVAS
@@ -85,7 +89,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
 
         // VISTAS DEL MENÚ
         Route::get('/peliculas', [AdministradorController::class, 'showPeliculas'])->name('peliculas');
-        Route::get('/sesiones', [AdminSesionController::class, 'index'])->name('sesiones'); 
+        Route::get('/sesiones/{idSala?}', [AdminSesionController::class, 'index'])->name('sesiones');
         Route::get('/salas', [AdminSalaController::class, 'index'])->name('salas');
         Route::get('/sliders', [AdminSliderController::class, 'show'])->name('sliders');
 
@@ -110,7 +114,6 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::post('/salas', [AdminSalaController::class, 'store'])->name('salas.store');
         Route::put('/salas/{id}', [AdminSalaController::class, 'update'])->name('salas.update');
         Route::delete('/salas/{id}', [AdminSalaController::class, 'destroy'])->name('salas.destroy');
-        Route::get('/admin/sesiones/{idSala?}', [AdminSesionController::class, 'index'])->name('admin.sesiones');
 
         // CRUD SLIDERS (Carrusel)
         Route::post('/sliders', [AdminSliderController::class, 'store'])->name('sliders.store');

@@ -18,6 +18,13 @@ class ProcesoCompraController extends Controller
     public function asientos(Request $request)
     {
         $idSesion = $request->query('idSesion');
+        
+        // Validación de estado
+        $sesion = Sesion::find($idSesion);
+        if (!$sesion || $sesion->estado !== 'Activa') {
+            return redirect()->route('cartelera')->with('error', 'Esta sesión ya no está disponible para comprar entradas.');
+        }
+
         $infoPelicula = Sesion::getInfoSesion($idSesion);
 
         return view('procesoCompra.paso1', [
@@ -33,11 +40,16 @@ class ProcesoCompraController extends Controller
             'butacas' => 'required|string',
         ]);
 
-        //$butacas = json_decode($request->input('butacas'), true);
         $idSesion = $request->input('idSesion');
-        $butacas = $request->input('butacas');
+
+        // Validación de estado
+        $sesion = \App\Models\Sesion::find($idSesion);
+        if (!$sesion || $sesion->estado !== 'Activa') {
+            return redirect()->route('cartelera')->with('error', 'Esta sesión ya no está disponible para comprar entradas.');
+        }
 
         $infoPelicula = Sesion::getInfoSesion($idSesion);
+        $butacas = $request->input('butacas');
 
         if (!$infoPelicula || !$butacas) {
             abort(404);
@@ -45,31 +57,36 @@ class ProcesoCompraController extends Controller
 
         $total = count(json_decode($butacas)) * $infoPelicula->precio;
 
-        return view('procesoCompra.paso2', [
-            'infoPelicula' => $infoPelicula,
-            'butacas' => $butacas,
-            'total' => $total,
-            'idSesion' => $idSesion
-        ]);
+        return view('procesoCompra.paso2', compact('infoPelicula', 'butacas', 'total', 'idSesion'));
     }
+
 
     public function pago(Request $request)
     {
         $idSesion = $request->query('idSesion');
-        $butacas = $request->input('butacas');
 
+        // Validación de estado
+        $sesion = \App\Models\Sesion::find($idSesion);
+        if (!$sesion || $sesion->estado !== 'Activa') {
+            return redirect()->route('cartelera')->with('error', 'Esta sesión ya no está disponible para comprar entradas.');
+        }
+
+        $butacas = $request->input('butacas');
         $infoPelicula = Sesion::getInfoSesion($idSesion);
 
-        return view('procesoCompra.paso3', [
-            'infoPelicula' => $infoPelicula,
-            'butacas' => $butacas,
-            'idSesion' => $idSesion
-        ]);
+        return view('procesoCompra.paso3', compact('infoPelicula', 'butacas', 'idSesion'));
     }
+
 
     public function tpv(Request $request)
     {
         $idSesion = $request->query('idSesion');
+
+        $sesion = Sesion::find($idSesion);
+        if (!$sesion || $sesion->estado !== 'Activa') {
+            return redirect()->route('cartelera')->with('error', 'Esta sesión ya no está disponible para comprar entradas.');
+        }
+        
         $butacas = $request->input('butacas');
 
         $metodo = $request->query('metodo', 'tarjeta');

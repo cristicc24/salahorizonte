@@ -4,7 +4,6 @@
         
         {{-- Anterior --}}
         @if ($paginator->onFirstPage())
-            <span class="px-3 py-2 text-gray-400 bg-gray-200 rounded cursor-not-allowed">Anterior</span>
         @else
             <a href="{{ $paginator->previousPageUrl() }}"
                class="px-3 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition">Anterior</a>

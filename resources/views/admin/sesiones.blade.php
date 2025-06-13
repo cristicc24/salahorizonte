@@ -25,17 +25,15 @@
             <button type="button" data-close-flash class="text-lg leading-none text-gray-500 hover:text-black focus:outline-none" aria-label="Cerrar notificación">&times;</button>
         </div>
     @endif
-
 </div>
+
 
 @if($sesiones->isEmpty())
     @if(isset($salaSeleccionada))
         @php
             $salaNombre = optional($salas->firstWhere('id', $salaSeleccionada))->idSala ?? $salaSeleccionada;
         @endphp
-        <p class="text-gray-600">
-            Esta sala (<strong>Sala {{ $salaNombre }}</strong>) no tiene sesiones registradas.
-        </p>
+        <p class="text-gray-600"> Esta (<strong>Sala {{ $salaNombre }}</strong>) no tiene sesiones registradas.</p>
         <div class="mt-2 flex gap-3">
             <a href="{{ route('admin.sesiones') }}" class="text-blue-600 hover:underline">Ver todas las sesiones</a>
             <a href="{{ route('admin.salas') }}" class="text-gray-700 hover:underline">Volver a Salas</a>
@@ -52,6 +50,7 @@
                     <th class="p-2">Sala</th>
                     <th class="p-2">Butacas reservadas</th>
                     <th class="p-2">Fecha y hora</th>
+                    <th class="p-2">Estado</th>
                     <th class="p-2">Acciones</th>
                 </tr>
             </thead>
@@ -62,17 +61,39 @@
                         <td class="p-2">{{ $sesion->sala->idSala }}</td>
                         <td class="p-2">{{ $sesion->numButacasReservadas }}</td>
                         <td class="p-2">{{ \Carbon\Carbon::parse($sesion->fechaHora)->format('d/m/Y H:i') }}</td>
+
+                        @php
+                            $estado = $sesion->estado;
+                            $estadoColor = match($estado) {
+                                'Activa' => 'text-blue-600',
+                                'En curso' => 'text-yellow-600',
+                                'Finalizada' => 'text-gray-600',
+                                default => 'text-black',
+                            };
+                        @endphp
+                        <td class="p-2 font-semibold {{ $estadoColor }}">{{ $estado }}</td>
+
                         <td class="p-2 flex gap-2">
-                            <button type="button" data-open-modal="edit-{{ $sesion->id }}" class="bg-yellow-400 text-white px-2 py-1 rounded cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82
-                                        a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1
-                                        1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
-                                </svg>
-                            </button>
+                            @if($estado === 'Activa')
+                                <button type="button" data-open-modal="edit-{{ $sesion->id }}" class="bg-yellow-400 text-white px-2 py-1 rounded cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5"
+                                        stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zM19.5 7.125L16.863 4.487"/>
+                                    </svg>
+                                </button>
+                            @else
+                                <span title="No se puede editar esta sesión (estado: {{ $estado }})"
+                                    class="bg-yellow-200 text-white px-2 py-1 rounded opacity-50 cursor-not-allowed flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5"
+                                        stroke="currentColor" class="size-6 text-yellow-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zM19.5 7.125L16.863 4.487"/>
+                                    </svg>
+                                </span>
+                            @endif
 
                             <button type="button" data-open-modal="delete-{{ $sesion->id }}" class="bg-red-600 text-white px-2 py-1 rounded cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,7 +108,6 @@
                         <form method="POST" action="{{ route('admin.sesiones.update', $sesion->id) }}">
                             @csrf
                             @method('PUT')
-
                             <h3 class="text-lg font-bold mb-4">Editar Sesión</h3>
                             @if (session('editError') && session('openModal') === 'edit-' . $sesion->id)
                                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
@@ -130,12 +150,10 @@
                         <form method="POST" action="{{ route('admin.sesiones.destroy', $sesion->id) }}">
                             @csrf
                             @method('DELETE')
-
                             <h3 class="text-lg font-bold mb-4">¿Eliminar sesión?</h3>
                             <p>Película: <strong>{{ $sesion->pelicula->titulo }}</strong></p>
                             <p>Sala: <strong>{{ $sesion->sala->id }}</strong></p>
                             <p>Fecha: {{ \Carbon\Carbon::parse($sesion->fechaHora)->format('d/m/Y H:i') }}</p>
-
                             <div class="flex justify-end gap-2 mt-4">
                                 <button type="button" data-close-modal="delete-{{ $sesion->id }}" class="bg-gray-300 px-4 py-2 rounded cursor-pointer">Cancelar</button>
                                 <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded cursor-pointer">Eliminar</button>
@@ -147,6 +165,7 @@
         </table>
     </div>
 @endif
+
 
 <!-- Modal Crear Sesión -->
 <dialog id="modal-create" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">

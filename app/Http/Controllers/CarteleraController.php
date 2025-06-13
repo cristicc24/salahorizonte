@@ -16,19 +16,11 @@ class CarteleraController extends Controller
         }
 
         if ($request->filled('genero')) {
-            $query->where('genero', $request->genero);
+            $query->where('genero', 'like', '%' . $request->genero . '%');
         }
 
         if ($request->filled('edad')) {
             $query->where('edad_recomendada', $request->edad);
-        }
-
-        if ($request->filled('duracion_min')) {
-            $query->where('duracion', '>=', $request->duracion_min);
-        }
-
-        if ($request->filled('duracion_max')) {
-            $query->where('duracion', '<=', $request->duracion_max);
         }
 
         $cartelera = $query->paginate(8)->withQueryString();

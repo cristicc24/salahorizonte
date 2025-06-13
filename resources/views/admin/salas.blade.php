@@ -43,7 +43,7 @@
         <tbody>
             @foreach($salas as $sala)
                 <tr class="border-t">
-                    <td class="p-2">{{ $sala->id }}</td>
+                    <td class="p-2">{{ $sala->idSala }}</td>
                     <td class="p-2">{{ $sala->cantidadFilas }}</td>
                     <td class="p-2">{{ $sala->cantidadColumnas }}</td>
                     <td class="p-2">{{ $sala->numButacasTotales }}</td>
@@ -62,7 +62,7 @@
                             </svg>
                         </button>
                         @else
-                            <button class="bg-gray-200 text-gray-400 px-2 py-1 rounded cursor-not-allowed" disabled>
+                            <button class="bg-gray-200 text-gray-400 px-2 py-1 rounded cursor-not-allowed" disabled title="Esta sala tiene sesiones">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="size-6 opacity-50">
@@ -76,7 +76,7 @@
 
                         {{-- Ver sesiones de esa sala --}}
                         @if($sala->sesiones_count > 0)
-                            <a href="{{ route('admin.sesiones', $sala->id) }}" class="bg-blue-500 text-white px-2 py-1 rounded cursor-pointer">
+                            <a href="{{ route('admin.sesiones', ['idSala' => $sala->id]) }}" class="bg-blue-500 text-white px-2 py-1 rounded cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>

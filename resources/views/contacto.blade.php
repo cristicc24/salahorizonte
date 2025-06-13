@@ -1,7 +1,7 @@
 @include('head', ['title' =>  'Contacto | Sala Horizonte'])
 @include('cabeceraCompleta' , ['completo' => true])
 
-<div class="mt-28 font-primary-font">
+<div class="mt-20 sm:mt-28 font-primary-font">
     <main class="py-12 px-4 text-white">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             <!-- Formulario -->

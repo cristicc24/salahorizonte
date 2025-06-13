@@ -9,15 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btn && menu && backdrop && closeBtn) {
         function openMenu() {
-            menu.classList.remove('-translate-x-full');
+            menu.classList.remove('-translate-x-full', 'opacity-0', 'pointer-events-none');
             menu.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
             backdrop.classList.remove('opacity-0', 'pointer-events-none');
             backdrop.classList.add('opacity-100', 'pointer-events-auto');
         }
 
         function closeMenu() {
-            menu.classList.add('-translate-x-full');
-            menu.classList.remove('translate-x-0');
+            menu.classList.add('-translate-x-full', 'opacity-0', 'pointer-events-none');
+            menu.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
             backdrop.classList.add('opacity-0', 'pointer-events-none');
             backdrop.classList.remove('opacity-100', 'pointer-events-auto');
         }
@@ -264,14 +264,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // CARTELERA
 document.addEventListener('DOMContentLoaded', () => {
+    // Mostrar/Ocultar filtros en móvil
+    const btnToggleFiltros = document.getElementById('toggleFiltros');
+    const filtrosWrapper = document.getElementById('filtrosWrapper');
+
+    if (btnToggleFiltros && filtrosWrapper) {
+        btnToggleFiltros.addEventListener('click', () => {
+            filtrosWrapper.classList.toggle('hidden');
+            const visible = !filtrosWrapper.classList.contains('hidden');
+            btnToggleFiltros.textContent = visible ? 'Ocultar filtros' : 'Mostrar filtros';
+        });
+    }
+
+    // Reset de filtros
     const resetBtn = document.getElementById('resetFiltros');
     const form = resetBtn?.closest('form');
 
     if (resetBtn && form) {
         resetBtn.addEventListener('click', (e) => {
             e.preventDefault();
-
-            // Limpiar todos los campos del formulario
             form.querySelectorAll('input, select').forEach(el => {
                 if (el.tagName === 'SELECT') {
                     el.selectedIndex = 0;
@@ -279,10 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.value = '';
                 }
             });
-
-            // Enviar el formulario limpio (sin parámetros)
             form.submit();
         });
     }
-    
 });

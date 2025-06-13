@@ -102,6 +102,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (flash) {
         setTimeout(() => flash.remove(), 5000);
     }
+
+
+    // Reset de filtros
+    const resetBtn = document.getElementById('resetFiltros');
+    const form = resetBtn?.closest('form');
+
+    if (resetBtn && form) {
+        resetBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            form.querySelectorAll('input, select').forEach(el => {
+                if (el.tagName === 'SELECT') {
+                    el.selectedIndex = 0;
+                } else {
+                    el.value = '';
+                }
+            });
+            form.submit();
+        });
+    }
 });
 
 // SALAS

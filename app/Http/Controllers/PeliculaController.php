@@ -18,7 +18,9 @@ class PeliculaController extends Controller
             return redirect('/');
         }
         $peliculasRelacionadas = Pelicula::getPeliculasRelacionadas($pelicula->genero);
-        $sesiones = Sesion::getSesionesPeliculaEspecifica($id);
+        $sesiones = Sesion::getSesionesPeliculaEspecifica($id)->filter(function ($sesion) {
+            return $sesion->estado === 'Activa';
+        });
 
         Carbon::setLocale('es');
         $fechaEstreno = Carbon::parse($pelicula->fecha_estreno)->isoFormat('DD MMMM YYYY');

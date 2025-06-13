@@ -35,7 +35,6 @@ class Pelicula extends Model
     }
 
 
-
     public static function getPeliculaEspecifica(string $id){
         return DB::table('peliculas')
                     ->where('id', $id)->first();
@@ -68,30 +67,40 @@ class Pelicula extends Model
                 ->get();
     }
 
-   public function setDuracionAttribute($value)
+//    public function setDuracionAttribute($value)
+//     {
+//         $value = trim($value);
+
+//         if (is_numeric($value)) {
+//             $horas = floor($value / 60);
+//             $min = $value % 60;
+//             $this->attributes['duracion'] = "{$horas}h {$min}m";
+//             return;
+//         }
+
+//         $this->attributes['duracion'] = $value;
+//     }
+
+
+    public function getDuracionFormatoAttribute()
     {
-        $value = trim($value);
-
-        if (is_numeric($value)) {
-            $horas = floor($value / 60);
-            $min = $value % 60;
-            $this->attributes['duracion'] = "{$horas}h {$min}m";
-            return;
-        }
-
-        $this->attributes['duracion'] = $value;
+        $minutos = (int) $this->duracion;
+        $horas = floor($minutos / 60);
+        $min = $minutos % 60;
+        return "{$horas}h {$min}m";
     }
 
-    // AÑADIDO AMBOS MÉTODOS
     public static function getGenerosDisponibles()
     {
-        return self::select('genero')
-            ->distinct()
-            ->orderBy('genero')
-            ->pluck('genero')
-            ->filter()
+        return self::pluck('genero')
+            ->flatMap(function ($generos) {
+                return array_map('trim', explode(',', $generos));
+            })
+            ->unique()
+            ->sort()
             ->values();
     }
+
 
     public static function getEdadesDisponibles()
     {

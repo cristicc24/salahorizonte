@@ -79,6 +79,17 @@ class AdminSesionController extends Controller
 
     public function update(Request $request, $id)
     {
+        $sesion = Sesion::findOrFail($id);
+
+        // Evitar edición si hay butacas reservadas
+        if ($sesion->estado !== 'Activa') {
+            return redirect()->route('admin.sesiones')
+                ->with('editError', 'No se puede editar esta sesión porque ya ha comenzado o finalizado.')
+                ->with('openModal', 'edit-' . $id);
+        }
+
+
+        // Validación
         $validator = \Validator::make($request->all(), [
             'idPelicula' => 'required|exists:peliculas,id',
             'idSala' => 'required|exists:salas,id',
@@ -97,7 +108,7 @@ class AdminSesionController extends Controller
                 ->withInput();
         }
 
-        $sesion = Sesion::findOrFail($id);
+        // Actualiza los campos permitidos (sin regenerar butacas)
         $sesion->update($request->only('idPelicula', 'idSala', 'fechaHora'));
 
         return redirect()->route('admin.sesiones')->with('success', 'Sesión actualizada correctamente.');

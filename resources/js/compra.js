@@ -1,4 +1,3 @@
-// Mapa de butacas y navegación al proceso de compra
 document.addEventListener('DOMContentLoaded', () => {
     const usuarioAutenticado = document.body.dataset.usuarioAutenticado === "true";
 
@@ -12,46 +11,77 @@ document.addEventListener('DOMContentLoaded', () => {
                 const filas = Object.keys(mapaObjeto).length;
                 const columnas = Object.keys(mapaObjeto['A']).length;
 
-                contenedor.classList.add('grid-cols-' + (+columnas + 1));
+                contenedor.className = `grid gap-[2px] max-w-full text-white text-xl grid-cols-${columnas + 1}`;
                 contenedor.innerHTML += `<p class="text-white font-bold block col-start-1 col-end-${+columnas + 2} text-center my-4">VISTA PREVIA SALA</p>`;
                 contenedor.innerHTML += `<div class="flex justify-center col-start-1 col-end-${+columnas + 2} gap-8 w-full mt-4">
                     <div class="flex items-center gap-2">
-                        <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-available"/></svg>
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#v-icon_standard-available"/></svg>
                         <span class="text-white">Disponible</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-unavailable"/></svg>
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#v-icon_standard-unavailable"/></svg>
                         <span class="text-white">Ocupado</span>
                     </div>
                 </div>`;
                 contenedor.innerHTML += `<div id="pantalla" class="col-start-2 col-end-${+columnas + 2} text-center bg-gray-600 mb-1 px-2">Pantalla</div>`;
                 contenedor.innerHTML += `<div></div>`;
                 for (let c = 1; c <= columnas; c++) {
-                    contenedor.innerHTML += `<div class="text-center">${c}</div>`;
+                    contenedor.innerHTML += `<div class="text-center text-base sm:text-lg md:text-xl">${c}</div>`;
                 }
 
                 Object.keys(mapaObjeto).forEach(letra => {
-                    contenedor.innerHTML += `<div class="text-center">${letra}</div>`;
+                    contenedor.innerHTML += `<div class="text-center text-base sm:text-lg md:text-xl">${letra}</div>`;
                     for (let c = 1; c <= columnas; c++) {
                         contenedor.innerHTML += mapaObjeto[letra][c]
-                            ? `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-unavailable"/></svg>`
-                            : `<svg class="w-3 h-3 sm:w-4 sm:h-4 md:w-8 md:h-8"><use href="#v-icon_standard-available"/></svg>`;
+                            ? `<svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#v-icon_standard-unavailable"/></svg>`
+                            : `<svg class="w-6 h-6 sm:w-8 sm:h-8"><use href="#v-icon_standard-available"/></svg>`;
                     }
                 });
 
-                contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 p-2 hover:bg-text-color/80">
-                    <button id='comprarEntrada' data-idsesion='${idSesion}' class="cursor-pointer">Comprar entradas</button>
-                </div>`;
+                // Consultar el estado de la sesión
+                fetch(`/sesion/${idSesion}/estado`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const estado = data.estado;
+                        const botonDiv = document.createElement('div');
+                        botonDiv.className = `col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 p-2`;
 
-                document.getElementById('comprarEntrada').addEventListener('click', comprarEntradas);
+                        if (estado === 'Activa') {
+                            botonDiv.innerHTML = `<button id='comprarEntrada' data-idsesion='${idSesion}' class="cursor-pointer">Comprar entradas</button>`;
+                        } else {
+                            botonDiv.innerHTML = `<button disabled class="cursor-not-allowed text-gray-400" title="Sesión ${estado.toLowerCase()}, no disponible">No disponible</button>`;
+                        }
+
+                        contenedor.appendChild(botonDiv);
+
+                        // Solo añadimos el evento si existe el botón
+                        const btn = document.getElementById('comprarEntrada');
+                        if (btn) btn.addEventListener('click', comprarEntradas);
+                    })
+                    .catch(error => {
+                        console.error('Error obteniendo el estado:', error);
+                    });
+
+                // Scroll a mapa en móviles
+                if (window.innerWidth < 768) {
+                    const destino = document.getElementById('vista-previa-mapa');
+                    if (destino) {
+                        setTimeout(() => {
+                            destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 100);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error cargando mapa de butacas:', error);
             });
     };
 
     document.querySelectorAll('.btnMostrarMapa').forEach(button => {
         button.addEventListener('click', (e) => {
-            if(e.currentTarget.dataset.idsesion)
-                mostrarMapa(e.currentTarget.dataset.idsesion)
-        })
+            if (e.currentTarget.dataset.idsesion)
+                mostrarMapa(e.currentTarget.dataset.idsesion);
+        });
     });
 
     function comprarEntradas() {
@@ -76,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Filtro por día en película específica
+    // Filtro de sesiones por día
     const contenedorDias = document.getElementById('contendor-dias');
     if (contenedorDias) {
         const primerDia = contenedorDias.querySelector('button');
@@ -92,9 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function filtrarPorDia(fecha, botonActivo) {
+        let haySesion = false;
+
         document.querySelectorAll('.sesion').forEach(el => {
-            el.style.display = el.dataset.dia === fecha ? 'block' : 'none';
+            if (el.dataset.dia === fecha) {
+                el.style.display = 'block';
+                haySesion = true;
+            } else {
+                el.style.display = 'none';
+            }
         });
+
+        document.getElementById('mensaje-no-sesiones-dia').classList.toggle('hidden', haySesion);
 
         document.querySelectorAll('.btn-dia').forEach(btn => {
             btn.classList.remove('bg-text-color/50', 'font-bold');
@@ -104,49 +143,5 @@ document.addEventListener('DOMContentLoaded', () => {
         botonActivo.classList.remove('bg-text-color', 'hover:bg-text-color/80');
         botonActivo.classList.add('bg-text-color/50', 'font-bold');
     }
-});
 
-// PASO 1
-document.addEventListener('DOMContentLoaded', function () {
-    const seleccionadas = [];
-    let butacasSeleccionadas = document.getElementById('butacasSeleccionadas');
-    let mensajeError = document.getElementById('mensaje-error-butacas');
-
-    document.querySelectorAll('.butaca-disponible').forEach(el => {
-        el.addEventListener('click', function () {
-            const fila = this.dataset.fila;
-            const columna = this.dataset.columna;
-            const id = `${fila}-${columna}`;
-
-            if (seleccionadas.includes(id)) {
-                seleccionadas.splice(seleccionadas.indexOf(id), 1);
-                this.querySelector('use').setAttribute('href', '#v-icon_standard-available');
-            } else {
-                seleccionadas.push(id);
-                this.querySelector('use').setAttribute('href', '#v-icon_standard-selected');
-            }
-
-            butacasSeleccionadas.innerHTML = seleccionadas.length > 0 
-                ? `<strong>Butacas seleccionadas:&nbsp;</strong><i>${seleccionadas.join(', ')}</i>`
-                : '';
-
-            // Oculta el mensaje de error si se selecciona una
-            if (mensajeError && seleccionadas.length > 0) {
-                mensajeError.classList.add('hidden');
-            }
-        });
-    });
-
-    const formContinuar = document.getElementById('formContinuar');
-    if (formContinuar) {
-        formContinuar.addEventListener('submit', function (e) {
-            if (seleccionadas.length === 0) {
-                e.preventDefault();
-                if (mensajeError) mensajeError.classList.remove('hidden');
-                return;
-            }
-
-            document.getElementById('inputButacas').value = JSON.stringify(seleccionadas);
-        });
-    }
 });

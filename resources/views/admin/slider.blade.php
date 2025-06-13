@@ -41,7 +41,7 @@
                 @foreach($sliders as $slider)
                 <tr class="border-t">
                     <td class="p-2">
-                        <img src="{{ $slider->pelicula->foto_grande }}" alt="{{ $slider->pelicula->titulo }}" class="w-32 h-20 object-cover rounded">
+                        <img src="{{ asset($slider->pelicula->foto_grande) }}" alt="{{ $slider->pelicula->titulo }}" class="w-32 h-20 object-cover rounded">
                     </td>
                     <td class="p-2">{{ $slider->pelicula->titulo }}</td>
                     <td class="p-2 flex gap-2">

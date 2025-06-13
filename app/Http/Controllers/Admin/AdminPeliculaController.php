@@ -23,7 +23,7 @@ class AdminPeliculaController extends Controller
 
         // Filtro por género
         if ($request->filled('genero')) {
-            $query->where('genero', $request->genero);
+            $query->where('genero', 'like', '%' . $request->genero . '%');
         }
 
         // Filtro por año
@@ -31,28 +31,19 @@ class AdminPeliculaController extends Controller
             $query->whereYear('fecha_estreno', $request->anio_estreno);
         }
 
-        // Filtro por duración mínima
-        if ($request->filled('duracion_min')) {
-            $query->whereRaw('CAST(SUBSTRING_INDEX(duracion, "h", 1) AS UNSIGNED) * 60 + CAST(TRIM(TRAILING "m" FROM SUBSTRING_INDEX(duracion, " ", -1)) AS UNSIGNED) >= ?', [(int)$request->duracion_min]);
-        }
-
-        // Filtro por duración máxima
-        if ($request->filled('duracion_max')) {
-            $query->whereRaw('CAST(SUBSTRING_INDEX(duracion, "h", 1) AS UNSIGNED) * 60 + CAST(TRIM(TRAILING "m" FROM SUBSTRING_INDEX(duracion, " ", -1)) AS UNSIGNED) <= ?', [(int)$request->duracion_max]);
-        }
-
         // Listado de géneros y años
         $generos = Pelicula::select('genero')->distinct()->pluck('genero')->flatMap(function($g){
             return array_map('trim', explode(',', $g));
         })->unique()->sort()->values();
 
+        
         $anios = Pelicula::selectRaw('YEAR(fecha_estreno) as anio')
             ->distinct()
             ->orderBy('anio')
             ->pluck('anio');
 
-        $peliculas = $query->orderByDesc('fecha_estreno')->paginate(15)->withQueryString();
-
+        $peliculas = $query->paginate(15)->withQueryString();
+    
         return view('admin.peliculas', compact('peliculas', 'generos', 'anios'));
     }
 

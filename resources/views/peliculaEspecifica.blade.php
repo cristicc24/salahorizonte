@@ -2,9 +2,9 @@
 @include('cabeceraCompleta' , ['completo' => true])
 
 
-<div class="bg-primary-color w-full font-primary-font mt-28">
+<div class="bg-primary-color w-full font-primary-font mt-20 sm:mt-28">
     <div class="relative w-full h-[240px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[480px]">
-        <img src="../{{ $foto_grande }}" alt="Foto de portada de la película" class="w-full h-full object-cover object-top">
+        <img src="{{ asset($foto_grande) }}" alt="Foto de portada de la película" class="w-full h-full object-cover object-top">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
         <a href="{{ $trailer }}" rel="noopener noreferrer" target="_blank"
         class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-9">
@@ -21,7 +21,7 @@
 
     <div class="flex flex-col md:flex-row gap-6 text-white mt-3 md:mt-10 px-4 md:mr-1">
         <div class="w-full md:w-1/4 relative">
-            <img src="../{{ $foto_miniatura }}" alt="Foto miniatura"
+            <img src="{{ asset($foto_miniatura) }}" alt="Foto miniatura"
                 class="hidden md:block absolute top-[-40%] right-0 w-[180px] lg:w-[200px] xl:w-[220px]">
         </div>
 
@@ -47,50 +47,64 @@
 @php
     use Carbon\Carbon;
     $hoy = Carbon::today();
+    $sesiones = collect($sesiones);
+    $sesionesActivas = $sesiones->filter(fn($s) => $s->estado === 'Activa');
 @endphp
 
 <div class="container mx-auto px-4 py-6 font-primary-font">
     <h1 class="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">Sesiones de la película</h1>
 
-    <div id='contendor-dias' class="flex sm:justify-center space-x-4 mb-4 overflow-x-scroll sm:overflow-auto">
-        @for($i = 0; $i < 5; $i++)
-            @php
-                $dia = $hoy->copy()->addDays($i);
-                $fecha = $dia->format('Y-m-d');
-                $etiqueta = $i == 0 ? 'Hoy' : $dia->format('D d/m');
-            @endphp
-            <button class="btn-dia px-4 py-2 rounded bg-text-color text-white hover:bg-text-color/80 transition duration-300"
-                data-fecha="{{ $fecha }}">
-                {{ $etiqueta }}
-            </button>
-        @endfor
-    </div>
-
-    <div id="lista-sesiones" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        @foreach($sesiones as $sesion)
-            @php
-                $fechaSesion = Carbon::parse($sesion->fechaHora)->format('Y-m-d');
-                $horaSesion = Carbon::parse($sesion->fechaHora)->format('H:i');
-            @endphp
-            <div class="border-2 border-text-color/70 rounded-lg shadow-md p-4 my-4 hover:border-text-color transition duration-300 sesion " data-dia="{{ $fechaSesion }}">
-                <h2 class="text-xl font-semibold text-white mb-2">Sala {{ $sesion->idSala }}</h2>
-                <p class="text-white"><strong>Hora:</strong> {{ $horaSesion }}</p>
-                <p class="text-white"><strong>Butacas Reservadas:</strong> {{ $sesion->numButacasReservadas }}</p>
+    @if ($sesionesActivas->isEmpty())
+        <div class="col-span-full text-center text-white text-lg mt-8">
+            No hay sesiones disponibles para esta película en los próximos días.
+        </div>
+    @else
+        {{-- Botones de días --}}
+        <div id='contendor-dias' class="flex sm:justify-center space-x-4 mb-4 overflow-x-scroll sm:overflow-auto">
+            @for($i = 0; $i < 5; $i++)
                 @php
+                    $dia = $hoy->copy()->addDays($i);
+                    $fecha = $dia->format('Y-m-d');
+                    $etiqueta = $i == 0 ? 'Hoy' : $dia->format('D d/m');
+                @endphp
+                <button class="btn-dia px-4 py-2 rounded bg-text-color text-white hover:bg-text-color/80 transition duration-300"
+                        data-fecha="{{ $fecha }}">
+                    {{ $etiqueta }}
+                </button>
+            @endfor
+        </div>
+
+        {{-- Lista de sesiones --}}
+        <div id="lista-sesiones" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div id="mensaje-no-sesiones-dia" class="col-span-full text-center text-white text-lg mt-8 hidden">
+                No hay sesiones disponibles para esta película en el día seleccionado.
+            </div>
+
+            @foreach($sesionesActivas as $sesion)
+                @php
+                    $fechaSesion = Carbon::parse($sesion->fechaHora)->format('Y-m-d');
+                    $horaSesion = Carbon::parse($sesion->fechaHora)->format('H:i');
                     $total = $sesion->numButacasTotales;
                     $ocupadas = $sesion->numButacasReservadas;
                     $completa = $ocupadas >= $total;
                 @endphp
 
-                <button 
-                    class="btnMostrarMapa ml-auto w-full items-center mt-3 px-4 py-2 {{ $completa ? 'bg-gray-400 cursor-not-allowed' : 'bg-white/50 hover:bg-white/80 cursor-pointer' }} text-black rounded transition duration-300"
-                    data-idsesion="{{ $completa ? '' : $sesion->id }}"
-                    {{ $completa ? 'disabled' : '' }}>
-                    {{ $completa ? 'Sala Completa' : 'Ver Detalles' }}
-                </button>
-            </div>
-        @endforeach
-    </div>
+                <div class="border-2 border-text-color/70 rounded-lg shadow-md p-4 my-4 hover:border-text-color transition duration-300 sesion" data-dia="{{ $fechaSesion }}">
+                    <h2 class="text-xl font-semibold text-white mb-2">Sala {{ $sesion->idSala }}</h2>
+                    <p class="text-white"><strong>Hora:</strong> {{ $horaSesion }}</p>
+                    <p class="text-white"><strong>Butacas Reservadas:</strong> {{ $ocupadas }}</p>
+
+                    <button class="btnMostrarMapa ml-auto w-full items-center mt-3 px-4 py-2 {{ $completa ? 'bg-gray-400 cursor-not-allowed' : 'bg-white/50 hover:bg-white/80 cursor-pointer' }} text-black rounded transition duration-300"
+                        data-idsesion="{{ $completa ? '' : $sesion->id }}"
+                        {{ $completa ? 'disabled' : '' }}>
+                        {{ $completa ? 'Sala Completa' : 'Ver Detalles' }}
+                    </button>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+
 
     <!-- Definición del ícono de butaca -->
     <svg style="display: none;">
@@ -129,7 +143,7 @@
         </symbol>
     </svg>
 
-    <div id="mapa-butacas" class="mt-4">
+    <div id="vista-previa-mapa" class="mt-4 scroll-mt-24 font-primary-font">
         <div class="flex justify-center">
             <div>
                 <div id='contenedor-mapa' class="grid gap-[2px] max-w-full text-white text-xl">
@@ -150,7 +164,7 @@
                     <div class="min-w-[80%] sm:min-w-[45%] md:min-w-[30%] lg:min-w-[23%] h-[400px] box-border relative mr-8">
                         <div class="rounded-lg shadow-lg overflow-hidden h-full">
                             <a href="/pelicula/{{ $pelicula->id }}" rel="noopener noreferrer">
-                                <img src="../{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
+                                <img src="{{ asset($pelicula->foto_miniatura) }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
                             </a>
                         </div>
                         <div class="absolute bottom-0 w-full bg-black/45 h-[64px] flex items-center justify-center">

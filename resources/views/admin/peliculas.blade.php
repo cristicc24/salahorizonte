@@ -34,23 +34,20 @@
         <input type="text" name="search" placeholder="Buscar título..." value="{{ request('search') }}"
                class="border border-gray-300 rounded px-3 py-2 w-64"/>
         <select name="genero" class="border border-gray-300 rounded px-3 py-2">
-            <option value="">-- Género --</option>
+            <option value="">Género</option>
             @foreach($generos as $genero)
                 <option value="{{ $genero }}" @selected(request('genero')==$genero)>{{ $genero }}</option>
             @endforeach
         </select>
         <select name="anio_estreno" class="border border-gray-300 rounded px-3 py-2">
-            <option value="">-- Año Estreno --</option>
+            <option value="">Año Estreno</option>
             @foreach($anios as $anio)
                 <option value="{{ $anio }}" @selected(request('anio_estreno')==$anio)>{{ $anio }}</option>
             @endforeach
         </select>
-        <input type="number" name="duracion_min" value="{{ request('duracion_min') }}" placeholder="Duración mínima (min)"
-               class="border border-gray-300 rounded px-3 py-2 w-40"/>
-        <input type="number" name="duracion_max" value="{{ request('duracion_max') }}" placeholder="Duración máxima (min)"
-               class="border border-gray-300 rounded px-3 py-2 w-40"/>
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Filtrar</button>
-        <a href="{{ route('admin.peliculas') }}" class="ml-2 text-gray-600 underline hover:text-gray-900">Limpiar</a>
+        
+        <button type="submit" class="bg-text-color text-white px-4 py-2 rounded hover:bg-text-color/80 transition">Filtrar</button>
+        <a href="{{ route('admin.peliculas') }}" id="resetFiltros" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">Resetear filtros</a>
     </form>
 
     @if($peliculas->isEmpty())
@@ -217,15 +214,14 @@
                 </dialog>
             @endforeach
         </div>
-
-        @if($peliculas->total() > 0)
-            <p class="mb-4 text-gray-700">
-                Mostrando del <strong>{{ $peliculas->firstItem() }}</strong> al <strong>{{ $peliculas->lastItem() }}</strong> de <strong>{{ $peliculas->total() }}</strong> resultados
-            </p>
-        @endif
-
-        {{ $peliculas->links() }}
+        <div class="flex justify-center mt-10 text-black">
+            {{ $peliculas->onEachSide(1)->links('components.pagination') }}
+        </div>
     @endif
+
+    <div class="text-center text-black mt-2">
+        Mostrando página {{ $peliculas->currentPage() }} de {{ $peliculas->lastPage() }} ({{ $peliculas->total() }} películas)
+    </div>
 
     <!-- Modal Crear -->
     <div id="backdrop-create" class="hidden fixed inset-0 bg-gray-400/70 bg-opacity-50 z-40" data-close-modal="create"></div>

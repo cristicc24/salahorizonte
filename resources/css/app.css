@@ -56,6 +56,10 @@
     grid-template-columns: repeat(13, minmax(0, 1fr));
 }
 
+.grid-cols-14 {
+    grid-template-columns: repeat(14, minmax(0, 1fr));
+}
+
 .col-end-5 {
     grid-column-end: 5;
 }
@@ -85,5 +89,8 @@
 }
 .col-end-14 {
     grid-column-end: 14;
+}
+.col-end-15 {
+    grid-column-end: 15;
 }
 

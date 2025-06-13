@@ -7,7 +7,7 @@
                     <div class="min-w-[100%] h-[400px] box-border relative mr-8 sm:min-w-[45%] md:min-w-[30%] lg:min-w-[23%]">
                         <div class="rounded-lg shadow-lg overflow-hidden h-full">
                             <a href="/pelicula/{{ $pelicula->id }}" rel="noopener noreferrer">
-                                <img src="../{{ $pelicula->foto_miniatura }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
+                                <img src="{{ asset($pelicula->foto_miniatura) }}" alt="{{ $pelicula->titulo }}" class="w-full h-full object-cover object-top">
                             </a>
                         </div>
                         <div class="absolute bottom-0 w-full bg-black/45 h-[64px] flex items-center justify-center">

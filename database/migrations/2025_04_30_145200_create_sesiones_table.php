@@ -13,7 +13,6 @@ return new class extends Migration {
             $table->text('butacasReservadas'); 
             $table->integer('numButacasReservadas')->default(0);
 
-            // Relaciones corregidas
             $table->unsignedBigInteger('idSala');
             $table->unsignedBigInteger('idPelicula');
 

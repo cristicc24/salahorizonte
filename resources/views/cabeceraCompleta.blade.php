@@ -14,20 +14,20 @@
                         d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
+            <div id="backdrop" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out md:hidden z-10"></div>
             <nav id="navLinks" class="md:static md:inset-auto md:transform-none md:transition-none md:translate-none md:justify-evenly md:flex md:flex-row md:space-y-0 md:space-x-8
-                    md:pt-0 md:px-0 md:max-w-none md:opacity-100 md:pointer-events-auto opacity-0 pointer-events-none fixed inset-y-0 left-0 z-50 w-4/5 max-w-xs bg-primary-color                     transition-transform duration-300 ease-in-out
-                    flex flex-col pt-28 space-y-4 px-6" >
-                    <!-- botón cerrar -->
-                    <button id="closeBtn" class="absolute top-4 right-4 md:hidden text-text-color focus:outline-none" aria-label="Cerrar menú">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                    <a href="{{ route('inicio') }}"    class="text-xl xl:text-2xl text-text-color">Inicio</a>
-                    <a href="{{ route('cartelera') }}" class="text-xl xl:text-2xl text-text-color">Cartelera</a>
-                    <a href="{{ route('contacto') }}"  class="text-xl xl:text-2xl text-text-color">Contacto</a>
-                </nav>
-                <div id="backdrop" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out md:hidden"></div>
+                md:pt-0 md:px-0 md:max-w-none md:opacity-100 md:pointer-events-auto opacity-0 pointer-events-none fixed inset-y-0 left-0 z-50 w-4/5 max-w-xs bg-primary-color                     transition-transform duration-300 ease-in-out
+                flex flex-col pt-28 space-y-4 px-6" >
+                <!-- botón cerrar -->
+                <button id="closeBtn" class="absolute top-4 right-4 md:hidden text-text-color focus:outline-none" aria-label="Cerrar menú">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <a href="{{ route('inicio') }}"    class="text-xl xl:text-2xl text-text-color">Inicio</a>
+                <a href="{{ route('cartelera') }}" class="text-xl xl:text-2xl text-text-color">Cartelera</a>
+                <a href="{{ route('contacto') }}"  class="text-xl xl:text-2xl text-text-color">Contacto</a>
+            </nav>
             @endif
         </div>
 
@@ -92,7 +92,6 @@
                                 <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg block w-full p-2.5 " required />
                             </div>
                             <div class="flex justify-end">
-                                {{-- <a href="{{ route('password.request') }}" class="text-md text-text-color hover:underline">¿Olvidaste tu contraseña?</a> --}}
                             </div>
                             <button type="submit" class="w-full text-white bg-text-color hover:bg-[#a7926d] cursor-pointer font-medium rounded-lg text-lg px-5 py-2.5 text-center">Iniciar sesión</button>
                             <div class="text-md font-medium text-gray-500 ">
