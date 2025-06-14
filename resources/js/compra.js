@@ -129,3 +129,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+// PASO 1
+document.addEventListener('DOMContentLoaded', function () {
+    const seleccionadas = [];
+    let butacasSeleccionadas = document.getElementById('butacasSeleccionadas');
+    let mensajeError = document.getElementById('mensaje-error-butacas');
+
+    document.querySelectorAll('.butaca-disponible').forEach(el => {
+        el.addEventListener('click', function () {
+            const fila = this.dataset.fila;
+            const columna = this.dataset.columna;
+            const id = `${fila}-${columna}`;
+
+            if (seleccionadas.includes(id)) {
+                seleccionadas.splice(seleccionadas.indexOf(id), 1);
+                this.querySelector('use').setAttribute('href', '#v-icon_standard-available');
+            } else {
+                seleccionadas.push(id);
+                this.querySelector('use').setAttribute('href', '#v-icon_standard-selected');
+            }
+
+            butacasSeleccionadas.innerHTML = seleccionadas.length > 0 
+                ? `<strong>Butacas seleccionadas:&nbsp;</strong><i>${seleccionadas.join(', ')}</i>`
+                : '';
+
+            // Oculta el mensaje de error si se selecciona una
+            if (mensajeError && seleccionadas.length > 0) {
+                mensajeError.classList.add('hidden');
+            }
+        });
+    });
+
+    const formContinuar = document.getElementById('formContinuar');
+    if (formContinuar) {
+        formContinuar.addEventListener('submit', function (e) {
+            if (seleccionadas.length === 0) {
+                e.preventDefault();
+                if (mensajeError) mensajeError.classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('inputButacas').value = JSON.stringify(seleccionadas);
+        });
+    }
+});

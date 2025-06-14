@@ -44,5 +44,7 @@ RUN chmod +x /start.sh
 # Exponer puerto
 EXPOSE 80
 
+RUN chown -R www-data:www-data /var/www/html
+
 # Forzar reemplazo de punto de entrada
 ENTRYPOINT ["/start.sh"]
