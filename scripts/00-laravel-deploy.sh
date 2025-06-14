@@ -17,7 +17,7 @@ php artisan migrate:fresh --seed --force
 echo "Creating symbolic link..."
 php artisan storage:link
 
-ls -lR /var/www/html/public/storage
+ls -lR /var/www/html/
 
 chown -R www-data:www-data /var/www/html/public/storage
 chmod -R 755 /var/www/html/public/storage
