@@ -3,10 +3,23 @@
 @section('contenido')
 <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl font-bold">Sesiones</h2>
-    <button type="button" data-open-modal="create" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
-        + Nueva Sesión
-    </button>
 
+    <div class="flex">
+        @if(isset($salaSeleccionada))
+        @php
+            $salaNombre = optional($salas->firstWhere('id', $salaSeleccionada))->idSala ?? $salaSeleccionada;
+        @endphp
+        <div class="flex items-center gap-4 mr-2">
+            <span class="text-sm text-gray-700">Filtrando por: <strong>Sala {{ $salaNombre }}</strong></span>
+            <a href="{{ route('admin.sesiones') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-3 py-1 rounded">
+                Limpiar filtro
+            </a>
+        </div>
+        @endif
+        <button type="button" data-open-modal="create" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
+            + Nueva Sesión
+        </button>
+    </div>
     @if(session('success') || session('createError') || session('editError'))
         <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
                     {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
@@ -30,9 +43,9 @@
 
 @if($sesiones->isEmpty())
     @if(isset($salaSeleccionada))
-        @php
+        {{-- @php
             $salaNombre = optional($salas->firstWhere('id', $salaSeleccionada))->idSala ?? $salaSeleccionada;
-        @endphp
+        @endphp --}}
         <p class="text-gray-600"> Esta (<strong>Sala {{ $salaNombre }}</strong>) no tiene sesiones registradas.</p>
         <div class="mt-2 flex gap-3">
             <a href="{{ route('admin.sesiones') }}" class="text-blue-600 hover:underline">Ver todas las sesiones</a>
