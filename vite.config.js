@@ -21,7 +21,7 @@ export default defineConfig({
                 'resources/js/app-back.js',
                 'resources/js/app-front.js',
                 'resources/js/bootstrap.js',
-                'resources/js/compra.js',],
+                'resources/js/app-back.js',],
             refresh: true,
         }),
         tailwindcss(),
