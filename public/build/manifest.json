@@ -31,5 +31,11 @@
     "imports": [
       "_index-xsH4HHeE.js"
     ]
+  },
+  "resources/js/compra.js": {
+    "file": "assets/compra-BG1wb1gj.js",
+    "name": "compra",
+    "src": "resources/js/compra.js",
+    "isEntry": true
   }
 }
