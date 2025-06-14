@@ -17,3 +17,9 @@ php artisan migrate --force
 
 echo "Running seeders..."
 php artisan db:seed --force
+
+echo "Installing Node dependencies..."
+npm ci
+
+echo "Building front-end assets..."
+npm run build
