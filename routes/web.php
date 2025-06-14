@@ -63,13 +63,6 @@ Route::get('/sesion/{id}/getMapa', function($id) {
     return response()->json($mapa);
 });
 
-// Route::get('/sesion/{id}/estado', function ($id) {
-//     $sesion = Sesion::find($id);
-//     if (!$sesion) return response()->json(['estado' => 'No encontrada'], 404);
-
-//     $estado = $sesion->estado;
-//     return response()->json(['estado' => $estado]);
-// });
 
 // ==============================
 // RUTAS ADMINISTRATIVAS
