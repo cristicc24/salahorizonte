@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class AdminSmtpController extends Controller
 {
-    public function edit()
+    public function show()
     {
         $smtp = [
             'mailer' => env('MAIL_MAILER'),

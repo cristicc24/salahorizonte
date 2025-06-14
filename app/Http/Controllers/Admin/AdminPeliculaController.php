@@ -37,10 +37,11 @@ class AdminPeliculaController extends Controller
         })->unique()->sort()->values();
 
         
-        $anios = Pelicula::selectRaw('YEAR(fecha_estreno) as anio')
-            ->distinct()
-            ->orderBy('anio')
-            ->pluck('anio');
+        $anios = Pelicula::pluck('fecha_estreno')
+            ->map(fn($fecha) => \Carbon\Carbon::parse($fecha)->year)
+            ->unique()
+            ->sort()
+            ->values();
 
         $peliculas = $query->paginate(15)->withQueryString();
     

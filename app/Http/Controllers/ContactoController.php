@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ConfirmacionUsuarioMail;
+use App\Mail\NotificacionAdminMail;
 
 class ContactoController extends Controller
 {
@@ -24,12 +26,12 @@ class ContactoController extends Controller
             'comentario' => 'required|string',
         ]);
 
-        // Enviar el correo
-        Mail::send('emails.contenidoCorreo', $data, function ($message) use ($data) {
-            $message->to('cristinacabreracarrillo@gmail.com') 
-                    ->cc('ariolop154@gmail.com')
-                    ->subject('Nuevo mensaje de contacto');
-        });
-        return back()->with('success', 'Mensaje enviado correctamente.');
+        // Enviar correo al usuario
+        Mail::to($data['email'])->send(new ConfirmacionUsuarioMail($data));
+
+        // Enviar correo al administrador
+        Mail::to('contacto@salahorizonte.com')->send(new NotificacionAdminMail($data));
+
+        return back()->with('success', 'Tu mensaje ha sido enviado correctamente.');
     }
 }

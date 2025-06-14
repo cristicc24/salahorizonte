@@ -43,7 +43,7 @@ class ProcesoCompraController extends Controller
         $idSesion = $request->input('idSesion');
 
         // Validación de estado
-        $sesion = \App\Models\Sesion::find($idSesion);
+        $sesion = Sesion::find($idSesion);
         if (!$sesion || $sesion->estado !== 'Activa') {
             return redirect()->route('cartelera')->with('error', 'Esta sesión ya no está disponible para comprar entradas.');
         }
@@ -66,7 +66,7 @@ class ProcesoCompraController extends Controller
         $idSesion = $request->query('idSesion');
 
         // Validación de estado
-        $sesion = \App\Models\Sesion::find($idSesion);
+        $sesion = Sesion::find($idSesion);
         if (!$sesion || $sesion->estado !== 'Activa') {
             return redirect()->route('cartelera')->with('error', 'Esta sesión ya no está disponible para comprar entradas.');
         }

@@ -9,7 +9,7 @@ use App\Models\Pelicula;
 
 class AdminSliderController extends Controller
 {
-    public function show()
+    public function index()
     {
         $sliders = Slider::all();
         $peliculas = Pelicula::all();

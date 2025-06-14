@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Sesion;
-use App\Models\Slider;
-use App\Models\TopPelicula;
 use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\CarteleraController;
 use App\Http\Controllers\ContactoController;
@@ -17,6 +15,7 @@ use App\Http\Controllers\Admin\AdminSliderController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\Admin\AdminSmtpController;
 use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\InicioController;
 
 
 require __DIR__.'/auth.php';
@@ -25,13 +24,8 @@ require __DIR__.'/auth.php';
 // RUTAS PÚBLICAS
 // ==============================
 
-Route::get('/', function () {
-    $sliders = Slider::with('pelicula')->get();
-    $topPeliculas = TopPelicula::get();
-    return view('inicio', ['sliders' => $sliders, 'toppeliculas' => $topPeliculas]);
-})->name('inicio');
+Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
-Route::get('/registro', fn () => view('registro'))->name('registro');
 Route::get('/registro', [RegistroController::class, 'show'])->name('registro');
 
 Route::get('/pelicula/{id}', [PeliculaController::class, 'show'])->name('pelicula');
@@ -40,7 +34,6 @@ Route::get('/contacto', [ContactoController::class, 'show'])->name('contacto');
 Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
 
 Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera');
-
 
 
 // ==============================
@@ -87,7 +80,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::get('/peliculas', [AdminPeliculaController::class, 'index'])->name('peliculas');
         Route::get('/sesiones/{idSala?}', [AdminSesionController::class, 'index'])->name('sesiones');
         Route::get('/salas', [AdminSalaController::class, 'index'])->name('salas');
-        Route::get('/sliders', [AdminSliderController::class, 'show'])->name('sliders');
+        Route::get('/sliders', [AdminSliderController::class, 'index'])->name('sliders');
 
         // CRUD PELÍCULAS
         Route::post('/peliculas', [AdminPeliculaController::class, 'store'])->name('peliculas.store');
