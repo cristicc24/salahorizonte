@@ -13,17 +13,19 @@ RUN npm run build
 # Etapa 2: Backend con PHP-FPM y Nginx
 FROM php:8.2-fpm AS backend
 
-# Instalar dependencias del sistema
+# Instalar extensiones necesarias del sistema
 RUN apt-get update && apt-get install -y \
-    nginx \
     git \
     unzip \
     curl \
     libzip-dev \
     libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
-    && docker-php-ext-install pdo_mysql zip mbstring exif
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_pgsql zip mbstring exif gd
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
