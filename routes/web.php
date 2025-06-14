@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\AdminSalaController;
 use App\Http\Controllers\Admin\AdminSliderController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\Admin\AdminSmtpController;
-use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\InicioController;
 
 
@@ -26,7 +26,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
-Route::get('/registro', [RegistroController::class, 'show'])->name('registro');
+Route::get('/registro', [RegisteredUserController::class, 'show'])->name('registro');
 
 Route::get('/pelicula/{id}', [PeliculaController::class, 'show'])->name('pelicula');
 

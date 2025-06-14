@@ -15,12 +15,29 @@
                     </div>
                 @endif
 
+                @if ($errors->any())
+                    <div>
+                        <ul class="pl-5 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li class="bg-red-600 text-white mb-3 shadow p-2 rounded">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+
                 <form action="{{ route('contacto.enviar') }}" method="POST" class="space-y-4">
-                    <input name="nombre" type="text" placeholder="Nombre" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
-                    <input name="apellidos" type="text" placeholder="Apellidos" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
-                    <input name="telefono" type="text" placeholder="Teléfono" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
-                    <input name="email" type="email" placeholder="Email" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
-                    <textarea name="comentario" placeholder="Comentario" rows="4" class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white resize-none"></textarea>
+                    @csrf
+                    <input name="nombre" type="text" placeholder="Nombre" value="{{ old('nombre') }}" required
+                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
+                    <input name="apellidos" type="text" placeholder="Apellidos" value="{{ old('apellidos') }}" required
+                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
+                    <input name="telefono" type="tel" placeholder="Teléfono" value="{{ old('telefono') }}"
+                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
+                    <input name="email" type="email" placeholder="Email" value="{{ old('email') }}" required
+                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
+                    <textarea name="comentario" placeholder="Comentario" rows="4" value="{{ old('comentario') }}" required
+                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white resize-none"></textarea>
                     <div class="pt-4">
                         <button type="submit" class="bg-white hover:bg-gray-200 text-black font-semibold px-6 py-2 rounded-md transition duration-300">
                             Enviar

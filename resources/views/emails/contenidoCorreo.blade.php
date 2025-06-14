@@ -49,7 +49,6 @@
             Disfruta la película,<br>
             El equipo de Sala Horizonte</strong>
         </p>
-        
     </div>
 </body>
 </html>
