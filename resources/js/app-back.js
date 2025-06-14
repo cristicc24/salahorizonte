@@ -304,5 +304,34 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const flash = document.getElementById('flash-message')
     if (flash) setTimeout(() => flash.remove(), 3000)
+
+    document.querySelectorAll('.toggle-activo').forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            const peliculaId = this.dataset.id;
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            fetch(`/adminSH/peliculas/${peliculaId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) {
+                    alert('No se pudo cambiar el estado');
+                    this.checked = !this.checked; // revertir si falla
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Error al cambiar el estado');
+                this.checked = !this.checked;
+            });
+        });
+    });
 })
     
+

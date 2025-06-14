@@ -49,16 +49,16 @@ class Sesion extends Model
             ->where('sesiones.idPelicula', $id)
             ->select(
                 'sesiones.id',
-                'salas.idSala',
+                'salas.idSala as idSala',
                 'sesiones.fechaHora',
                 'sesiones.numButacasReservadas',
                 'sesiones.idPelicula',
                 'salas.numButacasTotales',
                 'peliculas.duracion',
                 DB::raw("CASE
-                WHEN NOW() < sesiones.fechaHora THEN 'Activa'
-                WHEN NOW() BETWEEN sesiones.fechaHora AND (sesiones.fechaHora + (peliculas.duracion || ' minutes')::interval) THEN 'En curso'
-                ELSE 'Finalizada'
+                    WHEN NOW() < sesiones.\"fechaHora\" THEN 'Activa'
+                    WHEN NOW() BETWEEN sesiones.\"fechaHora\" AND (sesiones.\"fechaHora\" + (peliculas.duracion || ' minutes')::interval) THEN 'En curso'
+                    ELSE 'Finalizada'
                 END as estado")
             )
             ->get();

@@ -100,6 +100,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::post('/peliculas', [AdminPeliculaController::class, 'store'])->name('peliculas.store');
         Route::put('/peliculas/{id}', [AdminPeliculaController::class, 'update'])->name('peliculas.update');
         Route::delete('/peliculas/{id}', [AdminPeliculaController::class, 'destroy'])->name('peliculas.destroy');
+        Route::patch('/peliculas/{id}', [AdminPeliculaController::class, 'toggleActivo'])->name('peliculas.toggleActivo');
 
         // CRUD SESIONES
         Route::post('/sesiones', [AdminSesionController::class, 'store'])->name('sesiones.store');

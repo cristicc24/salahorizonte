@@ -63,7 +63,7 @@ class AdminPeliculaController extends Controller
             'actores' => 'required|string|max:255',
             'enlace_trailer' => 'nullable|url',
             'foto_miniatura' => 'nullable|image|max:2048',
-            'foto_grande' => 'nullable|image|max:4096',
+            'foto_grande' => 'nullable|image|max:4096'
         ]);
 
         if ($validator->fails()) {
@@ -75,6 +75,7 @@ class AdminPeliculaController extends Controller
 
         $data = $request->except('foto_miniatura', 'foto_grande');
         $data['duracion'] = $this->formatearDuracion($request->duracion);
+        $data['activo'] = false;
 
         $pelicula = new Pelicula($data);
         $pelicula->save();
@@ -151,6 +152,15 @@ class AdminPeliculaController extends Controller
         return redirect()->route('admin.peliculas')->with('success', 'Película actualizada correctamente.');
     }
 
+    public function toggleActivo($id)
+    {
+        $pelicula = Pelicula::find($id);
+        $pelicula->activo = !$pelicula->activo;
+        $pelicula->save();
+
+        return response()->json(['success' => true, 'activo' => $pelicula->activo]);
+    }
+
     public function destroy($id)
     {
         $pelicula = Pelicula::findOrFail($id);
@@ -182,4 +192,6 @@ class AdminPeliculaController extends Controller
 
         return $valor;
     }
+
+
 }

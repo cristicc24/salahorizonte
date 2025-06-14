@@ -59,6 +59,14 @@
                          alt="{{ $pelicula->titulo }}" class="w-full h-70 object-cover group-hover:brightness-75 transition duration-300">
 
                     <div class="absolute inset-0 flex items-start justify-end p-2 gap-1">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <input name="activo" type="checkbox" class="peer toggle-activo hidden" data-id="{{ $pelicula->id }}" {{ $pelicula->activo ? 'checked' : '' }}>
+                            <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-all relative">
+                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform" style="{{ $pelicula->activo ? 'transform: translateX(1.25rem);' : '' }}"></div>
+                            </div>
+                        </label>
+
                         <!-- Botón Editar -->
                         <button data-idpelicula="{{ $pelicula->id }}"
                                 class="edit bg-yellow-400 text-white px-2 py-1 rounded text-sm hover:bg-yellow-500 cursor-pointer">

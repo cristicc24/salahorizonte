@@ -34,7 +34,6 @@
                                 <div class="flex items-start">
                                 
                                 </div>
-                                <a href="#" class="text-md text-text-color hover:underline">Recuperar contraseña</a>
                             </div>
                             <button type="submit" class="w-full text-white bg-text-color hover:bg-[#a7926d] cursor-pointer font-medium rounded-lg text-lg px-5 py-2.5 text-center">Iniciar sesión</button>
                         </form> 
