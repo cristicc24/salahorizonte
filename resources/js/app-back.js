@@ -24,6 +24,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// MENÚ HAMBURGUESA
+
+// MENÚ HAMBURGUESA (Backoffice)
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('hamburgerBtn') || document.getElementById('adminMenuBtn');
+    const menu = document.getElementById('navLinks') || document.getElementById('adminMenu');
+    const backdrop = document.getElementById('backdrop') || document.getElementById('adminMenuBackdrop');
+    const closeBtn = document.getElementById('closeBtn') || document.getElementById('adminMenuClose');
+
+    if (btn && menu && backdrop && closeBtn) {
+        function openMenu() {
+            menu.classList.remove('opacity-0', 'pointer-events-none', '-translate-x-full');
+            menu.classList.add('opacity-100', 'pointer-events-auto', 'translate-x-0');
+            backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            backdrop.classList.add('opacity-100', 'pointer-events-auto');
+        }
+
+        function closeMenu() {
+            menu.classList.add('opacity-0', 'pointer-events-none', '-translate-x-full');
+            menu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-x-0');
+            backdrop.classList.add('opacity-0', 'pointer-events-none');
+            backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        }
+
+        btn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+        backdrop.addEventListener('click', closeMenu);
+    }
+});
+
+
 
 // PELICULAS
 
@@ -182,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const flash = document.getElementById('flash-message');
     if (flash) {
-        setTimeout(() => flash.remove(), 3000);
+        setTimeout(() => flash.remove(), 5000);
     }
 
 });
@@ -239,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ocultar mensaje flash automáticamente
     const flash = document.getElementById('flash-message');
     if (flash) {
-        setTimeout(() => flash.remove(), 3000);
+        setTimeout(() => flash.remove(), 5000);
     }
 });
 
@@ -303,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     
     const flash = document.getElementById('flash-message')
-    if (flash) setTimeout(() => flash.remove(), 3000)
+    if (flash) setTimeout(() => flash.remove(), 5000)
 
     document.querySelectorAll('.toggle-activo').forEach(toggle => {
         toggle.addEventListener('change', function () {

@@ -37,8 +37,7 @@ class Pelicula extends Model
 
 
     public static function getPeliculaEspecifica(string $id){
-        return DB::table('peliculas')
-                    ->where('id', $id)->first();
+        return Pelicula::activas()->where('id', $id)->first();
     }
 
     public static function getPeliculasRelacionadas(string $generos){
@@ -46,9 +45,9 @@ class Pelicula extends Model
         $generosArray = explode(',', $generos);
         $generosArrSinEspacios = array_map('trim', $generosArray);
 
-        $consulta = DB::table('peliculas')
-                    ->select(['id', 'titulo', 'foto_miniatura', 'enlace_trailer']);
-                
+        $consulta = Pelicula::activas()
+                        ->select(['id', 'titulo', 'foto_miniatura', 'enlace_trailer']);
+                        
         foreach($generosArrSinEspacios as $index => $genero){
             if($index === 0){
                 $consulta->where('genero', 'like', "%$genero%");
@@ -63,9 +62,7 @@ class Pelicula extends Model
     }
 
     public static function getCartelera(){
-        return DB::table('peliculas')
-                ->select('*')
-                ->get();
+        return Pelicula::activas()->get();
     }
 
     public function getDuracionFormatoAttribute()
@@ -87,7 +84,6 @@ class Pelicula extends Model
             ->values();
     }
 
-
     public static function getEdadesDisponibles()
     {
         return self::select('edad_recomendada')
@@ -96,5 +92,10 @@ class Pelicula extends Model
             ->pluck('edad_recomendada')
             ->filter()
             ->values();
+    }
+
+    public function scopeActivas($query)
+    {
+        return $query->where('activo', true);
     }
 }

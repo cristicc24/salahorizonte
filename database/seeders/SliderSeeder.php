@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pelicula;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +15,10 @@ class SliderSeeder extends Seeder
      */
     public function run(): void
     {
-        $peliculas = DB::table('peliculas')
+        $peliculas = Pelicula::activas()
                         ->select('id', 'titulo')
                         ->limit(5)
-                        ->get(); 
+                        ->get();
 
         foreach ($peliculas as $pelicula) {
             Slider::create([

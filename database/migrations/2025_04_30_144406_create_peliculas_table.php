@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('actores');
             $table->string('enlace_trailer')->nullable();
             $table->string('foto_grande')->nullable();
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });        
     }

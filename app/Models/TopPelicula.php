@@ -16,9 +16,11 @@ class TopPelicula extends Model
     ];
 
     public static function get(){
-        return DB::table('toppeliculas', 'tp')
-                ->leftJoin('peliculas', 'tp.idPelicula', '=', 'peliculas.id')
-                ->select('peliculas.id','peliculas.titulo', 'peliculas.foto_miniatura', 'peliculas.enlace_trailer')
-                ->get();
+        return Pelicula::activas()
+            ->whereIn('id', function ($query) {
+                $query->select('idPelicula')->from('toppeliculas');
+            })
+            ->select('id', 'titulo', 'foto_miniatura', 'enlace_trailer')
+            ->get();
     }
 }

@@ -180,14 +180,6 @@
     <form method="POST" action="{{ route('admin.salas.store') }}">
         @csrf
         <h3 class="text-lg font-bold mb-4">Crear Sala</h3>
-        @if (session('createError'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
-                {{ session('createError') }}
-            </div>
-            <script>
-                window.onload = () => openModal('create');
-            </script>
-        @endif
 
         <label class="block mb-2">ID de sala (único): 
             <input type="number" name="idSala" value="{{ old('idSala') }}" class="w-full border rounded px-2 py-1 @if(session('createError')) border-red-500 @endif" required>

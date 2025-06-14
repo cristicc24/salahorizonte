@@ -47,8 +47,7 @@
 @php
     use Carbon\Carbon;
     $hoy = Carbon::today();
-    $sesiones = collect($sesiones);
-    $sesionesActivas = $sesiones->filter(fn($s) => $s->estado === 'Activa');
+    $sesionesActivas = collect($sesiones);
 @endphp
 
 <div class="container mx-auto px-4 py-6 font-primary-font">
@@ -84,13 +83,14 @@
                 @php
                     $fechaSesion = Carbon::parse($sesion->fechaHora)->format('Y-m-d');
                     $horaSesion = Carbon::parse($sesion->fechaHora)->format('H:i');
-                    $total = $sesion->numButacasTotales;
+                    
+                    $total = $sesion->sala->numButacasTotales;
                     $ocupadas = $sesion->numButacasReservadas;
                     $completa = $ocupadas >= $total;
                 @endphp
 
                 <div class="border-2 border-text-color/70 rounded-lg shadow-md p-4 my-4 hover:border-text-color transition duration-300 sesion" data-dia="{{ $fechaSesion }}">
-                    <h2 class="text-xl font-semibold text-white mb-2">Sala {{ $sesion->idSala }}</h2>
+                    <h2 class="text-xl font-semibold text-white mb-2">Sala {{ $sesion->sala->idSala }}</h2>
                     <p class="text-white"><strong>Hora:</strong> {{ $horaSesion }}</p>
                     <p class="text-white"><strong>Butacas Reservadas:</strong> {{ $ocupadas }}</p>
 
@@ -106,53 +106,53 @@
 </div>
 
 
-    <!-- Definición del ícono de butaca -->
-    <svg style="display: none;">
-        <symbol id="v-icon_standard-available" viewBox="0 0 35 35" fill="gray" stroke="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="transparent" d="M0 0h35v35H0z"></path>
-            <g transform="translate(5 4)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
-                <rect width="25" height="27" rx="1"></rect>
-                <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
-            </g>
-            <g transform="translate(28 11)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
-                <rect width="3" height="15" rx="1"></rect>
-                <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
-            </g>
-            <g transform="translate(4 11)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
-                <rect width="3" height="15" rx="1"></rect>
-                <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
-            </g>
-        </symbol>
-    </svg>
+<!-- Definición del ícono de butaca -->
+<svg style="display: none;">
+    <symbol id="v-icon_standard-available" viewBox="0 0 35 35" fill="gray" stroke="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill="transparent" d="M0 0h35v35H0z"></path>
+        <g transform="translate(5 4)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
+            <rect width="25" height="27" rx="1"></rect>
+            <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+        <g transform="translate(28 11)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
+            <rect width="3" height="15" rx="1"></rect>
+            <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+        <g transform="translate(4 11)" style="fill:#a1a7b1;stroke:#000;stroke-miterlimit:10">
+            <rect width="3" height="15" rx="1"></rect>
+            <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+    </symbol>
+</svg>
 
-    <svg style="display: none;">
-        <symbol id="v-icon_standard-unavailable" viewBox="0 0 35 35" fill="#555555" stroke="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill="transparent" data-name="icon/Seat Picker/Seat/Available Standard Copy 4 background" d="M0 0h35v35H0z"></path>
-            <g transform="translate(5 4)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
-                <rect width="25" height="27" rx="1" style="stroke:none" stroke="none"></rect>
-                <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
-            </g>
-            <g data-name="Rectangle" transform="translate(28 11)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
-                <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
-                <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
-            </g>
-            <g data-name="Rectangle Copy 6" transform="translate(4 11)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
-                <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
-                <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
-            </g>
-        </symbol>
-    </svg>
+<svg style="display: none;">
+    <symbol id="v-icon_standard-unavailable" viewBox="0 0 35 35" fill="#555555" stroke="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill="transparent" data-name="icon/Seat Picker/Seat/Available Standard Copy 4 background" d="M0 0h35v35H0z"></path>
+        <g transform="translate(5 4)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
+            <rect width="25" height="27" rx="1" style="stroke:none" stroke="none"></rect>
+            <rect width="24" height="26" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+        <g data-name="Rectangle" transform="translate(28 11)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
+            <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
+            <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+        <g data-name="Rectangle Copy 6" transform="translate(4 11)" style="fill:#555555;stroke:#000;stroke-miterlimit:10">
+            <rect width="3" height="15" rx="1" style="stroke:none" stroke="none"></rect>
+            <rect width="2" height="14" x=".5" y=".5" rx=".5" style="fill:none"></rect>
+        </g>
+    </symbol>
+</svg>
 
-    <div id="vista-previa-mapa" class="mt-4 scroll-mt-24 font-primary-font">
-        <div class="flex justify-center">
-            <div>
-                <div id='contenedor-mapa' class="grid gap-[2px] max-w-full text-white text-xl">
+<div id="vista-previa-mapa" class="mt-4 scroll-mt-24 font-primary-font">
+    <div class="flex justify-center">
+        <div>
+            <div id='contenedor-mapa' class="grid gap-[2px] max-w-full text-white text-xl">
 
-                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="text-white font-primary-font px-4 py-6">
     <p class="w-full text-center text-2xl sm:text-3xl lg:text-4xl my-8 font-bold">PELÍCULAS RELACIONADAS</p>

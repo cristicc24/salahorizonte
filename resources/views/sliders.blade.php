@@ -1,4 +1,4 @@
-<div class="container mx-auto overflow-hidden mt-28">
+<div class="container mx-auto overflow-hidden mt-20 sm:mt-28">
   <div id="carousel" class="relative w-full" data-index="0">
     <!-- Carousel wrapper -->
     <div id="carousel-slides" class="flex transition-transform duration-700 ease-in-out">

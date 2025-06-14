@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class AdminPeliculaController extends Controller
 {
 
-   public function index(Request $request)
+    public function index(Request $request)
     {
         $query = Pelicula::query();
 

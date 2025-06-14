@@ -53,7 +53,7 @@
     @if($peliculas->isEmpty())
         <p>No hay películas que mostrar.</p>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             @foreach($peliculas as $pelicula)
                 <div class="relative bg-gray-100 rounded shadow overflow-hidden group"><img src="{{ asset($pelicula->foto_miniatura) }}"
                          alt="{{ $pelicula->titulo }}" class="w-full h-70 object-cover group-hover:brightness-75 transition duration-300">
@@ -61,10 +61,20 @@
                     <div class="absolute inset-0 flex items-start justify-end p-2 gap-1">
                         <label class="inline-flex items-center cursor-pointer">
                             <meta name="csrf-token" content="{{ csrf_token() }}">
-                            <input name="activo" type="checkbox" class="peer toggle-activo hidden" data-id="{{ $pelicula->id }}" {{ $pelicula->activo ? 'checked' : '' }}>
-                            <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-all relative">
-                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform" style="{{ $pelicula->activo ? 'transform: translateX(1.25rem);' : '' }}"></div>
+                            <input name="activo" type="checkbox" class="sr-only peer toggle-activo hidden" data-id="{{ $pelicula->id }}" {{ $pelicula->activo ? 'checked' : '' }}>
+                            <div class="relative w-11 h-6 bg-gray-200 rounded-full 
+                                    peer dark:bg-gray-700 
+                                    peer-focus:ring-4 peer-focus:ring-[#A7D7C5] 
+                                    dark:peer-focus:ring-[#A7D7C5] 
+                                    peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full 
+                                    peer-checked:after:border-white 
+                                    after:content-[''] after:absolute after:top-0.5 after:start-[2px] 
+                                    after:bg-white after:border-gray-300 after:border 
+                                    after:rounded-full after:h-5 after:w-5 after:transition-all 
+                                    dark:border-gray-600 
+                                    peer-checked:bg-green-700">
                             </div>
+
                         </label>
 
                         <!-- Botón Editar -->

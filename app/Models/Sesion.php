@@ -43,42 +43,42 @@ class Sesion extends Model
     }
     public static function getSesionesPeliculaEspecifica(string $id)
     {
-        return DB::table('sesiones')
-            ->join('salas', 'sesiones.idSala', '=', 'salas.id')
-            ->join('peliculas', 'sesiones.idPelicula', '=', 'peliculas.id')
-            ->where('sesiones.idPelicula', $id)
-            ->select(
-                'sesiones.id',
-                'salas.idSala as idSala',
-                'sesiones.fechaHora',
-                'sesiones.numButacasReservadas',
-                'sesiones.idPelicula',
-                'salas.numButacasTotales',
-                'peliculas.duracion',
-                DB::raw("CASE
-                    WHEN NOW() < sesiones.\"fechaHora\" THEN 'Activa'
-                    WHEN NOW() BETWEEN sesiones.\"fechaHora\" AND (sesiones.\"fechaHora\" + (peliculas.duracion || ' minutes')::interval) THEN 'En curso'
-                    ELSE 'Finalizada'
-                END as estado")
-            )
-            ->get();
+        return Sesion::where('idPelicula', $id)->with('pelicula', 'sala')->get()
+                    ->filter(fn($s) => $s->estado === 'Activa');
     }
+
+    // public static function getSesionesPeliculaEspecifica(string $id)
+    // {
+    //     return DB::table('sesiones')
+    //         ->join('salas', 'sesiones.idSala', '=', 'salas.id')
+    //         ->join('peliculas', 'sesiones.idPelicula', '=', 'peliculas.id')
+    //         ->where('sesiones.idPelicula', $id)
+    //         ->select(
+    //             'sesiones.id',
+    //             'salas.idSala as idSala',
+    //             'sesiones.fechaHora',
+    //             'sesiones.numButacasReservadas',
+    //             'sesiones.idPelicula',
+    //             'salas.numButacasTotales',
+    //             'peliculas.duracion',
+    //             DB::raw("CASE
+    //                 WHEN NOW() < sesiones.\"fechaHora\" THEN 'Activa'
+    //                 WHEN NOW() BETWEEN sesiones.\"fechaHora\" AND (sesiones.\"fechaHora\" + (peliculas.duracion || ' minutes')::interval) THEN 'En curso'
+    //                 ELSE 'Finalizada'
+    //             END as estado")
+    //         )
+    //         ->get();
+    // }
 
 
     public static function getMapa(string $sesionId) {
-        return DB::table('sesiones')
-            ->where('id', $sesionId)
-            ->select('butacasReservadas')
-            ->first()->butacasReservadas;
+        $sesion = Sesion::find($sesionId);
+        return $sesion?->butacasReservadas ?? null;
     }
 
     public static function getInfoSesion(string $sesionId) {
-        return DB::table('sesiones')
-            ->leftJoin('Peliculas', 'sesiones.idPelicula', '=', 'Peliculas.id')
-            ->leftJoin('Salas', 'sesiones.idSala', '=', 'Salas.id')
-            ->where('sesiones.id', $sesionId)
-            ->select('*')    
-            ->first();
+        return Sesion::with(['pelicula', 'sala'])
+                    ->find($sesionId);
     }
    
     // Crea un campo calculado en el Model Sesión (como si estuviera en BD, pero no se guarda)

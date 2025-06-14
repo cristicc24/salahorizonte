@@ -30,8 +30,6 @@ class Administrador extends Authenticatable
 
     public static function getAdministrador()
     {
-        return DB::table('administradores')
-            ->select('*')
-            ->get();
+        return Administrador::all();
     }
 }

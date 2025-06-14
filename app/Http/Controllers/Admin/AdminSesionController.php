@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Sesion;
 use App\Models\Pelicula;
@@ -53,6 +54,33 @@ class AdminSesionController extends Controller
         if ($validator->fails()) {
             return redirect()->route('admin.sesiones')
                 ->with('createError', $validator->errors()->first())
+                ->with('openModal', 'create')
+                ->withInput();
+        }
+
+        $nuevaFechaHora = Carbon::parse($request->fechaHora);
+        $pelicula = Pelicula::findOrFail($request->idPelicula);
+        $duracionEnMinutos = $this->parseDuracionEnMinutos($pelicula->duracion);
+
+        // Establecer el rango de tiempo ocupado por la nueva sesión
+        $inicioPropuesta = $nuevaFechaHora->copy()->subMinutes(15);
+        $finPropuesta = $nuevaFechaHora->copy()->addMinutes($duracionEnMinutos + 15);
+
+        // Verificar conflictos con otras sesiones en la misma sala
+        $conflictos = Sesion::where('idSala', $request->idSala)
+            ->with('pelicula')
+            ->get()
+            ->filter(function ($sesion) use ($inicioPropuesta, $finPropuesta) {
+                $inicioSesion = Carbon::parse($sesion->fechaHora);
+                $duracionSesion = $this->parseDuracionEnMinutos($sesion->pelicula->duracion);
+                $finSesion = $inicioSesion->copy()->addMinutes($duracionSesion);
+
+                return $finSesion->gt($inicioPropuesta) && $inicioSesion->lt($finPropuesta);
+            });
+
+        if ($conflictos->isNotEmpty()) {
+            return redirect()->route('admin.sesiones')
+                ->with('createError', 'Ya existe una sesión en esa sala demasiado próxima en el tiempo.')
                 ->with('openModal', 'create')
                 ->withInput();
         }

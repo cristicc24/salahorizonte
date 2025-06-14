@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pelicula;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +15,10 @@ class TopPeliculasSeeder extends Seeder
      */
     public function run(): void
     {
-        $peliculas = DB::table('peliculas')
-                        ->select('id')
-                        ->limit(7)
-                        ->get();
+        $peliculas = Pelicula::activas()
+                ->select('id')
+                ->limit(7)
+                ->get();
 
         foreach ($peliculas as $pelicula) {
             TopPelicula::create([

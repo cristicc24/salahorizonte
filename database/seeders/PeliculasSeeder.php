@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pelicula;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Emma Watson, Dan Stevens, Luke Evans, Kevin Kline, Emma Thompson, Ewan McGregor, Josh Gad, Gugu Mbatha-Raw, Audra McDonald, Stanley Tucci, Adrian Schiller, Chris Andrew Mellow, Harriet Jones, Sonoya Mizuno',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=XpMjfUJ1lUc',
                 'foto_grande' => 'storage/images/films/1-labellaylabestia/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Forrest Gump',
@@ -40,6 +42,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Tom Hanks, Robin Wright, Gary Sinise, Mykelti Williamson',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=Cyh1LpxnaxI',
                 'foto_grande' => 'storage/images/films/2-forrestgump/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Señor de Los Anillos: la Comunidad del Anillo',
@@ -55,6 +58,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Elijah Wood, Ian McKellen, Liv Tyler, Viggo Mortensen, Sean Astin, Cate Blanchett',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=iFOucwxKRFE',
                 'foto_grande' => 'storage/images/films/3-elsenordelosanillos/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Titanic',
@@ -70,6 +74,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Leonardo DiCaprio, Kate Winslet, Billy Zane, Gloria Stuart, Bill Paxton, Kathy Bates, Frances Fisher',
                 'enlace_trailer' => 'https://www.youtube.com/embed/wMZuro21wtE?si=BoVm5UJ5TKDkRJYv',
                 'foto_grande' => 'storage/images/films/4-titanic/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Romper el Círculo',
@@ -85,6 +90,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Blake Lively, Justin Baldoni, Jenny Slate, Hasan Minhaj, Brandon Sklenar',
                 'enlace_trailer' => 'https://www.youtube.com/embed/aT_IzP2eJaU?si=SMEsM8fl_AdgDZQk',
                 'foto_grande' => 'storage/images/films/5-romperelcirculo/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El 47',
@@ -100,6 +106,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Eduard Fernández, Salva Reina, Carlos Cuevas, Zoe Arnao, Mireia Vilapuig',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=PctPdv7LiuE',
                 'foto_grande' => 'storage/images/films/6-el47/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La estrella azul',
@@ -115,6 +122,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Pepe Lorente, Cuti Carabajal, Bruna Cusí, Marc Rodríguez, Catalina Sopelana, Mariela Carabajal, Noelia Verenice Díaz',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=SKHB1SRmrdA',
                 'foto_grande' => 'storage/images/films/7-laestrellaazul/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Del Revés',
@@ -130,6 +138,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Amy Poehler, Phyllis Smith, Richard Kind, Bill Hader, Lewis Black, Mindy Kaling',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=ZOWV9F7LnIQ',
                 'foto_grande' => 'storage/images/films/8-delreves/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Avengers: Endgame',
@@ -146,6 +155,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Robert Downey Jr., Chris Evans, Scarlett Johansson',
                 'enlace_trailer' => 'https://www.youtube.com/embed/TcMBFSGVi1c',
                 'foto_grande' => 'storage/images/films/9-endgame/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Avatar',
@@ -161,6 +171,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Sam Worthington, Zoe Saldana, Sigourney Weaver',
                 'enlace_trailer' => 'https://www.youtube.com/embed/5PSNL1qE6VY',
                 'foto_grande' => 'storage/images/films/10-avatar/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Spider-man: No Way Home',
@@ -176,6 +187,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Tom Holland, Zendaya, Benedict Cumberbatch',
                 'enlace_trailer' => 'https://www.youtube.com/embed/JfVOs4VSpmA',
                 'foto_grande' => 'storage/images/films/11-nowayhome/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Star Wars: El Despertar de la Fuerza',
@@ -191,6 +203,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Daisy Ridley, John Boyega, Harrison Ford',
                 'enlace_trailer' => 'https://www.youtube.com/embed/sGbxmsDFVnE',
                 'foto_grande' => 'storage/images/films/12-eldespertardelafuerza/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Padrino',
@@ -206,6 +219,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Marlon Brando, Al Pacino, James Caan',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=v72XprPxy3E',
                 'foto_grande' => 'storage/images/films/13-elpadrino/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Jurassic World',
@@ -221,6 +235,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Chris Pratt, Bryce Dallas Howard',
                 'enlace_trailer' => 'https://www.youtube.com/embed/RFinNxS5KN4',
                 'foto_grande' => 'storage/images/films/14-jurassicworld/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Rey León',
@@ -236,6 +251,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Donald Glover, Beyoncé, James Earl Jones',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=mb79ctR-E-c',
                 'foto_grande' => 'storage/images/films/15-lionking/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Frozen II',
@@ -251,6 +267,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Idina Menzel, Kristen Bell, Josh Gad',
                 'enlace_trailer' => 'https://www.youtube.com/embed/Zi4LMpSDccc',
                 'foto_grande' => 'storage/images/films/16-frozenII/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Fast and Furious 7',
@@ -266,6 +283,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Vin Diesel, Paul Walker, Jason Statham',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=tX0MGnC41nk',
                 'foto_grande' => 'storage/images/films/17-fastandfurious/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Harry Potter y la Piedra Filosofal',
@@ -281,6 +299,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Daniel Radcliffe, Rupert Grint, Emma Watson, John Cleese, Robbie Coltrane, Warwick Davis, Richard Griffiths, Richard Harris, Ian Hart',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=WE4AJuIvG1Y',
                 'foto_grande' => 'storage/images/films/18-harrypotter/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Wall-E',
@@ -296,6 +315,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ben Burtt, Elissa Knight, Jeff Garlin, Fred Willard, Sigourney Weaver',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=qF7p4lZ00RA',
                 'foto_grande' => 'storage/images/films/19-walle/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La Vida es Bella',
@@ -311,6 +331,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Roberto Benigni, Nicoletta Braschi, Giorgio Cantarini',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=e-Z062tRdbQ',
                 'foto_grande' => 'storage/images/films/20-lavidaesbella/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El club de la Lucha',
@@ -326,6 +347,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Brad Pitt, Edward Norton, Helena Bonham Carter',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=r5KDiUNZv4w',
                 'foto_grande' => 'storage/images/films/21-elclubdelalucha/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Psicosis',
@@ -341,6 +363,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Anthony Perkins, Janet Leigh, Vera Miles, John Gavin',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=mC2gOyWuSEY',
                 'foto_grande' => 'storage/images/films/22-psicosis/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Parásitos',
@@ -356,6 +379,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=90dWVETAdtI',
                 'foto_grande' => 'storage/images/films/23-parasitos/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Diario de Noa',
@@ -371,6 +395,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ryan Gosling, Rachel Mcadams, James Garner, Gena Rowlands',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=fwlmQ3PCZ9g',
                 'foto_grande' => 'storage/images/films/24-eldiariodenoa/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Elegir Un Amor',
@@ -386,6 +411,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Laura Marano, Avan Jogia, Scott Michael Foster',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=A8p0w_Ec1NY',
                 'foto_grande' => 'storage/images/films/25-elegirunamor/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Vaiana',
@@ -401,6 +427,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Auli\'i Cravalho, Dwayne Johnson, Rachel House, Temuera Morrison, Nicole Scherzinger, Jemaine Clement, Alan Tudyk',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=tmpTGztGJ8E',
                 'foto_grande' => 'storage/images/films/26-vaiana/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Coco',
@@ -416,6 +443,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Anthony Gonzalez, Gael García Bernal, Benjamin Bratt',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=R7wo-0Q0u4g',
                 'foto_grande' => 'storage/images/films/27-coco/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Marcelino, Pan y Vino',
@@ -431,6 +459,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Pablito Calvo, Rafael Rivelles, Antonio Vico, Juan Calvo, José Marco Davó, José Nieto, Fernando Rey, Juanjo Menéndez, Jesús Tordesillas, María Isbert, Manuel Alexandre',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=bN4fvv-G5vE',
                 'foto_grande' => 'storage/images/films/28-marcelinopanyvino/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Gladiator',
@@ -446,6 +475,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Russell Crowe, Joaquin Phoenix',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=Pb6WME02hdA',
                 'foto_grande' => 'storage/images/films/29-gladiator/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Capitán América 1',
@@ -461,6 +491,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Chris Evans, Hayley Atwell, Sebastian Stan, Tommy Lee Jones',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=YqEJ0jpFvSU',
                 'foto_grande' => 'storage/images/films/30-capitanamerica1/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La momia regresa',
@@ -476,6 +507,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Brendan Fraser, Rachel Weisz, John Hannah, Arnold Vosloo, Oded Fehr, Patricia Velásquez, Freddie Boath, Dwayne Johnson',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=c67PSYSbzMY',
                 'foto_grande' => 'storage/images/films/31-lamomia/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La lista de Schindler',
@@ -491,6 +523,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Liam Neeson, Ben Kingsley, Ralph Fiennes, Caroline Goodall, Embeth Davidtz',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=BmkchuRJ82w',
                 'foto_grande' => 'storage/images/films/32-schindler/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Lágrimas del sol',
@@ -506,6 +539,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Bruce Willis, Monica Bellucci, Cole Hauser, Eamonn Walker, Johnny Messner, Fionnula Flanagan, Tom Skerritt',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=EiaMa-IdXCc',
                 'foto_grande' => 'storage/images/films/33-lagrimasdelsol/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Sin instrucciones',
@@ -521,6 +555,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Eugenio Derbez, Loreto Peralta, Jessica Lindsey, Daniel Raymont, Alessandra Rosaldo',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=YtXjZ2U1oTo',
                 'foto_grande' => 'storage/images/films/34-sininstrucciones/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Palmeras en la nieve',
@@ -536,6 +571,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Mario Casas, Adriana Ugarte, Macarena García, Berta Vázquez, Emilio Gutiérrez Caba',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=3S6Fh2T1v5g',
                 'foto_grande' => 'storage/images/films/35-palmeras/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Demon Slayer: Mugen Train',
@@ -551,6 +587,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Natsuki Hanae, Akari Kitō, Hiro Shimono, Yoshitsugu Matsuoka, Satoshi Hino',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=ATJYac_dORw',
                 'foto_grande' => 'storage/images/films/36-demonslayer/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La familia Addams',
@@ -566,6 +603,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Oscar Isaac, Charlize Theron, Chloë Grace Moretz, Finn Wolfhard, Nick Kroll',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=O-1jv4dx4IY',
                 'foto_grande' => 'storage/images/films/37-lafamilia/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Ghost',
@@ -581,6 +619,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Patrick Swayze, Demi Moore, Whoopi Goldberg, Tony Goldwyn, Rick Aviles',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=6CRc7IMjW2g',
                 'foto_grande' => 'storage/images/films/38-ghost/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El niño con el pijama de rayas',
@@ -596,6 +635,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Asa Butterfield, Jack Scanlon, Vera Farmiga, David Thewlis, Amber Beattie',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=zV8v5H4FZ3g',
                 'foto_grande' => 'storage/images/films/39-elniño/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Conjuro',
@@ -611,6 +651,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Vera Farmiga, Patrick Wilson, Lili Taylor, Ron Livingston, Joey King',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=k10ETZ41q5o',
                 'foto_grande' => 'storage/images/films/40-elconjuro/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Paranormal Activity 2',
@@ -626,6 +667,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Sprague Grayden, Brian Boland, Molly Ephraim, Katie Featherston, Micah Sloat',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=07XbSkY7f2Y',
                 'foto_grande' => 'storage/images/films/41-paranormal/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Mamá',
@@ -641,6 +683,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Jessica Chastain, Nikolaj Coster-Waldau, Megan Charpentier, Isabelle Nélisse, Daniel Kash',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=7Am7i7uM9r0',
                 'foto_grande' => 'storage/images/films/42-mama/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'This Is It',
@@ -656,6 +699,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Michael Jackson, Kenny Ortega, Alex Al, Orianthi, Tommy Organ',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=cyrkcz7msfY',
                 'foto_grande' => 'storage/images/films/43-thisisit/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Bowling for Columbine',
@@ -671,6 +715,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Michael Moore, Marilyn Manson, Charlton Heston',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=hH0mSAjp_Jw',
                 'foto_grande' => 'storage/images/films/44-bowling/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Sin perdón',
@@ -686,6 +731,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Clint Eastwood, Gene Hackman, Morgan Freeman',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=ftTX4FoBWlE',
                 'foto_grande' => 'storage/images/films/45-sinperdon/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Chinatown',
@@ -701,6 +747,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Jack Nicholson, Faye Dunaway, John Huston',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=beVX_JZ1CWY',
                 'foto_grande' => 'storage/images/films/46-chinatown/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Jojo Rabbit',
@@ -716,6 +763,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Roman Griffin Davis, Scarlett Johansson, Taika Waititi',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=tL4McUzXfFI',
                 'foto_grande' => 'storage/images/films/47-jojo/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Milagro en la celda 7',
@@ -731,6 +779,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Aras Bulut İynemli, Nisa Sofiya Aksongur, Deniz Baysal',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=4nC4VXHlys8',
                 'foto_grande' => 'storage/images/films/48-milagroenlacelda7/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Los juegos del hambre',
@@ -746,6 +795,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Jennifer Lawrence, Josh Hutcherson, Woody Harrelson',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=mfmrPu43DF8',
                 'foto_grande' => 'storage/images/films/49-juegosdelhambre/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El cisne negro',
@@ -761,6 +811,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Natalie Portman, Mila Kunis, Vincent Cassel',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=5jaI1XOB-bs',
                 'foto_grande' => 'storage/images/films/50-elcisnenegro/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Resplandor',
@@ -776,6 +827,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Jack Nicholson, Shelley Duvall',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=5Cb3ik6zP2I',
                 'foto_grande' => 'storage/images/films/51-elresplandor/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Amélie',
@@ -791,6 +843,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Audrey Tautou, Mathieu Kassovitz',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=HUECWi5pX7o',
                 'foto_grande' => 'storage/images/films/52-amelie/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Gran Hotel Budapest',
@@ -806,6 +859,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ralph Fiennes, Tony Revolori',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=1Fg5iWmQjwk',
                 'foto_grande' => 'storage/images/films/53-granhotelbudapest/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Whiplash',
@@ -821,6 +875,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Miles Teller, J.K. Simmons',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=7d_jQycdQGo',
                 'foto_grande' => 'storage/images/films/54-whiplash/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La La Land',
@@ -836,6 +891,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ryan Gosling, Emma Stone',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=0pdqf4P9MB8',
                 'foto_grande' => 'storage/images/films/55-lalaland/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Castillo Ambulante',
@@ -851,6 +907,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Chieko Baisho, Takuya Kimura',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=iwROgK94zcM',
                 'foto_grande' => 'storage/images/films/56-elcastilloambulante/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Gran Pez',
@@ -866,6 +923,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ewan McGregor, Albert Finney',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=JZTE078OmZg',
                 'foto_grande' => 'storage/images/films/57-granpez/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Laberinto del Fauno',
@@ -881,6 +939,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ivana Baquero, Sergi López, Maribel Verdú',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=gpEh4O8Hb5Y',
                 'foto_grande' => 'storage/images/films/58-laberintofauno/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Gran Dictador',
@@ -896,6 +955,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Charles Chaplin, Paulette Goddard',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=wNFWcR5dqlw',
                 'foto_grande' => 'storage/images/films/59-grandictador/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Viaje de Chihiro',
@@ -911,6 +971,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Rumi Hiiragi, Miyu Irino',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=5Fgq4Osh6XQ',
                 'foto_grande' => 'storage/images/films/60-chihiro/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La Caza',
@@ -926,6 +987,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Mads Mikkelsen, Thomas Bo Larsen',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=ieLIOBkMgAQ',
                 'foto_grande' => 'storage/images/films/61-lacaza/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La llegada',
@@ -941,6 +1003,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Amy Adams, Jeremy Renner',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=tFMo3UJ4B4g',
                 'foto_grande' => 'storage/images/films/62-lallegada/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El Secreto de sus Ojos',
@@ -956,6 +1019,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ricardo Darín, Soledad Villamil',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=GqdLlefQ8gU',
                 'foto_grande' => 'storage/images/films/63-secretosojos/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Intocable',
@@ -971,6 +1035,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'François Cluzet, Omar Sy',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=34WIbmXkewU',
                 'foto_grande' => 'storage/images/films/64-intocable/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Her',
@@ -986,6 +1051,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Joaquin Phoenix, Scarlett Johansson (voz), Amy Adams',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=VYGU95sDDOc',
                 'foto_grande' => 'storage/images/films/65-her/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La tumba de las luciérnagas',
@@ -1001,6 +1067,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Tsutomu Tatsumi, Ayano Shiraishi',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=4vPeTSRd580',
                 'foto_grande' => 'storage/images/films/66-tumbaluciernagas/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El indomable Will Hunting',
@@ -1016,6 +1083,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Matt Damon, Robin Williams, Ben Affleck',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=PaZVjZEFkRs',
                 'foto_grande' => 'storage/images/films/67-willhunting/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La princesa Mononoke',
@@ -1031,6 +1099,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Yōji Matsuda, Yuriko Ishida',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=4OiMOHRDs14',
                 'foto_grande' => 'storage/images/films/68-mononoke/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Cadena perpetua',
@@ -1046,6 +1115,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Tim Robbins, Morgan Freeman',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=6hB3S9bIaco',
                 'foto_grande' => 'storage/images/films/69-cadenaperpetua/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El show de Truman',
@@ -1061,6 +1131,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Jim Carrey, Ed Harris, Laura Linney',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=dlnmQbPGuls',
                 'foto_grande' => 'storage/images/films/70-truman/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Midsommar',
@@ -1076,6 +1147,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Florence Pugh, Jack Reynor, Vilhelm Blomgren',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=1Vnghdsjmd0',
                 'foto_grande' => 'storage/images/films/71-midsommar/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La maldición de Hill House',
@@ -1091,6 +1163,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Victoria Pedretti, Oliver Jackson-Cohen, Carla Gugino',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=Dywejalfyzs',
                 'foto_grande' => 'storage/images/films/72-hillhouse/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Dune',
@@ -1106,6 +1179,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Timothée Chalamet, Zendaya, Rebecca Ferguson',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=8g18jFHCLXk',
                 'foto_grande' => 'storage/images/films/73-dune/fotogrande.webp',
+                'estado' => true
             ),
 
             array(
@@ -1122,6 +1196,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Tom Cruise, Miles Teller, Jennifer Connelly',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=giXco2jaZ_4',
                 'foto_grande' => 'storage/images/films/74-maverick/fotogrande.webp',
+                'estado' => true
             ),
 
             array(
@@ -1138,6 +1213,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Cillian Murphy, Emily Blunt, Robert Downey Jr.',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=uYPbbksJxIg',
                 'foto_grande' => 'storage/images/films/75-oppenheimer/fotogrande.webp',
+                'estado' => true
             ),
 
             array(
@@ -1154,6 +1230,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Humphrey Bogart, Ingrid Bergman, Paul Henreid',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=BkL9l7qovsE',
                 'foto_grande' => 'storage/images/films/76-casablanca/fotogrande.webp',
+                'estado' => true
             ),
 
             array(
@@ -1170,6 +1247,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Chris Pratt, Zoe Saldaña, Dave Bautista',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=u3V5KDHRQvk',
                 'foto_grande' => 'storage/images/films/77-guardianes3/fotogrande.webp',
+                'estado' => true
             ),
 
             array(
@@ -1186,6 +1264,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Matthew McConaughey, Anne Hathaway, Jessica Chastain',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=zSWdZVtXT7E',
                 'foto_grande' => 'storage/images/films/78-interstellar/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Pretty Woman',
@@ -1201,6 +1280,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Richard Gere, Julia Roberts, Hector Elizondo',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=2EBAVoN8L_U',
                 'foto_grande' => 'storage/images/films/79-prettywoman/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Los chicos del coro',
@@ -1216,6 +1296,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Gérard Jugnot, François Berléand, Jean-Baptiste Maunier',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=OVBgzo5tGp4',
                 'foto_grande' => 'storage/images/films/80-coristas/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El gran showman',
@@ -1231,6 +1312,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Hugh Jackman, Zac Efron, Michelle Williams',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=uprrVIIT0G8',
                 'foto_grande' => 'storage/images/films/81-granshowman/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El último vals',
@@ -1246,6 +1328,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Robbie Robertson, Bob Dylan, Neil Young',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=M63DTQc6WPE',
                 'foto_grande' => 'storage/images/films/82-ultimovals/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Up',
@@ -1261,6 +1344,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Ed Asner, Jordan Nagai (voces en VO)',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=pkqzFUhGPJg',
                 'foto_grande' => 'storage/images/films/83-up/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El bueno, el feo y el malo',
@@ -1276,6 +1360,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Clint Eastwood, Eli Wallach, Lee Van Cleef',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=WCN5JJY_wiA',
                 'foto_grande' => 'storage/images/films/84-buenofeomalo/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Los ojos de Julia',
@@ -1291,6 +1376,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Belén Rueda, Lluís Homar, Pablo Derqui',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=6IGiYMSRe0g',
                 'foto_grande' => 'storage/images/films/85-ojosjulia/fotogrande.webp',
+                'estado' => true
             ),            
             array(
                 'titulo' => 'Amy',
@@ -1306,6 +1392,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Amy Winehouse',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=Za3lZcrzzcM',
                 'foto_grande' => 'storage/images/films/86-amy/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Antes de ti',
@@ -1321,6 +1408,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Emilia Clarke, Sam Claflin, Janet McTeer',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=Eh993__rOxA',
                 'foto_grande' => 'storage/images/films/87-antesdeti/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El secreto de Adaline',
@@ -1336,6 +1424,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Blake Lively, Michiel Huisman, Harrison Ford',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=7UzSekc0LoQ',
                 'foto_grande' => 'storage/images/films/88-adaline/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El ilusionista',
@@ -1351,6 +1440,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Edward Norton, Jessica Biel, Paul Giamatti',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=QngdF-55AGc',
                 'foto_grande' => 'storage/images/films/89-ilusionista/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La caza del Octubre Rojo',
@@ -1366,6 +1456,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Sean Connery, Alec Baldwin, Scott Glenn',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=ASSqC7on_Pk',
                 'foto_grande' => 'storage/images/films/90-octubrorojo/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El pianista',
@@ -1381,6 +1472,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Adrien Brody, Thomas Kretschmann, Frank Finlay',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=BFwGqLa_oAo',
                 'foto_grande' => 'storage/images/films/91-pianista/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El niño',
@@ -1396,6 +1488,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Lauren Cohan, Rupert Evans, James Russell',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=LFhQv8GitF8',
                 'foto_grande' => 'storage/images/films/92-elnino/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La invención de Hugo',
@@ -1411,6 +1504,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Asa Butterfield, Ben Kingsley, Chloë Grace Moretz',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=uIeSAf5pv90',
                 'foto_grande' => 'storage/images/films/93-hugo/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El viaje de Arlo',
@@ -1426,6 +1520,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Raymond Ochoa, Jeffrey Wright, Steve Zahn',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=daFnEiLEx70',
                 'foto_grande' => 'storage/images/films/94-arlo/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El método Williams',
@@ -1441,6 +1536,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Will Smith, Aunjanue Ellis, Saniyya Sidney',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=tn2W744pxXI',
                 'foto_grande' => 'storage/images/films/95-williams/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El chico y la garza',
@@ -1456,6 +1552,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Soma Santoki, Masaki Suda, Ko Shibasaki',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=oDIbOWgADr8',
                 'foto_grande' => 'storage/images/films/96-ninoygarza/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'Robot Salvaje',
@@ -1471,6 +1568,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Lupita Nyong\'o (voz de Roz), Pedro Pascal, Bill Nighy',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=VY9lcYA4RT4',
                 'foto_grande' => 'storage/images/films/97-robotsalvaje/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El hombre invisible',
@@ -1486,6 +1584,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Elisabeth Moss, Aldis Hodge, Storm Reid',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=dSBsNeYqh-k',
                 'foto_grande' => 'storage/images/films/98-hombreinvisible/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El discurso del rey',
@@ -1501,6 +1600,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Colin Firth, Geoffrey Rush, Helena Bonham Carter',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=EcxBrTvLbBM',
                 'foto_grande' => 'storage/images/films/99-discursorey/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'El renacido',
@@ -1516,6 +1616,7 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Leonardo DiCaprio, Tom Hardy, Domhnall Gleeson',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=LoebZZ8K5N0',
                 'foto_grande' => 'storage/images/films/100-renacido/fotogrande.webp',
+                'estado' => true
             ),
             array(
                 'titulo' => 'La teoría del todo',
@@ -1531,9 +1632,10 @@ class PeliculasSeeder extends Seeder
                 'actores' => 'Eddie Redmayne, Felicity Jones',
                 'enlace_trailer' => 'https://www.youtube.com/watch?v=Salz7uGp72c',
                 'foto_grande' => 'storage/images/films/101-teoriatodo/fotogrande.webp',
+                'estado' => true
             ),
         );
 
-        DB::table('peliculas')->insert($peliculas);
+        Pelicula::insert($peliculas);
     }
 }
