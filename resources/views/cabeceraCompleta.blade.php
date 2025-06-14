@@ -39,7 +39,7 @@
                         </button>
                     </form>
                 @else
-                    <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer text-xl xl:text-2xl text-text-color w-fit">
+                    <button data-dialog-target="modal" class="botonLogin cursor-pointer text-xl xl:text-2xl text-text-color w-fit inline md:hidden">
                         Iniciar sesión
                     </button>
                 @endif
@@ -71,7 +71,7 @@
                     </form>
                 </div>
             @else
-                <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer">
+                <button data-dialog-target="modal" class="botonLogin cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"

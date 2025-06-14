@@ -34,13 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.addEventListener('click', closeMenu);
     }
 
-    const botonLogin = document.getElementById("botonLogin");
+    const botonLogin = document.querySelectorAll(".botonLogin");
     const btnCerrarModalLogin = document.getElementById("btnCerrarModalLogin");
     const modalLogin = document.getElementById("modalLogin");
 
-    if (botonLogin && modalLogin) {
-        botonLogin.addEventListener("click", () => {
-            modalLogin.classList.remove("hidden");
+    if (botonLogin.length && modalLogin) {
+        botonLogin.forEach(button => {
+            button.addEventListener("click", () => {
+                modalLogin.classList.remove("hidden");
+            });
         });
     }
 
