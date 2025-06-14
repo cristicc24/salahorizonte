@@ -15,6 +15,8 @@ echo "✅ Laravel listo."
 echo "🔍 Verificando existencia de index.php..."
 if [ -f /var/www/html/public/index.php ]; then
   echo "✅ index.php encontrado"
+  echo "Contenido de /var/www/html/public:"
+  ls -la /var/www/html/public
 else
   echo "❌ index.php no existe. Algo falló."
   exit 1

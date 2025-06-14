@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
+                contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 p-2 hover:bg-text-color/80">
+                    <button id='comprarEntrada' data-idsesion='${idSesion}' class="cursor-pointer">Comprar entradas</button>
+                </div>`;
+
+                document.getElementById('comprarEntrada').addEventListener('click', comprarEntradas);
+
                 // Scroll a mapa en móviles
                 if (window.innerWidth < 1024) {
                     const destino = document.getElementById('vista-previa-mapa');
@@ -99,6 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function filtrarPorDia(fecha, botonActivo) {
         let haySesion = false;
+        const contenedor = document.getElementById('contenedor-mapa');
+        contenedor.innerHTML = '';
 
         document.querySelectorAll('.sesion').forEach(el => {
             if (el.dataset.dia === fecha) {

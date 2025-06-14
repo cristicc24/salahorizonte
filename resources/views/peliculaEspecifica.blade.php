@@ -173,7 +173,7 @@
                             </h2>
                         </div>
                         <div class="absolute top-0 left-0 w-full flex justify-start">
-                            <a href="{{ $pelicula->enlace_trailer }}" rel="noopener noreferrer"
+                            <a href="{{ $pelicula->enlace_trailer }}" rel="noopener noreferrer" target="_blank"
                                 class="bg-text-color hover:bg-text-color/80 text-white p-2 rounded-tl-lg transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
                                     <path d="M8 5v14l11-7z" />

@@ -24,7 +24,10 @@ class AuthenticatedSessionController extends Controller
         // Recuperar la URL anterior del campo oculto (o redirigir a '/')
         $previousUrl = $request->input('previous_url', '/');
 
-        return redirect()->to($previousUrl);
+        if(str_contains($previousUrl, 'registro'))
+            return redirect()->to('/');
+        else
+            return redirect()->to($previousUrl);
     }
 
     /**

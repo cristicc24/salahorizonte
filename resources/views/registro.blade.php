@@ -54,7 +54,9 @@
         <button type="submit" class="w-full text-white bg-text-color hover:bg-[#a7926d] cursor-pointer font-medium rounded-lg text-lg mt-4 px-5 py-2.5 text-center">Registrar</button>
 
         <div class="text-md font-medium text-gray-500">
-            <a href="{{ route('registro') }}">¿Ya tiene cuenta?</a>
+            <button type="button" data-dialog-target="modal" class="botonLogin cursor-pointer w-fit">
+                ¿Ya tiene cuenta?
+            </button>
         </div>
     </form>
 </div>

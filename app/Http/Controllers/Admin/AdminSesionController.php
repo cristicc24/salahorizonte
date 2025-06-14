@@ -20,6 +20,9 @@ class AdminSesionController extends Controller
             $query->where('idSala', $idSala);
         }
 
+        // Ordenar por fecha y hora (ajusta los nombres de los campos si son diferentes)
+        $query->orderBy('fechaHora', 'desc');
+
         $sesiones = $query->get();
         $peliculas = Pelicula::all();
         $salas = Sala::all();
