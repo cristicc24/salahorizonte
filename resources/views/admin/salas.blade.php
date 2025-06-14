@@ -182,7 +182,7 @@
         <h3 class="text-lg font-bold mb-4">Crear Sala</h3>
 
         <label class="block mb-2">ID de sala (único): 
-            <input type="number" name="idSala" value="{{ old('idSala') }}" class="w-full border rounded px-2 py-1 @if(session('createError')) border-red-500 @endif" required>
+            <input type="number" name="idSala" value="{{ old('idSala') }}" class="w-full border rounded px-2 py-1" required>
         </label>
 
         <label class="block mb-2">Cantidad de filas (mín 5 - máx 13): 

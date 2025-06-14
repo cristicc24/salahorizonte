@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminSalaController;
 use App\Http\Controllers\Admin\AdminSliderController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\Admin\AdminSmtpController;
+use App\Http\Controllers\RegistroController;
 
 
 require __DIR__.'/auth.php';
@@ -31,13 +32,12 @@ Route::get('/', function () {
 })->name('inicio');
 
 Route::get('/registro', fn () => view('registro'))->name('registro');
+Route::get('/registro', [RegistroController::class, 'show'])->name('registro');
 
 Route::get('/pelicula/{id}', [PeliculaController::class, 'show'])->name('pelicula');
 
-Route::get('/contacto', fn () => view('contacto'))->name('contacto');
+Route::get('/contacto', [ContactoController::class, 'show'])->name('contacto');
 Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
-
-Route::get('/footer', fn () => view('footer'))->name('footer');
 
 Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera');
 
@@ -111,7 +111,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::delete('/sliders/{id}', [AdminSliderController::class, 'destroy'])->name('sliders.destroy');
         
         // RU SMTP (Read & Update)
-        Route::get('/smtp', [AdminSmtpController::class, 'edit'])->name('smtp.edit');
+        Route::get('/smtp', [AdminSmtpController::class, 'show'])->name('smtp.show');
         Route::put('/smtp', [AdminSmtpController::class, 'update'])->name('smtp.update');
     });
 });

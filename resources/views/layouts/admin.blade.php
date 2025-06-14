@@ -165,7 +165,7 @@
         </svg>
         Sliders
     </a>
-    <a href="{{ route('admin.smtp.edit') }}" class="text-lg text-black hover:underline flex items-center gap-2">Configuración SMTP</a>
+    <a href="{{ route('admin.smtp.show') }}" class="text-lg text-black hover:underline flex items-center gap-2">Configuración SMTP</a>
 
     <form action="{{ route('admin.logout') }}" method="POST">
         @csrf

@@ -201,12 +201,6 @@
     <form method="POST" action="{{ route('admin.sesiones.store') }}">
         @csrf
         <h3 class="text-lg font-bold mb-4">Crear Sesión</h3>
-        @if (session('createError') && session('openModal') === 'create')
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
-                {{ session('createError') }}
-            </div>
-            <script>window.onload = () => openModal('create');</script>
-        @endif
 
         <label class="block mb-2">Película:
             <select name="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer">

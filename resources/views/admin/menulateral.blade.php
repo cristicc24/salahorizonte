@@ -155,8 +155,8 @@
                       0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 
                       0 2 2z"/>
             </svg>
-            <a href="{{ route('admin.smtp.edit') }}"
-               class="{{ request()->routeIs('admin.smtp.edit') ? 'font-bold text-text-color' : 'text-black' }}">
+            <a href="{{ route('admin.smtp.show') }}"
+               class="{{ request()->routeIs('admin.smtp.show') ? 'font-bold text-text-color' : 'text-black' }}">
                 Configuración SMTP
             </a>
         </li>

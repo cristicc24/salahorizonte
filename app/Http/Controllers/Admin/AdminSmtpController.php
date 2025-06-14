@@ -21,7 +21,7 @@ class AdminSmtpController extends Controller
             'from_name' => env('MAIL_FROM_NAME'),
         ];
 
-        return view('admin.smtp.edit', compact('smtp'));
+        return view('admin.smtp', compact('smtp'));
     }
 
     public function update(Request $request)

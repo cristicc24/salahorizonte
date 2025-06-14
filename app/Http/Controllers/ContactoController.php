@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Mail;
 
 class ContactoController extends Controller
 {
+
+    public function show()
+    {
+        return view('contacto');
+    }
+
     public function enviar(Request $request)
     {
         // Validar el formulario

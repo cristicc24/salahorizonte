@@ -77,3 +77,4 @@
 @else
     <p class="text-center text-lg text-white my-12">No hay películas que coincidan con los filtros seleccionados.</p>
 @endif
+@include('footer')
