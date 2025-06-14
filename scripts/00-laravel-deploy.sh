@@ -28,3 +28,5 @@ cat /etc/nginx/conf.d/default.conf
 echo "🚀 Iniciando servicios..."
 php-fpm &
 nginx -g "daemon off;"
+
+cat /var/log/nginx/access.log
