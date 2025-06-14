@@ -39,7 +39,7 @@
                         </button>
                     </form>
                 @else
-                    <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer text-xl xl:text-2xl text-text-color">
+                    <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer text-xl xl:text-2xl text-text-color w-fit">
                         Iniciar sesión
                     </button>
                 @endif
