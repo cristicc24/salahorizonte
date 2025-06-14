@@ -88,7 +88,7 @@ class Sesion extends Model
         $inicio = Carbon::parse($this->fechaHora, env('APP_TIMEZONE'));
         $duracionTexto = $this->pelicula?->duracion;
 
-        $duracion = $this->parseDuracionEnMinutos($duracionTexto);
+        $duracion = Sesion::parseDuracionEnMinutos($duracionTexto);
 
         $fin = $inicio->copy()->addMinutes($duracion);
 
@@ -98,7 +98,7 @@ class Sesion extends Model
         return 'Finalizada';
     }
 
-    private function parseDuracionEnMinutos($duracion)
+    public static function parseDuracionEnMinutos($duracion)
     {
         $minutos = 0;
 

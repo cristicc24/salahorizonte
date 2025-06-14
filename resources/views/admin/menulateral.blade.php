@@ -21,7 +21,7 @@
                       1.125V21h4.125c.621 0 1.125-.504 
                       1.125-1.125V9.75M8.25 21h8.25"/>
             </svg>
-            <a href="{{ route('admin.home') }}" class="{{ request()->routeIs('admin.home') ? 'font-bold text-text-color' : 'text-black' }}">
+            <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'font-bold text-text-color' : 'text-black' }}">
                 Dashboard
             </a>
         </li>

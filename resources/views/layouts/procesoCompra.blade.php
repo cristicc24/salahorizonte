@@ -3,4 +3,4 @@
 
 @yield('Proceso de Compra')
 
-@include('footer');
+@include('footer')

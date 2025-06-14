@@ -2,8 +2,8 @@
 
 <header class="w-full bg-primary-color h-20 sm:h-28 flex justify-between items-center font-primary-font fixed top-0 z-50 border-b border-text-color px-4 sm:px-10">
     <!-- Logo -->
-    <div class="flex justify-center text-text-color w-6/12 sm:w-4/12">
-        <a href="{{ route('inicio') }}" class="w-full max-w-[300px] sm:max-w-[400px] px-2">
+    <div class="flex text-text-color w-6/12 sm:w-4/12">
+        <a href="{{ route('admin.dashboard') }}" class="w-full max-w-[300px] sm:max-w-[400px] px-2">
             <img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full h-auto">
         </a>
     </div>
@@ -56,7 +56,7 @@
     <!-- Contenido -->
     <p class="text-xl font-bold text-black">Hola, {{ auth()->guard('admin')->user()->nombre }}</p>
 
-    <a href="{{ route('admin.home') }}" class="text-lg text-black hover:underline flex items-center gap-2">
+    <a href="{{ route('admin.dashboard') }}" class="text-lg text-black hover:underline flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round"

@@ -2,8 +2,8 @@
 
 @section('contenido')
 <div class="max-w-2xl mx-auto bg-white p-6 rounded">
-    <h2 class="text-xl font-bold mb-4">Configuración SMTP</h2>
-
+    <h2 class="text-xl font-bold mb-2">Configuración SMTP</h2>
+    <p class="text-sm italic text-red-500 mb-2">No modificar si no tienes los conocimientos necesarios. Póngase en contacto con la desarrolladora</p>
 
     @if(session('success'))
         <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50

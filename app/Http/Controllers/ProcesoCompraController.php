@@ -55,7 +55,7 @@ class ProcesoCompraController extends Controller
             abort(404);
         }
 
-        $total = count(json_decode($butacas)) * $infoPelicula->precio;
+        $total = count(json_decode($butacas)) * $infoPelicula->pelicula->precio;
 
         return view('procesoCompra.paso2', compact('infoPelicula', 'butacas', 'total', 'idSesion'));
     }
@@ -94,7 +94,7 @@ class ProcesoCompraController extends Controller
 
         // SE CREAN EL PEDIDO Y LAS LINEAS DE PEDIDO
         $usuario = auth()->user();
-        $total = count(json_decode($butacas))* $infoPelicula->precio;
+        $total = count(json_decode($butacas))* $infoPelicula->pelicula->precio;
         
         $pedido = Pedido::create([
             'totalPedido' => $total,
@@ -140,7 +140,7 @@ class ProcesoCompraController extends Controller
             $butacas = is_array($decoded) ? $decoded : [$butacas];
         }
 
-        $qrContent = "Película: {$infoPelicula->titulo}\nSesión: {$infoPelicula->fechaHora}\n";
+        $qrContent = "Película: {$infoPelicula->pelicula->titulo}\nSesión: {$infoPelicula->fechaHora}\n";
         $qrContent .= "Usuario: {$usuario->name} ({$usuario->email})\n";
 
 
@@ -179,7 +179,7 @@ class ProcesoCompraController extends Controller
         // Enviar PDF por correo con el pedido
         Mail::to($usuario->email)->send(new EntradaPedidoMail($pedido, $infoPelicula, $butacas, $usuario, $qrBase64));
 
-        $total = count($butacas) * $infoPelicula->precio;
+        $total = count($butacas) * $infoPelicula->pelicula->precio;
 
         // Actualizar mapa de butacas reservadas
         $sesion = Sesion::find($idSesion);

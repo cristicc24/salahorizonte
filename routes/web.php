@@ -85,7 +85,7 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
     Route::middleware('auth:admin')->group(function () {
         
         // DASHBOARD
-        Route::get('/', [AdministradorController::class, 'show'])->name('home');
+        Route::get('/', [AdministradorController::class, 'show'])->name('dashboard');
 
         // LOGOUT
         Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');

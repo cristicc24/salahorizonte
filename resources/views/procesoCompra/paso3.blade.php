@@ -1,8 +1,8 @@
 @extends('layouts.procesoCompra')
 
 @section('Proceso de Compra')
-<div class="max-w-2xl mx-auto text-white mt-32 p-6 mb-4 font-primary-font">
-    <h2 class="text-3xl font-bold mb-6 border-b border-white/90 pb-2">Selecciona método de pago</h2>
+<div class="max-w-2xl mx-auto text-white mt-28 p-6 mb-4 font-primary-font">
+    <h2 class="lg:text-3xl text-xl sm:text-2xl font-bold mb-6 border-b border-white/90 pb-2">Selecciona método de pago</h2>
 
     <ul class="space-y-4">
         @foreach([
@@ -46,13 +46,13 @@
         @endforeach
     </ul>
 
-    <p class="mt-6 text-sm text-gray-400">
+    <p class="mt-6 lg:text-base sm:text-sm md:text-md text-gray-400">
         Al seleccionar un método de pago, serás redirigido a la pasarela de pago correspondiente.
         En caso de querer cancelar el pedido, se reembolsará la cantidad pagada si queda más de 1 hora para la sesión.
     </p>
 
     <div class="mt-8">
-        <a href="{{ url()->previous() }}" class="flex items-center gap-2 text-white border border-white px-4 py-2 rounded hover:bg-white/80 hover:text-gray-800 transition duration-200 w-fit">
+        <a href="{{ route('procesoCompra.paso2', ['idSesion' => $infoPelicula->id, 'butacas' => $butacas]) }}" class="flex items-center gap-2 text-white border border-white px-4 py-2 rounded hover:bg-white/80 hover:text-gray-800 transition duration-200 w-fit">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
             </svg>

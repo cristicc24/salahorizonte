@@ -60,7 +60,7 @@ class AdminSesionController extends Controller
 
         $nuevaFechaHora = Carbon::parse($request->fechaHora);
         $pelicula = Pelicula::findOrFail($request->idPelicula);
-        $duracionEnMinutos = $this->parseDuracionEnMinutos($pelicula->duracion);
+        $duracionEnMinutos = Sesion::parseDuracionEnMinutos($pelicula->duracion);
 
         // Establecer el rango de tiempo ocupado por la nueva sesión
         $inicioPropuesta = $nuevaFechaHora->copy()->subMinutes(15);
@@ -72,7 +72,7 @@ class AdminSesionController extends Controller
             ->get()
             ->filter(function ($sesion) use ($inicioPropuesta, $finPropuesta) {
                 $inicioSesion = Carbon::parse($sesion->fechaHora);
-                $duracionSesion = $this->parseDuracionEnMinutos($sesion->pelicula->duracion);
+                $duracionSesion = Sesion::parseDuracionEnMinutos($sesion->pelicula->duracion);
                 $finSesion = $inicioSesion->copy()->addMinutes($duracionSesion);
 
                 return $finSesion->gt($inicioPropuesta) && $inicioSesion->lt($finPropuesta);
@@ -112,13 +112,12 @@ class AdminSesionController extends Controller
     {
         $sesion = Sesion::findOrFail($id);
 
-        // Evitar edición si hay butacas reservadas
+        // Evitar edición si ya ha empezado o finalizado
         if ($sesion->estado !== 'Activa') {
             return redirect()->route('admin.sesiones')
                 ->with('editError', 'No se puede editar esta sesión porque ya ha comenzado o finalizado.')
                 ->with('openModal', 'edit-' . $id);
         }
-
 
         // Validación
         $validator = \Validator::make($request->all(), [
@@ -139,7 +138,34 @@ class AdminSesionController extends Controller
                 ->withInput();
         }
 
-        // Actualiza los campos permitidos (sin regenerar butacas)
+        // Verificación de conflictos con otras sesiones
+        $nuevaFechaHora = Carbon::parse($request->fechaHora);
+        $pelicula = Pelicula::findOrFail($request->idPelicula);
+        $duracionEnMinutos = Sesion::parseDuracionEnMinutos($pelicula->duracion);
+
+        $inicioPropuesta = $nuevaFechaHora->copy()->subMinutes(15);
+        $finPropuesta = $nuevaFechaHora->copy()->addMinutes($duracionEnMinutos + 15);
+
+        $conflictos = Sesion::where('idSala', $request->idSala)
+            ->where('id', '!=', $id) // 👈 excluye la sesión actual
+            ->with('pelicula')
+            ->get()
+            ->filter(function ($otraSesion) use ($inicioPropuesta, $finPropuesta) {
+                $inicio = Carbon::parse($otraSesion->fechaHora);
+                $duracion = Sesion::parseDuracionEnMinutos($otraSesion->pelicula->duracion);
+                $fin = $inicio->copy()->addMinutes($duracion);
+
+                return $fin->gt($inicioPropuesta) && $inicio->lt($finPropuesta);
+            });
+
+        if ($conflictos->isNotEmpty()) {
+            return redirect()->route('admin.sesiones')
+                ->with('editError', 'Existe una sesión en esa sala demasiado próxima en el tiempo.')
+                ->with('openModal', 'edit-' . $id)
+                ->withInput();
+        }
+
+        // Actualizar sesión
         $sesion->update($request->only('idPelicula', 'idSala', 'fechaHora'));
 
         return redirect()->route('admin.sesiones')->with('success', 'Sesión actualizada correctamente.');

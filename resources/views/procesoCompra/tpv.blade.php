@@ -7,7 +7,7 @@
         </h2>
 
         <p class="text-gray-700 text-center mb-4">
-            Estás realizando el pago con <strong>{{ ucfirst($metodo) }}</strong> para <strong>{{ $infoPelicula->titulo }}</strong>.
+            Estás realizando el pago con <strong>{{ ucfirst($metodo) }}</strong> para <strong>{{ $infoPelicula->pelicula->titulo }}</strong>.
         </p>
 
         <p class="text-gray-600 text-sm mb-6 text-center">

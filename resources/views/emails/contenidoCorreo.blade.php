@@ -24,7 +24,7 @@
                 <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553 2.276A1 1 0 0120 13.118V18a1 1 0 01-1 1H5a1 1 0 01-1-1v-4.882a1 1 0 01.447-.842L9 10m6 0V6a3 3 0 00-6 0v4m6 0H9"/>
                 </svg>
-                <strong>Película: </strong> {{ $infoPelicula->titulo }}
+                <strong>Película: </strong> {{ $infoPelicula->pelicula->titulo }}
             </p>
 
             <p style="margin: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
@@ -40,7 +40,7 @@
                 <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5V6a3 3 0 013-3h12a3 3 0 013 3v1.5M3 7.5v9a3 3 0 003 3h12a3 3 0 003-3v-9M3 7.5h18"/>
                 </svg>
-                <strong>Sala: </strong> {{ $infoPelicula->idSala }}
+                <strong>Sala: </strong> {{ $infoPelicula->sala->idSala }}
             </p>
 
         </div>

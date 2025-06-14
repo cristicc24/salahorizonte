@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(form);
             form.submit();
         } else {
-            const loginBtn = document.getElementById('botonLogin');
+            const loginBtn = document.querySelector('.botonLogin');
             if (loginBtn) loginBtn.click();
         }
     }
@@ -173,4 +173,4 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('inputButacas').value = JSON.stringify(seleccionadas);
         });
     }
-});w
+});
