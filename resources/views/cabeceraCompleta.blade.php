@@ -1,6 +1,6 @@
 <body class="bg-primary-color" data-usuario-autenticado="{{ Auth::check() ? 'true' : 'false' }}">
     <header class="container-fluid w-full bg-primary-color h-20 sm:h-28 flex justify-between font-primary-font fixed top-0 z-10 border-1 border-b-text-color">
-        <div @class(['flex', 'items-center', 'w-full', 'mx-2', 'justify-center' => !$completo])>
+        <div @class(['flex', 'items-center', 'w-full', 'mx-2', 'md:justify-center' => !$completo, 'justify-between' => $completo, 'md:justify-start' => $completo])>
             <div class="flex justify-center text-text-color w-6/12 sm:w-4/12 h-fit">
                 <a href="{{ route('inicio') }}" class="w-full max-w-[300px] sm:max-w-[400px] px-2">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo de la empresa" class="w-full h-auto">
@@ -17,34 +17,55 @@
             <div id="backdrop" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out md:hidden z-10"></div>
             <nav id="navLinks" class="md:static md:inset-auto md:transform-none md:transition-none md:translate-none md:justify-evenly md:flex md:flex-row md:space-y-0 md:space-x-8
                 md:pt-0 md:px-0 md:max-w-none md:opacity-100 md:pointer-events-auto opacity-0 pointer-events-none fixed inset-y-0 left-0 z-50 w-4/5 max-w-xs bg-primary-color                     transition-transform duration-300 ease-in-out
-                flex flex-col pt-28 space-y-4 px-6" >
+                flex flex-col pt-16 space-y-4 px-6" >
                 <!-- botón cerrar -->
                 <button id="closeBtn" class="absolute top-4 right-4 md:hidden text-text-color focus:outline-none" aria-label="Cerrar menú">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
-                <a href="{{ route('inicio') }}"    class="text-xl xl:text-2xl text-text-color">Inicio</a>
-                <a href="{{ route('cartelera') }}" class="text-xl xl:text-2xl text-text-color">Cartelera</a>
-                <a href="{{ route('contacto') }}"  class="text-xl xl:text-2xl text-text-color">Contacto</a>
+                @if (Auth::check())
+                <p class="text-xl xl:text-2xl text-text-color inline md:hidden italic font-bold"><span class="text-lg xl:text-xl">Hola,</span> {{ Auth::user()->name }}</p>
+                @endif
+                <a href="{{ route('inicio') }}"         class="text-xl xl:text-2xl text-text-color">Inicio</a>
+                <a href="{{ route('cartelera') }}"      class="text-xl xl:text-2xl text-text-color">Cartelera</a>
+                <a href="{{ route('contacto') }}"       class="text-xl xl:text-2xl text-text-color">Contacto</a>
+                <a href="{{ route('usuario.perfil') }}" class="text-xl xl:text-2xl text-text-color inline md:hidden">Mi cuenta</a>
+                @if (Auth::check())
+                <form method="POST" action="{{ route('logout') }}" class="inline md:hidden">
+                    @csrf
+                    <button type="submit" class="cursor-pointer text-xl xl:text-2xl text-text-color">
+                        Cerrar sesión
+                    </button>
+                </form>
+                @endif
             </nav>
             @endif
         </div>
 
         @if ($completo)
-        <div class="text-text-color w-1/4 flex justify-around items-center z-20">
+        <div class="text-text-color w-1/4 justify-around items-center z-20 hidden md:flex">
             @if (Auth::check())
-                <p class="text-xl xl:text-2xl hidden md:block"><span class="text-lg xl:text-xl">Hola,</span> {{ Auth::user()->name }}</p>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="cursor-pointer">
+                <p class="text-xl xl:text-2xl font-bold"><span class="text-lg xl:text-xl italic">Hola,</span> {{ Auth::user()->name }}</p>
+                <div class="flex gap-x-4">
+                    <a href="{{ route('usuario.perfil') }}" class="text-text-color text-lg xl:text-xl hover:underline">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg>
-                    </button>
-                </form>
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
             @else
                 <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
