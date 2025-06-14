@@ -15,7 +15,7 @@
                 </svg>
             </button>
             <div id="backdrop" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out md:hidden z-10"></div>
-            <nav id="navLinks" class="md:static md:inset-auto md:transform-none md:transition-none md:translate-none md:justify-evenly md:flex md:flex-row md:space-y-0 md:space-x-8
+            <nav id="navLinks" class="md:static md:inset-auto md:transform-none md:transition-none md:translate-none md:justify-evenly md:flex md:flex-row md:space-y-0
                 md:pt-0 md:px-0 md:max-w-none md:opacity-100 md:pointer-events-auto opacity-0 pointer-events-none fixed inset-y-0 left-0 z-50 w-4/5 max-w-xs bg-primary-color                     transition-transform duration-300 ease-in-out
                 flex flex-col pt-16 space-y-4 px-6" >
                 <!-- botón cerrar -->
@@ -46,10 +46,10 @@
         </div>
 
         @if ($completo)
-        <div class="text-text-color w-1/4 justify-around items-center z-20 hidden md:flex">
+        <div class="text-text-color w-1/3 justify-around items-center z-20 hidden md:flex mr-4">
             @if (Auth::check())
-                <p class="text-xl xl:text-2xl font-bold"><span class="text-lg xl:text-xl italic">Hola,</span> {{ Auth::user()->name }}</p>
-                <div class="flex gap-x-4">
+                <p class="text-xl xl:text-2xl font-bold text-center mx-2"><span class="text-lg xl:text-xl italic">Hola,</span> {{ Auth::user()->name }}</p>
+                <div class="flex gap-x-2">
                     <a href="{{ route('usuario.perfil') }}" class="text-text-color text-lg xl:text-xl hover:underline">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="size-6">

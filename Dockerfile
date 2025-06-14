@@ -38,4 +38,4 @@ RUN chmod +x /start.sh
 # Exponer el puerto que Nginx va a servir
 EXPOSE 80
 
-CMD ["/00-laravel-deploy.sh"]
+CMD ["/start.sh"]
