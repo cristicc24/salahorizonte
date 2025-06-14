@@ -31,15 +31,17 @@
                 <a href="{{ route('cartelera') }}"      class="text-xl xl:text-2xl text-text-color">Cartelera</a>
                 <a href="{{ route('contacto') }}"       class="text-xl xl:text-2xl text-text-color">Contacto</a>
                 @if (Auth::check())
-                <a href="{{ route('usuario.perfil') }}" class="text-xl xl:text-2xl text-text-color inline md:hidden">Mi cuenta</a>
-                <form method="POST" action="{{ route('logout') }}" class="inline md:hidden">
-                    @csrf
-                    <button type="submit" class="cursor-pointer text-xl xl:text-2xl text-text-color">
-                        Cerrar sesión
-                    </button>
-                </form>
+                    <a href="{{ route('usuario.perfil') }}" class="text-xl xl:text-2xl text-text-color inline md:hidden">Mi cuenta</a>
+                    <form method="POST" action="{{ route('logout') }}" class="inline md:hidden">
+                        @csrf
+                        <button type="submit" class="cursor-pointer text-xl xl:text-2xl text-text-color">
+                            Cerrar sesión
+                        </button>
+                    </form>
                 @else
-                <a href="{{ route('usuario.perfil') }}" class="text-xl xl:text-2xl text-text-color inline md:hidden">Iniciar sesión</a>
+                    <button data-dialog-target="modal" id="botonLogin" class="cursor-pointer text-xl xl:text-2xl text-text-color">
+                        Iniciar sesión
+                    </button>
                 @endif
             </nav>
             @endif
