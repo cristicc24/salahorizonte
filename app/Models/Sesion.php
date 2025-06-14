@@ -49,7 +49,7 @@ class Sesion extends Model
             ->where('sesiones.idPelicula', $id)
             ->select(
                 'sesiones.id',
-                'sesiones.idSala',
+                'salas.idSala',
                 'sesiones.fechaHora',
                 'sesiones.numButacasReservadas',
                 'sesiones.idPelicula',

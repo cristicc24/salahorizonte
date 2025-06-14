@@ -1,13 +1,35 @@
 {
+  "_index-xsH4HHeE.js": {
+    "file": "assets/index-xsH4HHeE.js",
+    "name": "index"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-DIHCXgsg.css",
+    "file": "assets/app-q9jMImjs.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
-  "resources/js/app.js": {
-    "file": "assets/app-CRVvAGuw.js",
-    "name": "app",
-    "src": "resources/js/app.js",
+  "resources/js/app-back.js": {
+    "file": "assets/app-back-Dhu3zlsH.js",
+    "name": "app-back",
+    "src": "resources/js/app-back.js",
     "isEntry": true
+  },
+  "resources/js/app-front.js": {
+    "file": "assets/app-front-Cf0moMol.js",
+    "name": "app-front",
+    "src": "resources/js/app-front.js",
+    "isEntry": true,
+    "imports": [
+      "_index-xsH4HHeE.js"
+    ]
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-BM9oQkvv.js",
+    "name": "bootstrap",
+    "src": "resources/js/bootstrap.js",
+    "isEntry": true,
+    "imports": [
+      "_index-xsH4HHeE.js"
+    ]
   }
 }
