@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8080:80"
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=your-postgres-host.render.com
+      - DB_PORT=5432
+      - DB_DATABASE=yourdbname
+      - DB_USERNAME=youruser
+      - DB_PASSWORD=yourpassword
+    depends_on:
+      - nginx
+    networks:
+      - laravel
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - laravel
+
+networks:
+  laravel:
