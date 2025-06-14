@@ -173,4 +173,4 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('inputButacas').value = JSON.stringify(seleccionadas);
         });
     }
-});
+});w
