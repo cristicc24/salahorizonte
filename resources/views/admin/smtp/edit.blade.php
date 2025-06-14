@@ -4,6 +4,7 @@
 <div class="max-w-2xl mx-auto bg-white p-6 rounded">
     <h2 class="text-xl font-bold mb-4">Configuración SMTP</h2>
 
+
     @if(session('success'))
         <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
             bg-green-100 border border-green-400 text-green-700">

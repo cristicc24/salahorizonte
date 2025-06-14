@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            Seeder::class, SliderSeeder::class, TopPeliculasSeeder::class, AdministradoresSeeder::class
+            PeliculasSeeder::class, SliderSeeder::class, TopPeliculasSeeder::class, AdministradoresSeeder::class
         ]);
     }
 }
