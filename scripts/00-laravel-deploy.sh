@@ -1,35 +1,28 @@
 #!/usr/bin/env bash
-
 set -e
 
-echo "🔧 Verificando si index.php existe..."
+echo "🔧 Ejecutando setup Laravel..."
+composer install --no-dev --optimize-autoloader
+
+php artisan key:generate --show
+php artisan config:cache
+php artisan route:cache
+php artisan migrate --force
+php artisan db:seed --force
+
+echo "✅ Laravel listo."
+
+echo "🔍 Verificando existencia de index.php..."
 if [ -f /var/www/html/public/index.php ]; then
   echo "✅ index.php encontrado"
 else
-  echo "❌ index.php NO existe"
+  echo "❌ index.php no existe. Algo falló."
+  exit 1
 fi
 
-echo "🔧 Verificando contenido de /etc/nginx/conf.d/default.conf"
+echo "📄 nginx.conf cargado:"
 cat /etc/nginx/conf.d/default.conf
 
-echo "Running composer..."
-composer install --no-dev --optimize-autoloader
-
-echo "Generating application key..."
-php artisan key:generate --show
-
-echo "Caching config..."
-php artisan config:cache
-
-echo "Caching routes..."
-php artisan route:cache
-
-echo "Running migrations..."
-php artisan migrate --force
-
-echo "Running seeders..."
-php artisan db:seed --force
-
-
-echo "Starting Nginx..."
+echo "🚀 Iniciando servicios..."
+php-fpm &
 nginx -g "daemon off;"
