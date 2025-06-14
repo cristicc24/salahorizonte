@@ -17,4 +17,4 @@ php artisan migrate:fresh --seed --force
 echo "Creating symbolic link..."
 php artisan storage:link
 
-ls -l /var/www/html/public/storage
+ls -lR /var/www/html/public/storage

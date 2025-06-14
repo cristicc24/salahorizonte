@@ -17,6 +17,6 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
+RUN chown -R www-data:www-data /var/www/html \
+ && chmod -R 755 /var/www/html/public/storage
 CMD ["/start.sh"]
