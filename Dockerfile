@@ -1,20 +1,46 @@
-FROM richarvey/nginx-php-fpm:3.1.6
+# Etapa 1: Construcción de assets con Node
+FROM node:18 AS frontend
+
+WORKDIR /app
+
+COPY package*.json vite.config.js ./
+COPY resources ./resources
+
+RUN npm install
+RUN npm run build
+
+
+# Etapa 2: Backend con PHP-FPM y Nginx
+FROM php:8.2-fpm AS backend
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    nginx \
+    git \
+    unzip \
+    curl \
+    libzip-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install pdo_mysql zip mbstring exif
+
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
 
 COPY . .
 
-# Image config
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+RUN composer install --no-dev --optimize-autoloader
+COPY --from=frontend /app/public/build ./public/build
 
-# Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+RUN php artisan config:cache \
+ && php artisan route:cache \
+ && php artisan view:cache
 
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Configurar Nginx
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 
-CMD ["/start.sh"]
+# Arranque de servicios
+CMD service nginx start && php-fpm
