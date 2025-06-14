@@ -16,7 +16,12 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                'resources/css/app.css', 
+                'resources/js/app-back.js',
+                'resources/js/app-front.js',
+                'resources/js/bootstrap.js',
+                'resources/js/compra.js',],
             refresh: true,
         }),
         tailwindcss(),
