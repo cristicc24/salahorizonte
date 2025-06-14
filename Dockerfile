@@ -46,4 +46,4 @@ RUN php artisan config:cache \
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 
 # Arranque de servicios
-CMD service nginx start && php-fpm
+CMD ["php-fpm"]
