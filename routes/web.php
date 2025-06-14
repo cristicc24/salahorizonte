@@ -87,25 +87,21 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         // DASHBOARD
         Route::get('/', [AdministradorController::class, 'show'])->name('home');
 
+        // LOGOUT
+        Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
+
         // VISTAS DEL MENÚ
-        Route::get('/peliculas', [AdministradorController::class, 'showPeliculas'])->name('peliculas');
+        Route::get('/peliculas', [AdminPeliculaController::class, 'index'])->name('peliculas');
         Route::get('/sesiones/{idSala?}', [AdminSesionController::class, 'index'])->name('sesiones');
         Route::get('/salas', [AdminSalaController::class, 'index'])->name('salas');
         Route::get('/sliders', [AdminSliderController::class, 'show'])->name('sliders');
 
-        // LOGOUT
-        Route::post('logout', [AdminLogin::class, 'destroy'])->name('logout');
-
         // CRUD PELÍCULAS
-        Route::resource('api/peliculas', AdminPeliculaController::class);
         Route::post('/peliculas', [AdminPeliculaController::class, 'store'])->name('peliculas.store');
-        Route::get('/peliculas', [AdminPeliculaController::class, 'index'])->name('peliculas');
-
         Route::put('/peliculas/{id}', [AdminPeliculaController::class, 'update'])->name('peliculas.update');
         Route::delete('/peliculas/{id}', [AdminPeliculaController::class, 'destroy'])->name('peliculas.destroy');
 
         // CRUD SESIONES
-        Route::resource('api/sesiones', AdminSesionController::class)->except(['create', 'edit']);
         Route::post('/sesiones', [AdminSesionController::class, 'store'])->name('sesiones.store');
         Route::put('/sesiones/{id}', [AdminSesionController::class, 'update'])->name('sesiones.update');
         Route::delete('/sesiones/{id}', [AdminSesionController::class, 'destroy'])->name('sesiones.destroy');
@@ -120,11 +116,9 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
         Route::put('/sliders/{id}', [AdminSliderController::class, 'update'])->name('sliders.update');
         Route::delete('/sliders/{id}', [AdminSliderController::class, 'destroy'])->name('sliders.destroy');
         
-
-        // RU SMTP
+        // RU SMTP (Read & Update)
         Route::get('/smtp', [AdminSmtpController::class, 'edit'])->name('smtp.edit');
         Route::put('/smtp', [AdminSmtpController::class, 'update'])->name('smtp.update');
-
     });
 });
 

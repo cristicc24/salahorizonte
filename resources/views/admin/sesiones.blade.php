@@ -4,19 +4,22 @@
 <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl font-bold">Sesiones</h2>
 
-    <div class="flex">
+    <div class="flex gap-2 items-center">
         @if(isset($salaSeleccionada))
-        @php
-            $salaNombre = optional($salas->firstWhere('id', $salaSeleccionada))->idSala ?? $salaSeleccionada;
-        @endphp
-        <div class="flex items-center gap-4 mr-2">
+            @php
+                $salaNombre = optional($salas->firstWhere('id', $salaSeleccionada))->idSala ?? $salaSeleccionada;
+            @endphp
             <span class="text-sm text-gray-700">Filtrando por: <strong>Sala {{ $salaNombre }}</strong></span>
-            <a href="{{ route('admin.sesiones') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-3 py-1 rounded">
+            
+            <a href="{{ route('admin.sesiones') }}"
+            class="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-4 py-2 rounded cursor-pointer">
                 Limpiar filtro
             </a>
-        </div>
         @endif
-        <button type="button" data-open-modal="create" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
+
+        <button type="button"
+            data-open-modal="create"
+            class="flex items-center gap-2 bg-green-600 text-white text-sm px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
             + Nueva Sesión
         </button>
     </div>
