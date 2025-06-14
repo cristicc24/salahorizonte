@@ -17,4 +17,7 @@ php artisan migrate --force
 echo "Running seeders..."
 php artisan db:seed --force
 
+echo "Creating symbolic link..."
+php artisan storage:link
+
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
