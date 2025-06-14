@@ -38,7 +38,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553 2.276A1 1 0 0120 13.118V18a1 1 0 01-1 1H5a1 1 0 01-1-1v-4.882a1 1 0 01.447-.842L9 10m6 0V6a3 3 0 00-6 0v4m6 0H9"/>
             </svg>
-            <span><strong>Película:</strong> {{ $infoPelicula->titulo }}</span>
+            <span><strong>Película:</strong>&nbsp;{{ $infoPelicula->titulo }}</span>
         </p>
 
         <p class="mb-2 flex">
@@ -46,7 +46,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <span><strong>Sesión:</strong> {{ \Carbon\Carbon::parse($infoPelicula->fechaHora)->format('d/m/Y H:i') }}</span>
+            <span><strong>Sesión:</strong>&nbsp;{{ \Carbon\Carbon::parse($infoPelicula->fechaHora)->format('d/m/Y H:i') }}</span>
         </p>
 
         <p class="mb-2 flex">
@@ -54,7 +54,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5V6a3 3 0 013-3h12a3 3 0 013 3v1.5M3 7.5v9a3 3 0 003 3h12a3 3 0 003-3v-9M3 7.5h18"/>
             </svg>
-            <span><strong>Sala:</strong> {{ $infoPelicula->idSala }}</span>
+            <span><strong>Sala:</strong>&nbsp;{{ $infoPelicula->idSala }}</span>
         </p>
 
         <p class="mb-2 flex">
@@ -62,7 +62,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
-            <span><strong>Butacas:</strong> {{ implode(', ', $butacas) }}</span>
+            <span><strong>Butacas:</strong>&nbsp;{{ implode(', ', $butacas) }}</span>
         </p>
 
         @if($usuario)
@@ -71,7 +71,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 19.5a8.25 8.25 0 1115 0"/>
             </svg>
-            <span><strong>Usuario:</strong> {{ $usuario->name }} ({{ $usuario->email }})</span>
+            <span><strong>Usuario:</strong>&nbsp;{{ $usuario->name }} ({{ $usuario->email }})</span>
         </p>
         @endif
     </div>
