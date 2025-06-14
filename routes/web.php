@@ -63,13 +63,13 @@ Route::get('/sesion/{id}/getMapa', function($id) {
     return response()->json($mapa);
 });
 
-Route::get('/sesion/{id}/estado', function ($id) {
-    $sesion = Sesion::find($id);
-    if (!$sesion) return response()->json(['estado' => 'No encontrada'], 404);
+// Route::get('/sesion/{id}/estado', function ($id) {
+//     $sesion = Sesion::find($id);
+//     if (!$sesion) return response()->json(['estado' => 'No encontrada'], 404);
 
-    $estado = $sesion->estado;
-    return response()->json(['estado' => $estado]);
-});
+//     $estado = $sesion->estado;
+//     return response()->json(['estado' => $estado]);
+// });
 
 // ==============================
 // RUTAS ADMINISTRATIVAS
@@ -127,6 +127,10 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
 
     });
 });
+
+// ==============================
+// RUTAS PERFIL USUARIO
+// ==============================
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/usuario/perfil', [UsuarioController::class, 'index'])->name('usuario.perfil');

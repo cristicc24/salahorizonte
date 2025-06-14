@@ -38,37 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                // Consultar el estado de la sesión
-                fetch(`/sesion/${idSesion}/estado`)
-                    .then(res => res.json())
-                    .then(data => {
-                        const estado = data.estado;
-                        const botonDiv = document.createElement('div');
-                        botonDiv.className = `col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 p-2`;
-
-                        if (estado === 'Activa') {
-                            botonDiv.innerHTML = `<button id='comprarEntrada' data-idsesion='${idSesion}' class="cursor-pointer">Comprar entradas</button>`;
-                        } else {
-                            botonDiv.innerHTML = `<button disabled class="cursor-not-allowed text-gray-400" title="Sesión ${estado.toLowerCase()}, no disponible">No disponible</button>`;
-                        }
-
-                        contenedor.appendChild(botonDiv);
-
-                        // Solo añadimos el evento si existe el botón
-                        const btn = document.getElementById('comprarEntrada');
-                        if (btn) btn.addEventListener('click', comprarEntradas);
-                    })
-                    .catch(error => {
-                        console.error('Error obteniendo el estado:', error);
-                    });
-
                 // Scroll a mapa en móviles
-                if (window.innerWidth < 768) {
+                if (window.innerWidth < 1024) {
                     const destino = document.getElementById('vista-previa-mapa');
                     if (destino) {
                         setTimeout(() => {
                             destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 100);
+                        }, 500);
                     }
                 }
             })
