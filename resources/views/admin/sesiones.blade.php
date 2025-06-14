@@ -145,7 +145,7 @@
                             <label class="block mb-2">Sala:
                                 <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer">
                                     @foreach($salas as $sala)
-                                        <option value="{{ $sala->id }}" @selected(old('idSala', $sesion->idSala) == $sala->id)>Sala {{ $sala->id }}</option>
+                                        <option value="{{ $sala->id }}" @selected(old('idSala', $sesion->idSala) == $sala->id)>Sala {{ $sala->idSala }}</option>
                                     @endforeach
                                 </select>
                             </label>
@@ -209,7 +209,7 @@
             <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer">
                 @foreach($salas as $sala)
                     <option value="{{ $sala->id }}" @selected(old('idSala') == $sala->id)>
-                        Sala {{ $sala->id }}
+                        Sala {{ $sala->idSala }}
                     </option>
                 @endforeach
             </select>

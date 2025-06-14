@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-echo "Running composer"
-composer global require hirak/prestissimo
-composer install --no-dev --working-dir=/var/www/html
 
-echo "generating application key..."
+set -e
+
+echo "Running composer..."
+composer install --no-dev --optimize-autoloader
+
+echo "Generating application key..."
 php artisan key:generate --show
 
 echo "Caching config..."
@@ -23,3 +25,9 @@ npm ci
 
 echo "Building front-end assets..."
 npm run build
+
+echo "Starting PHP-FPM..."
+php-fpm &
+
+echo "Starting Nginx..."
+nginx -g "daemon off;"

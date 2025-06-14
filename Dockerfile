@@ -31,8 +31,11 @@ RUN php artisan config:cache \
 # Copiar configuración de Nginx
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer puerto que Nginx usará
+# Copiar script de arranque
+COPY ./scripts/00-laravel-deploy.sh /start.sh
+RUN chmod +x /start.sh
+
+# Exponer el puerto que Nginx va a servir
 EXPOSE 80
 
-# Start both PHP-FPM and Nginx
-CMD service php8.2-fpm start && nginx -g "daemon off;"
+CMD ["/00-laravel-deploy.sh"]

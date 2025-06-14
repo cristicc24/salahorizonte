@@ -32,7 +32,7 @@
     <table class="w-full text-left border mt-4 text-sm">
         <thead class="bg-gray-200">
             <tr>
-                <th class="p-2">ID</th>
+                <th class="p-2">ID Sala</th>
                 <th class="p-2">Filas</th>
                 <th class="p-2">Columnas</th>
                 <th class="p-2">Total Butacas</th>
