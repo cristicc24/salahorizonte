@@ -18,3 +18,6 @@ echo "Creating symbolic link..."
 php artisan storage:link
 
 ls -lR /var/www/html/public/storage
+
+chown -R www-data:www-data /var/www/html/public/storage
+chmod -R 755 /var/www/html/public/storage
