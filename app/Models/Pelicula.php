@@ -25,7 +25,8 @@ class Pelicula extends Model
         'foto_grande',
         'actores',
         'enlace_trailer',
-        'foto_miniatura'
+        'foto_miniatura',
+        'activo'
     ];
 
     // Relación: una película puede tener muchas sesiones
@@ -66,21 +67,6 @@ class Pelicula extends Model
                 ->select('*')
                 ->get();
     }
-
-//    public function setDuracionAttribute($value)
-//     {
-//         $value = trim($value);
-
-//         if (is_numeric($value)) {
-//             $horas = floor($value / 60);
-//             $min = $value % 60;
-//             $this->attributes['duracion'] = "{$horas}h {$min}m";
-//             return;
-//         }
-
-//         $this->attributes['duracion'] = $value;
-//     }
-
 
     public function getDuracionFormatoAttribute()
     {

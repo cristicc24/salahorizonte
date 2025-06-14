@@ -56,9 +56,9 @@ class Sesion extends Model
                 'salas.numButacasTotales',
                 'peliculas.duracion',
                 DB::raw("CASE
-                    WHEN NOW() < sesiones.fechaHora THEN 'Activa'
-                    WHEN NOW() BETWEEN sesiones.fechaHora AND DATE_ADD(sesiones.fechaHora, INTERVAL peliculas.duracion MINUTE) THEN 'En curso'
-                    ELSE 'Finalizada'
+                WHEN NOW() < sesiones.fechaHora THEN 'Activa'
+                WHEN NOW() BETWEEN sesiones.fechaHora AND (sesiones.fechaHora + (peliculas.duracion || ' minutes')::interval) THEN 'En curso'
+                ELSE 'Finalizada'
                 END as estado")
             )
             ->get();
