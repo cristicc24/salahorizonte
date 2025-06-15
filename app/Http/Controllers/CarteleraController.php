@@ -30,10 +30,6 @@ class CarteleraController extends Controller
             $peliculas->where('genero', 'like', '%' . $request->genero . '%');
         }
 
-        if ($request->filled('edad')) {
-            $peliculas->where('edad_recomendada', $request->edad);
-        }
-
         $peliculas = $peliculas->get();
 
         // 3. Filtrar solo películas con sesiones activas (según duración real)

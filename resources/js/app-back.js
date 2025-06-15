@@ -222,14 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.querySelectorAll('input[name="cantidadFilas"], input[name="cantidadColumnas"]').forEach(input => {
-        input.addEventListener('input', () => {
-            let val = parseInt(input.value);
-            if (val > 13) input.value = 13;
-            if (val < 5) input.value = 5;
-        });
-    });
-
     const flash = document.getElementById('flash-message');
     if (flash) {
         setTimeout(() => flash.remove(), 4000);

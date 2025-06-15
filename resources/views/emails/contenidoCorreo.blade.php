@@ -36,7 +36,7 @@
                 @php
                     use Carbon\Carbon;
 
-                    setlocale(LC_TIME, 'es_ES.UTF-8'); // Necesario para compatibilidad en algunos sistemas
+                    setlocale(LC_TIME, 'es_ES.UTF-8');
 
                     $fecha = Carbon::parse($infoPelicula->fechaHora);
                     $dia = $fecha->translatedFormat('d \\d\\e F \\d\\e Y'); // Ej: "15 de junio de 2025"

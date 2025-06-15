@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <div>
                 <h4 class="text-white text-2xl font-semibold mb-2">Sala Horizonte</h4>
-                <p class="text-lg">Una experiencia curada para amantes del buen cine.<br>Proyecto académico sin fines comerciales.</p>
+                <p class="text-lg">Una experiencia para amantes del buen cine.<br>Proyecto académico sin fines comerciales.</p>
             </div>
 
             <div>

@@ -28,14 +28,6 @@
             @endforeach
         </select>
 
-        {{-- Edad recomendada --}}
-        <select name="edad" class="w-full sm:w-48 border border-gray-300 text-white p-2 rounded">
-            <option value="" class="text-black">Todas las edades</option>
-            @foreach ($edades as $edad)
-                <option value="{{ $edad }}" {{ request('edad') == $edad ? 'selected' : '' }} class="text-black">{{ $edad }}+</option>
-            @endforeach
-        </select>
-
         {{-- Día de la sesión --}}
         <select name="dia" class="w-full sm:w-48 border border-gray-300 text-white p-2 rounded">
             <option value="" class="text-black">Todos los días</option>
