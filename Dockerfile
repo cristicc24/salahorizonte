@@ -6,6 +6,7 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 
 COPY . .
 
+
 # Image config
 ENV SKIP_COMPOSER 1
 ENV WEBROOT /var/www/html/public
@@ -21,4 +22,4 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-CMD ["/script.sh"]
+CMD ["/scripts/00-laravel-deploy.sh"]
