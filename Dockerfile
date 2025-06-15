@@ -5,6 +5,9 @@ WORKDIR /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
+# Instalar la extensión bcmath
+RUN docker-php-ext-install bcmath
+
 COPY . .
 
 # Dar permisos de ejecución al script
