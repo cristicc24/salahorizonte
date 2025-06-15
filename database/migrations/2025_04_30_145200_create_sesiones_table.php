@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('sesiones', function (Blueprint $table) {
-            $table->id(); // id de la sesión
+            $table->id(); 
             $table->dateTime('fechaHora');
             $table->text('butacasReservadas'); 
             $table->integer('numButacasReservadas')->default(0);

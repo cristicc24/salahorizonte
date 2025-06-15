@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('pedidos', function (Blueprint $table) {
-            $table->id(); // clave primaria estándar
+            $table->id(); 
             $table->decimal('totalPedido', 8, 2);
             $table->string('metodoPago')->nullable();
             $table->date('fechaPago');

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->integer('idPelicula');
-            $table->string('titulo');
             $table->timestamps();
         });
     }

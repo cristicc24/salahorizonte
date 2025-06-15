@@ -113,7 +113,7 @@ class AdminPeliculaController extends Controller
             'genero' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\,\-]+$/u'],
             'directores' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\,\-]+$/u'],
             'edad_recomendada' => ['required', 'string', 'max:20', 'regex:/^[\pL0-9\+\s]+$/u'],
-            'duracion' => ['required', 'number', 'max:20', 'regex:/^(\d+h\s\d+m|\d{1,3})$/'],
+            'duracion' => ['required', 'numeric', 'max:20', 'regex:/^(\d+h\s\d+m|\d{1,3})$/'],
             'fecha_estreno' => ['required', 'date'],
             'fecha_emision' => ['required', 'date', 'after_or_equal:fecha_estreno'],
             'sinopsis' => ['required', 'string', 'min:10'],
