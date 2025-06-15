@@ -11,8 +11,8 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
-echo "Resetting database (fresh migrate with seed)..."
-php artisan migrate:fresh --seed --force
+# echo "Resetting database (fresh migrate with seed)..."
+# php artisan migrate:fresh --seed --force
 
 echo "Creating symbolic link..."
 php artisan storage:link
