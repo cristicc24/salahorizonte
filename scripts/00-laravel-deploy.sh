@@ -22,3 +22,5 @@ chmod -R 755 /var/www/html/public/storage
 
 echo "Verifying tables..."
 php artisan db:show
+
+exec /start.sh
