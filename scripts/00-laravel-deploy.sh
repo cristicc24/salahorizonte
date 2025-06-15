@@ -19,6 +19,3 @@ php artisan storage:link
 
 chown -R www-data:www-data /var/www/html/public/storage
 chmod -R 755 /var/www/html/public/storage
-
-echo "Verifying tables..."
-php artisan db:show
