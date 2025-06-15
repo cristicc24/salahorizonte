@@ -1,4 +1,5 @@
 FROM richarvey/nginx-php-fpm:3.1.6
+WORKDIR /var/www/html
 
 # Instalar Composer manualmente
 RUN curl -sS https://getcomposer.org/installer | php && \
@@ -6,6 +7,8 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 
 COPY . .
 
+# Dar permisos de ejecución al script
+RUN chmod +x scripts/00-laravel-deploy.sh
 
 # Image config
 ENV SKIP_COMPOSER 1
@@ -22,4 +25,4 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-CMD ["/scripts/00-laravel-deploy.sh"]
+ENTRYPOINT ["bash", "scripts/00-laravel-deploy.sh"]
