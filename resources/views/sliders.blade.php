@@ -18,7 +18,7 @@
     <!-- Indicadores del carrousel -->
     <div class="absolute z-9 md:flex hidden bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 space-x-3">
       @foreach($sliders as $index => $slider)
-        <button onclick="goToSlide({{ $index }})" class="lg:w-2.5 lg:h-2.5 md:w-1.5 md:h-1.5 rounded-full bg-white hover:bg-white transition-all focus:outline-none" 
+        <button onclick="goToSlide({{ $index }})" class="lg:w-2.5 lg:h-2.5 cursor-pointer md:w-1.5 md:h-1.5 rounded-full bg-white hover:bg-white transition-all focus:outline-none" 
           id="indicator-{{ $index }}">
         </button>
       @endforeach

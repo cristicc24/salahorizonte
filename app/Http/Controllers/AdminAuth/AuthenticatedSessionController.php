@@ -21,23 +21,22 @@ class AuthenticatedSessionController extends Controller
             'password' => 'required',
         ]);
 
-        // Usar configuración de sesión separada para admin
-        //config(['session.cookie' => config('admin_session.cookie')]);
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($request->only('email', 'password'), $request->filled('remember'))) {
+        if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'));
+
+            return redirect(route('admin.dashboard'));
         }
 
         throw ValidationException::withMessages([
-            'email' => __('auth.failed'),
+            'email' => __('auth.failed'), 
         ]);
     }
 
+
     public function destroy(Request $request)
     {
-        // Usar configuración de sesión separada para admin
-        //config(['session.cookie' => config('admin_session.cookie')]);
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

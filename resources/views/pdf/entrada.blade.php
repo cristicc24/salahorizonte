@@ -46,7 +46,16 @@
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <span><strong>Sesión:</strong>&nbsp;{{ \Carbon\Carbon::parse($infoPelicula->fechaHora)->format('d/m/Y H:i') }}</span>
+            @php
+                use Carbon\Carbon;
+
+                setlocale(LC_TIME, 'es_ES.UTF-8'); // Necesario para compatibilidad en algunos sistemas
+
+                $fecha = Carbon::parse($infoPelicula->fechaHora);
+                $dia = $fecha->translatedFormat('d \\d\\e F \\d\\e Y'); // Ej: "15 de junio de 2025"
+                $horaSesion = $fecha->format('H:i');
+            @endphp
+            <span><strong>Sesión:</strong>&nbsp;{{ $dia }} - {{ $horaSesion }}</span>
         </p>
 
         <p class="mb-2 flex">

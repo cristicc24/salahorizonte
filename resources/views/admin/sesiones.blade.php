@@ -17,14 +17,12 @@
             </a>
         @endif
 
-        <button type="button"
-            data-open-modal="create"
-            class="flex items-center gap-2 bg-green-600 text-white text-sm px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
+        <button type="button" data-open-modal="create" class="flex items-center gap-2 bg-green-600 text-white text-sm px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
             + Nueva Sesión
         </button>
     </div>
     @if(session('success') || session('createError') || session('editError'))
-        <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
+        <div id="flash-message" class="fixed top-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
                     {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
             
             @if(session('success'))
@@ -46,9 +44,6 @@
 
 @if($sesiones->isEmpty())
     @if(isset($salaSeleccionada))
-        {{-- @php
-            $salaNombre = optional($salas->firstWhere('id', $salaSeleccionada))->idSala ?? $salaSeleccionada;
-        @endphp --}}
         <p class="text-gray-600"> Esta (<strong>Sala {{ $salaNombre }}</strong>) no tiene sesiones registradas.</p>
         <div class="mt-2 flex gap-3">
             <a href="{{ route('admin.sesiones') }}" class="text-blue-600 hover:underline">Ver todas las sesiones</a>
@@ -144,7 +139,7 @@
                             @endif
 
                             <label class="block mb-2">Película:
-                                <select name="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer">
+                                <select name="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
                                     @foreach($peliculas as $pelicula)
                                         <option value="{{ $pelicula->id }}" @selected(old('idPelicula', $sesion->idPelicula) == $pelicula->id)>
                                             {{ $pelicula->titulo }}
@@ -154,7 +149,7 @@
                             </label>
 
                             <label class="block mb-2">Sala:
-                                <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer">
+                                <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
                                     @foreach($salas as $sala)
                                         <option value="{{ $sala->id }}" @selected(old('idSala', $sesion->idSala) == $sala->id)>Sala {{ $sala->idSala }}</option>
                                     @endforeach
@@ -162,7 +157,7 @@
                             </label>
 
                             <label class="block mb-4">Fecha y hora:
-                                <input type="datetime-local" name="fechaHora" value="{{ old('fechaHora', \Carbon\Carbon::parse($sesion->fechaHora)->format('Y-m-d\TH:i')) }}" class="w-full border rounded px-2 py-1 cursor-pointer" required>
+                                <input type="datetime-local" name="fechaHora" value="{{ old('fechaHora', \Carbon\Carbon::parse($sesion->fechaHora)->format('Y-m-d\TH:i')) }}" class="w-full border rounded px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                             </label>
 
                             <div class="flex justify-end gap-2">
@@ -203,7 +198,7 @@
         <h3 class="text-lg font-bold mb-4">Crear Sesión</h3>
 
         <label class="block mb-2">Película:
-            <select name="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer">
+            <select name="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
                 @foreach($peliculas as $pelicula)
                     <option value="{{ $pelicula->id }}" @selected(old('idPelicula') == $pelicula->id)>
                         {{ $pelicula->titulo }}
@@ -213,7 +208,7 @@
         </label>
 
         <label class="block mb-2">Sala:
-            <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer">
+            <select name="idSala" class="w-full border rounded px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
                 @foreach($salas as $sala)
                     <option value="{{ $sala->id }}" @selected(old('idSala') == $sala->id)>
                         Sala {{ $sala->idSala }}
@@ -223,7 +218,7 @@
         </label>
 
         <label class="block mb-4">Fecha y hora:
-            <input type="datetime-local" name="fechaHora" value="{{ old('fechaHora') }}" class="w-full border rounded px-2 py-1 cursor-pointer" required>
+            <input type="datetime-local" name="fechaHora" value="{{ old('fechaHora') }}" class="w-full border rounded px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
         </label>
 
         <div class="flex justify-end gap-2">

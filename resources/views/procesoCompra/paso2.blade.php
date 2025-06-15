@@ -5,8 +5,12 @@
     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 border-b border-white/90 pb-2">Resumen de compra</h2>
 
     @php
-        $fecha = \Carbon\Carbon::parse($infoPelicula->fechaHora);
-        $dia = $fecha->format('d F Y');
+        use Carbon\Carbon;
+
+        setlocale(LC_TIME, 'es_ES.UTF-8'); // Necesario para compatibilidad en algunos sistemas
+
+        $fecha = Carbon::parse($infoPelicula->fechaHora);
+        $dia = $fecha->translatedFormat('d \\d\\e F \\d\\e Y'); // Ej: "15 de junio de 2025"
         $horaSesion = $fecha->format('H:i');
     @endphp
 
@@ -58,7 +62,7 @@
         <form action="{{ route('procesoCompra.paso3') }}" method="GET" class="flex-1">
             <input type="hidden" name="idSesion" value="{{ $idSesion }}">
             <input type="hidden" name="butacas" value="{{ $butacas }}">
-            <button type="submit" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 px-6 py-2 rounded text-white font-semibold transition">Confirmar y pagar</button>
+            <button type="submit" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 px-6 py-2 rounded text-white cursor-pointer font-semibold transition">Confirmar y pagar</button>
         </form>
     </div>
 </div>

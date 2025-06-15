@@ -4,6 +4,7 @@
 <div class="mt-20 sm:mt-28 font-primary-font">
     <main class="py-12 px-4 text-white">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+
             <!-- Formulario -->
             <div class="p-8 rounded-lg shadow-none bg-transparent">
                 <h3 class="text-3xl font-semibold mb-6">Contacto</h3>
@@ -15,31 +16,58 @@
                     </div>
                 @endif
 
+                {{-- Alerta de errores generales --}}
                 @if ($errors->any())
-                    <div>
-                        <ul class="pl-5 space-y-1">
-                            @foreach ($errors->all() as $error)
-                                <li class="bg-red-600 text-white mb-3 shadow p-2 rounded">{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div class="mb-6 p-4 bg-red-600 text-white rounded shadow text-center font-medium">
+                        Se encontraron errores. Revisa los campos marcados.
                     </div>
                 @endif
 
-
                 <form action="{{ route('contacto.enviar') }}" method="POST" class="space-y-4">
                     @csrf
+
+                    {{-- Nombre --}}
                     <input name="nombre" type="text" placeholder="Nombre" value="{{ old('nombre') }}" required
-                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
+                        class="w-full px-4 py-2 border {{ $errors->has('nombre') ? 'border-red-500' : 'border-white' }} bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200"
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s\-]+" title="Solo letras y espacios">
+                    @error('nombre')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+
+                    {{-- Apellidos --}}
                     <input name="apellidos" type="text" placeholder="Apellidos" value="{{ old('apellidos') }}" required
-                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
+                        class="w-full px-4 py-2 border {{ $errors->has('apellidos') ? 'border-red-500' : 'border-white' }} bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200"
+                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s\-]+" title="Solo letras y espacios">
+                    @error('apellidos')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+
+                    {{-- Teléfono --}}
                     <input name="telefono" type="tel" placeholder="Teléfono" value="{{ old('telefono') }}"
-                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
+                        class="w-full px-4 py-2 border {{ $errors->has('telefono') ? 'border-red-500' : 'border-white' }} bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200"
+                        pattern="\d{9}" title="Debe tener 9 dígitos">
+                    @error('telefono')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+
+                    {{-- Email --}}
                     <input name="email" type="email" placeholder="Email" value="{{ old('email') }}" required
-                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white">
-                    <textarea name="comentario" placeholder="Comentario" rows="4" value="{{ old('comentario') }}" required
-                        class="w-full px-4 py-2 border border-white bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-1 focus:ring-white resize-none"></textarea>
+                        class="w-full px-4 py-2 border {{ $errors->has('email') ? 'border-red-500' : 'border-white' }} bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
+                    @error('email')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+
+                    {{-- Comentario --}}
+                    <textarea name="comentario" placeholder="Comentario" rows="4" required
+                        class="w-full px-4 py-2 border {{ $errors->has('comentario') ? 'border-red-500' : 'border-white' }} bg-transparent rounded-md placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200 resize-none"
+                        minlength="10" maxlength="1000">{{ old('comentario') }}</textarea>
+                    @error('comentario')
+                        <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+
                     <div class="pt-4">
-                        <button type="submit" class="bg-white hover:bg-gray-200 text-black font-semibold px-6 py-2 rounded-md transition duration-300">
+                        <button type="submit"
+                            class="bg-white cursor-pointer hover:bg-gray-200 text-black font-semibold px-6 py-2 rounded-md transition duration-300">
                             Enviar
                         </button>
                     </div>
@@ -62,4 +90,5 @@
         </div>
     </main>
 </div>
+
 @include('footer')

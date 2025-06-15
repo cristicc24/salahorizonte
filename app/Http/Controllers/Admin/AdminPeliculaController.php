@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\Slider;
 
 class AdminPeliculaController extends Controller
 {
@@ -52,19 +53,19 @@ class AdminPeliculaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
-            'precio' => 'required|numeric|min:0',
-            'genero' => 'required|string|max:100',
-            'directores' => 'required|string|max:255',
-            'edad_recomendada' => 'required|string|max:20',
-            'duracion' => 'required|string|max:20',
-            'fecha_estreno' => 'required|date',
-            'fecha_emision' => 'required|date',
-            'sinopsis' => 'required|string',
-            'actores' => 'required|string|max:255',
-            'enlace_trailer' => 'nullable|url',
-            'foto_miniatura' => 'nullable|image|max:2048',
-            'foto_grande' => 'nullable|image|max:4096'
+            'titulo' => ['required', 'string', 'max:255', 'regex:/^[\pL0-9\s\-\:\,\.\'"]+$/u'],
+            'precio' => ['required', 'numeric', 'min:0', 'max:999.99'],
+            'genero' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\,\-]+$/u'],
+            'directores' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\,\-]+$/u'],
+            'edad_recomendada' => ['required', 'string', 'max:20', 'regex:/^[\pL0-9\+\s]+$/u'],
+            'duracion' => ['required', 'string', 'max:20', 'regex:/^(\d+h\s\d+m|\d{1,3})$/'],
+            'fecha_estreno' => ['required', 'date'],
+            'fecha_emision' => ['required', 'date', 'after_or_equal:fecha_estreno'],
+            'sinopsis' => ['required', 'string', 'min:10'],
+            'actores' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\,\-]+$/u'],
+            'enlace_trailer' => ['nullable', 'url', 'max:255'],
+            'foto_miniatura' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp'],
+            'foto_grande' => ['nullable', 'image', 'max:4096', 'mimes:jpg,jpeg,png,webp'],
         ]);
 
         if ($validator->fails()) {
@@ -107,19 +108,19 @@ class AdminPeliculaController extends Controller
         $pelicula = Pelicula::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string|max:255',
-            'precio' => 'required|numeric|min:0',
-            'genero' => 'required|string|max:100',
-            'directores' => 'required|string|max:255',
-            'edad_recomendada' => 'required|string|max:20',
-            'duracion' => 'required|string|max:20',
-            'fecha_estreno' => 'required|date',
-            'fecha_emision' => 'required|date',
-            'sinopsis' => 'required|string',
-            'actores' => 'required|string|max:255',
-            'enlace_trailer' => 'nullable|url',
-            'foto_miniatura' => 'nullable|image|max:2048',
-            'foto_grande' => 'nullable|image|max:4096',
+            'titulo' => ['required', 'string', 'max:255', 'regex:/^[\pL0-9\s\-\:\,\.\'"]+$/u'],
+            'precio' => ['required', 'numeric', 'min:0', 'max:999.99'],
+            'genero' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\,\-]+$/u'],
+            'directores' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\,\-]+$/u'],
+            'edad_recomendada' => ['required', 'string', 'max:20', 'regex:/^[\pL0-9\+\s]+$/u'],
+            'duracion' => ['required', 'number', 'max:20', 'regex:/^(\d+h\s\d+m|\d{1,3})$/'],
+            'fecha_estreno' => ['required', 'date'],
+            'fecha_emision' => ['required', 'date', 'after_or_equal:fecha_estreno'],
+            'sinopsis' => ['required', 'string', 'min:10'],
+            'actores' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\,\-]+$/u'],
+            'enlace_trailer' => ['nullable', 'url', 'max:255'],
+            'foto_miniatura' => ['nullable', 'image', 'max:2048', 'mimes:jpg,jpeg,png,webp'],
+            'foto_grande' => ['nullable', 'image', 'max:4096', 'mimes:jpg,jpeg,png,webp'],
         ]);
 
         if ($validator->fails()) {
@@ -165,6 +166,7 @@ class AdminPeliculaController extends Controller
     public function destroy($id)
     {
         $pelicula = Pelicula::findOrFail($id);
+        Slider::where('idPelicula', $pelicula->id)->delete();
 
         if ($pelicula->foto_miniatura) {
             Storage::disk('public')->delete($pelicula->foto_miniatura);

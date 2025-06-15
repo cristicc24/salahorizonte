@@ -15,6 +15,8 @@ return new class extends Migration {
 
             // Clave foránea a users
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->boolean('email_enviado')->default(false);
+            $table->string('hash_confirmacion', 64)->nullable()->unique();
 
             $table->timestamps();
         });

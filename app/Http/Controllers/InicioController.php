@@ -10,7 +10,13 @@ class InicioController extends Controller
 {
     public function index()
     {
-        $sliders = Slider::with('pelicula')->get();
+
+        $sliders = Slider::with('pelicula')
+        ->whereHas('pelicula', function ($query) {
+            $query->where('activo', true);
+        })
+        ->get();
+
         $topPeliculas = TopPelicula::get();
 
         return view('inicio', [

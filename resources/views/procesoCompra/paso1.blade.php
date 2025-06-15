@@ -2,9 +2,8 @@
 
 @section('Proceso de Compra')
 <div class="w-full font-primary-font mt-20 sm:mt-28">
-    <div class="relative w-full h-[200px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[480px] font-primary-font">
-        <img src="{{ asset($infoPelicula->pelicula->foto_grande) }}" 
-             alt="Foto de portada de la película" 
+    <div class="relative w-full h-[200px] sm:h-[320px] font-primary-font">
+        <img src="{{ asset($infoPelicula->pelicula->foto_grande) }}"        alt="Foto de portada de la película" 
              class="w-full h-full object-cover object-top">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
         <p class="text-white text-2xl sm:text-3xl md:text-4xl font-bold text-center absolute bottom-[-1rem] md:bottom-[-1rem] w-[90%] left-1/2 -translate-x-1/2">
@@ -59,7 +58,9 @@
         @endforeach
     </div>
 
-    <div id="butacasSeleccionadas" class="text-white w-full flex justify-center items-center h-8 mt-6 text-base sm:text-lg"></div>
+    <div class="w-full flex justify-center items-center">
+        <div id="butacasSeleccionadas" class="text-white max-w-lg mt-6 text-base sm:text-lg"></div>
+    </div>
     
     {{-- ✅ Mensaje de error si no se selecciona ninguna butaca --}}
     <div id="mensaje-error-butacas" class="text-red-500 text-center mt-2 hidden text-sm sm:text-base">

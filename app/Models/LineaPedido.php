@@ -20,12 +20,11 @@ class LineaPedido extends Model
     // Una línea de pedido pertenece a un pedido
     public function pedido()
     {
-        return $this->belongsTo(Pedido::class, 'id', 'pedido_id');
+        return $this->belongsTo(Pedido::class, 'pedido_id', 'id');
     }
 
-    // Una línea de pedido pertenece a una sesión
     public function sesion()
     {
-        return $this->belongsTo(Sesion::class, 'id', 'sesion_id');
+        return $this->belongsTo(Sesion::class, 'sesion_id', 'id');
     }
 }

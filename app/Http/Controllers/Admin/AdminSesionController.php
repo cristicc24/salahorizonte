@@ -10,7 +10,6 @@ use App\Models\Pelicula;
 use App\Models\Sala;
 use Illuminate\Support\Facades\Validator;
 
-
 class AdminSesionController extends Controller
 {
     public function index($idSala = null)
@@ -21,7 +20,6 @@ class AdminSesionController extends Controller
             $query->where('idSala', $idSala);
         }
 
-        // Ordenar por fecha y hora (ajusta los nombres de los campos si son diferentes)
         $query->orderBy('fechaHora', 'desc');
 
         $sesiones = $query->get();
@@ -41,14 +39,21 @@ class AdminSesionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'idPelicula' => 'required|exists:peliculas,id',
-            'idSala' => 'required|exists:salas,id',
-            'fechaHora' => 'required|date_format:Y-m-d\TH:i',
+            'idPelicula' => 'required|integer|exists:peliculas,id',
+            'idSala' => 'required|integer|exists:salas,id',
+            'fechaHora' => 'required|date_format:Y-m-d\TH:i|after_or_equal:now',
         ], [
-            'idPelicula.required' => 'La película es obligatoria.',
-            'idSala.required' => 'La sala es obligatoria.',
-            'fechaHora.required' => 'La fecha y hora es obligatoria.',
-            'fechaHora.date_format' => 'El formato de fecha y hora no es válido.',
+            'idPelicula.required' => 'Debe seleccionar una película.',
+            'idPelicula.integer' => 'La película seleccionada no es válida.',
+            'idPelicula.exists' => 'La película seleccionada no existe.',
+
+            'idSala.required' => 'Debe seleccionar una sala.',
+            'idSala.integer' => 'La sala seleccionada no es válida.',
+            'idSala.exists' => 'La sala seleccionada no existe.',
+
+            'fechaHora.required' => 'Debe ingresar una fecha y hora.',
+            'fechaHora.date_format' => 'El formato de la fecha y hora no es válido.',
+            'fechaHora.after_or_equal' => 'La fecha y hora deben ser iguales o posteriores a la actual.',
         ]);
 
         if ($validator->fails()) {
@@ -62,11 +67,9 @@ class AdminSesionController extends Controller
         $pelicula = Pelicula::findOrFail($request->idPelicula);
         $duracionEnMinutos = Sesion::parseDuracionEnMinutos($pelicula->duracion);
 
-        // Establecer el rango de tiempo ocupado por la nueva sesión
         $inicioPropuesta = $nuevaFechaHora->copy()->subMinutes(15);
         $finPropuesta = $nuevaFechaHora->copy()->addMinutes($duracionEnMinutos + 15);
 
-        // Verificar conflictos con otras sesiones en la misma sala
         $conflictos = Sesion::where('idSala', $request->idSala)
             ->with('pelicula')
             ->get()
@@ -107,28 +110,32 @@ class AdminSesionController extends Controller
         return redirect()->route('admin.sesiones')->with('success', 'Sesión creada correctamente.');
     }
 
-
     public function update(Request $request, $id)
     {
         $sesion = Sesion::findOrFail($id);
 
-        // Evitar edición si ya ha empezado o finalizado
         if ($sesion->estado !== 'Activa') {
             return redirect()->route('admin.sesiones')
                 ->with('editError', 'No se puede editar esta sesión porque ya ha comenzado o finalizado.')
                 ->with('openModal', 'edit-' . $id);
         }
 
-        // Validación
-        $validator = \Validator::make($request->all(), [
-            'idPelicula' => 'required|exists:peliculas,id',
-            'idSala' => 'required|exists:salas,id',
-            'fechaHora' => 'required|date_format:Y-m-d\TH:i',
+        $validator = Validator::make($request->all(), [
+            'idPelicula' => 'required|integer|exists:peliculas,id',
+            'idSala' => 'required|integer|exists:salas,id',
+            'fechaHora' => 'required|date_format:Y-m-d\TH:i|after_or_equal:now',
         ], [
-            'idPelicula.required' => 'La película es obligatoria.',
-            'idSala.required' => 'La sala es obligatoria.',
-            'fechaHora.required' => 'La fecha y hora es obligatoria.',
-            'fechaHora.date_format' => 'El formato de fecha y hora no es válido.',
+            'idPelicula.required' => 'Debe seleccionar una película.',
+            'idPelicula.integer' => 'La película seleccionada no es válida.',
+            'idPelicula.exists' => 'La película seleccionada no existe.',
+
+            'idSala.required' => 'Debe seleccionar una sala.',
+            'idSala.integer' => 'La sala seleccionada no es válida.',
+            'idSala.exists' => 'La sala seleccionada no existe.',
+
+            'fechaHora.required' => 'Debe ingresar una fecha y hora.',
+            'fechaHora.date_format' => 'El formato de la fecha y hora no es válido.',
+            'fechaHora.after_or_equal' => 'La fecha y hora deben ser iguales o posteriores a la actual.',
         ]);
 
         if ($validator->fails()) {
@@ -138,7 +145,6 @@ class AdminSesionController extends Controller
                 ->withInput();
         }
 
-        // Verificación de conflictos con otras sesiones
         $nuevaFechaHora = Carbon::parse($request->fechaHora);
         $pelicula = Pelicula::findOrFail($request->idPelicula);
         $duracionEnMinutos = Sesion::parseDuracionEnMinutos($pelicula->duracion);
@@ -147,7 +153,7 @@ class AdminSesionController extends Controller
         $finPropuesta = $nuevaFechaHora->copy()->addMinutes($duracionEnMinutos + 15);
 
         $conflictos = Sesion::where('idSala', $request->idSala)
-            ->where('id', '!=', $id) // 👈 excluye la sesión actual
+            ->where('id', '!=', $id)
             ->with('pelicula')
             ->get()
             ->filter(function ($otraSesion) use ($inicioPropuesta, $finPropuesta) {
@@ -165,12 +171,10 @@ class AdminSesionController extends Controller
                 ->withInput();
         }
 
-        // Actualizar sesión
         $sesion->update($request->only('idPelicula', 'idSala', 'fechaHora'));
 
         return redirect()->route('admin.sesiones')->with('success', 'Sesión actualizada correctamente.');
     }
-
 
     public function destroy($id)
     {
@@ -180,4 +184,3 @@ class AdminSesionController extends Controller
         return redirect()->route('admin.sesiones')->with('success', 'Sesión eliminada correctamente.');
     }
 }
-

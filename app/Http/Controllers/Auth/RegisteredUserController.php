@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RegistroExitosoMail;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\Rules\PasswordStrong;
+use Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -22,7 +25,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
         //dd('PdfController / store()', $request->all());
         $request->merge([
@@ -34,8 +37,8 @@ class RegisteredUserController extends Controller
             'surname' => ['required', 'string', 'max:255'],
             'phonenumber' => ['nullable', 'string', 'max:9'],
             'birthdate' => ['nullable', 'date'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email_registro' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class . ',email'],
+            'password_registro' => ['required', 'confirmed', 'min:8', new PasswordStrong],
         ]);
 
         $user = User::create([
@@ -43,15 +46,16 @@ class RegisteredUserController extends Controller
             'surname' => $request->surname,
             'phonenumber' => $request->phonenumber ?? null,
             'birthdate' => $request->birthdate ?? null,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'email' => $request->email_registro,
+            'password' => Hash::make($request->password_registro),
         ]);
 
 
         event(new Registered($user));
 
         Auth::login($user);
+        Mail::to($user->email)->send(new RegistroExitosoMail($user));
 
-        return response()->noContent();
+        return redirect('/')->with('status', 'Registro completado. ¡Bienvenido!');
     }
 }

@@ -20,7 +20,6 @@ class PeliculaController extends Controller
         $peliculasRelacionadas = Pelicula::getPeliculasRelacionadas($pelicula->genero);
         $sesiones = Sesion::getSesionesPeliculaEspecifica($id);
 
-        Carbon::setLocale('es');
         $fechaEstreno = Carbon::parse($pelicula->fecha_estreno)->isoFormat('DD MMMM YYYY');
         $fechaEmision = Carbon::parse($pelicula->fecha_emision)->isoFormat('DD MMMM YYYY');
         return view('peliculaEspecifica', [

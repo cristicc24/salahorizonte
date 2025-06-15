@@ -2,4 +2,4 @@
 @include('cabeceraCompleta' , ['completo' => true])
 @include('sliders')
 @include('toppeliculas')
-@include('footer');
+@include('footer')

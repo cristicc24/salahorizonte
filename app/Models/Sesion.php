@@ -47,30 +47,6 @@ class Sesion extends Model
                     ->filter(fn($s) => $s->estado === 'Activa');
     }
 
-    // public static function getSesionesPeliculaEspecifica(string $id)
-    // {
-    //     return DB::table('sesiones')
-    //         ->join('salas', 'sesiones.idSala', '=', 'salas.id')
-    //         ->join('peliculas', 'sesiones.idPelicula', '=', 'peliculas.id')
-    //         ->where('sesiones.idPelicula', $id)
-    //         ->select(
-    //             'sesiones.id',
-    //             'salas.idSala as idSala',
-    //             'sesiones.fechaHora',
-    //             'sesiones.numButacasReservadas',
-    //             'sesiones.idPelicula',
-    //             'salas.numButacasTotales',
-    //             'peliculas.duracion',
-    //             DB::raw("CASE
-    //                 WHEN NOW() < sesiones.\"fechaHora\" THEN 'Activa'
-    //                 WHEN NOW() BETWEEN sesiones.\"fechaHora\" AND (sesiones.\"fechaHora\" + (peliculas.duracion || ' minutes')::interval) THEN 'En curso'
-    //                 ELSE 'Finalizada'
-    //             END as estado")
-    //         )
-    //         ->get();
-    // }
-
-
     public static function getMapa(string $sesionId) {
         $sesion = Sesion::find($sesionId);
         return $sesion?->butacasReservadas ?? null;

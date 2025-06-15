@@ -6,16 +6,26 @@
 
     <p class="text-center text-xl">Gracias por tu compra.</p>
 
+    @php
+        use Carbon\Carbon;
+
+        setlocale(LC_TIME, 'es_ES.UTF-8'); // Necesario para compatibilidad en algunos sistemas
+
+        $fecha = Carbon::parse($infoPelicula->fechaHora);
+        $dia = $fecha->translatedFormat('d \\d\\e F \\d\\e Y'); // Ej: "15 de junio de 2025"
+        $horaSesion = $fecha->format('H:i');
+    @endphp
+
     <div class="mt-6 space-y-2 text-base md:text-md lg:text-lg ">
         <p><span class="font-semibold">Película:</span> {{ $infoPelicula->pelicula->titulo }}</p>
-        <p><span class="font-semibold">Fecha y hora:</span> {{ \Carbon\Carbon::parse($infoPelicula->fechaHora)->format('d F Y H:i') }}</p>
+        <p><span class="font-semibold">Fecha y hora:</span> {{ $dia }} - {{ $horaSesion }}</p>
         <p><span class="font-semibold">Sala:</span> {{ $infoPelicula->sala->idSala }}</p>
         <p><span class="font-semibold">Butacas:</span>
             @php $butacaArray = is_array($butacas) ? $butacas : json_decode($butacas, true); @endphp
             {{ implode(', ', $butacaArray) }}
         </p>
         <p><span class="font-semibold">Total:</span> {{ number_format($total, 2, ',', '.') }} €</p>
-        <p><span class="font-semibold">Método de pago:</span> {{ ucfirst(request()->query('metodo', 'no especificado')) }}</p>
+        <p><span class="font-semibold">Método de pago:</span> {{ $metodo }}</p>
     </div>
 
     <div class="mt-8 text-center">

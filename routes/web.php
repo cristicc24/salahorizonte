@@ -16,6 +16,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\Admin\AdminSmtpController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\PaginasEstaticasController;
 
 
 require __DIR__.'/auth.php';
@@ -35,17 +36,8 @@ Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.
 
 Route::get('/cartelera', [CarteleraController::class, 'show'])->name('cartelera');
 
-
-// ==============================
-// RUTAS DE PROCESO DE COMPRA
-// ==============================
-
-Route::get('/compra/asientos', [ProcesoCompraController::class, 'asientos'])->name('procesoCompra.paso1');
-Route::get('/compra/resumen', [ProcesoCompraController::class, 'resumen'])->name('procesoCompra.paso2');
-Route::get('/compra/pago', [ProcesoCompraController::class, 'pago'])->name('procesoCompra.paso3');
-Route::get('/compra/tpv', [ProcesoCompraController::class, 'tpv'])->name('procesoCompra.tpv');
-Route::get('/compra/confirmacion', [ProcesoCompraController::class, 'confirmacion'])->name('procesoCompra.paso4');
-
+Route::get('/preguntas-frecuentes', [PaginasEstaticasController::class, 'faq'])->name('faq');
+Route::get('/terminos-y-condiciones', [PaginasEstaticasController::class, 'terminos'])->name('terminos');
 
 // ==============================
 // RUTA PARA MAPA DE BUTACAS (AJAX)
@@ -58,7 +50,7 @@ Route::get('/sesion/{id}/getMapa', function($id) {
 
 
 // ==============================
-// RUTAS ADMINISTRATIVAS
+// RUTAS QUE REQUIEREN LOGIN DEL ADMINISTRADOR
 // ==============================
 
 Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(function () {
@@ -109,10 +101,27 @@ Route::prefix('adminSH')->name('admin.')->middleware('admin.session')->group(fun
     });
 });
 
+
 // ==============================
-// RUTAS PERFIL USUARIO
+// RUTAS QUE REQUIEREN LOGIN DEL USUARIO
 // ==============================
 
 Route::middleware(['auth'])->group(function () {
+
+    // ==============================
+    // RUTAS PERFIL USUARIO
+    // ==============================
+
     Route::get('/usuario/perfil', [UsuarioController::class, 'index'])->name('usuario.perfil');
+
+    // ==============================
+    // RUTAS DE PROCESO DE COMPRA
+    // ==============================
+
+    Route::get('/compra/asientos', [ProcesoCompraController::class, 'asientos'])->name('procesoCompra.paso1');
+    Route::get('/compra/resumen', [ProcesoCompraController::class, 'resumen'])->name('procesoCompra.paso2');
+    Route::get('/compra/pago', [ProcesoCompraController::class, 'pago'])->name('procesoCompra.paso3');
+    Route::get('/compra/tpv', [ProcesoCompraController::class, 'tpv'])->name('procesoCompra.tpv');
+    Route::post('/compra/procesar-pago', [ProcesoCompraController::class, 'procesarPago'])->name('procesoCompra.procesarPago');
+    Route::get('/compra/confirmacion', [ProcesoCompraController::class, 'confirmacion'])->name('procesoCompra.paso4');
 });

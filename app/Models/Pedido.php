@@ -18,12 +18,14 @@ class Pedido extends Model
         'metodoPago',
         'fechaPago',
         'user_id',
+        'email_enviado',
+        'hash_confirmacion'
     ];
 
     // Relación: un pedido pertenece a un user
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     // Relación: un pedido tiene muchas líneas

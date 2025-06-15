@@ -7,7 +7,7 @@
             + Nueva Película
         </button>
         @if(session('success') || session('createError') || session('editError'))
-            <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
+            <div id="flash-message" class="fixed top-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
                         {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
 
                 @if(session('success'))
@@ -32,21 +32,21 @@
     {{-- Buscador y filtros --}}
     <form method="GET" action="{{ route('admin.peliculas') }}" class="mb-6 flex flex-wrap gap-4 items-center">
         <input type="text" name="search" placeholder="Buscar título..." value="{{ request('search') }}"
-               class="border border-gray-300 rounded px-3 py-2 w-64"/>
-        <select name="genero" class="border border-gray-300 rounded px-3 py-2">
+               class="border border-gray-300 rounded px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200"/>
+        <select name="genero" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             <option value="">Género</option>
             @foreach($generos as $genero)
                 <option value="{{ $genero }}" @selected(request('genero')==$genero)>{{ $genero }}</option>
             @endforeach
         </select>
-        <select name="anio_estreno" class="border border-gray-300 rounded px-3 py-2">
+        <select name="anio_estreno" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             <option value="">Año Estreno</option>
             @foreach($anios as $anio)
                 <option value="{{ $anio }}" @selected(request('anio_estreno')==$anio)>{{ $anio }}</option>
             @endforeach
         </select>
         
-        <button type="submit" class="bg-text-color text-white px-4 py-2 rounded hover:bg-text-color/80 transition">Filtrar</button>
+        <button type="submit" class="bg-text-color text-white px-4 py-2 rounded hover:bg-text-color/80 cursor-pointer transition">Filtrar</button>
         <a href="{{ route('admin.peliculas') }}" id="resetFiltros" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">Resetear filtros</a>
     </form>
 
@@ -61,7 +61,7 @@
                     <div class="absolute inset-0 flex items-start justify-end p-2 gap-1">
                         <label class="inline-flex items-center cursor-pointer">
                             <meta name="csrf-token" content="{{ csrf_token() }}">
-                            <input name="activo" type="checkbox" class="sr-only peer toggle-activo hidden" data-id="{{ $pelicula->id }}" {{ $pelicula->activo ? 'checked' : '' }}>
+                            <input name="activo" type="checkbox" class="sr-only peer toggle-activo hidden " data-id="{{ $pelicula->id }}" {{ $pelicula->activo ? 'checked' : '' }}>
                             <div class="relative w-11 h-6 bg-gray-200 rounded-full 
                                     peer dark:bg-gray-700 
                                     peer-focus:ring-4 peer-focus:ring-[#A7D7C5] 
@@ -143,39 +143,39 @@
 
                         <label class="block mb-2">
                             Título:
-                            <input type="text" name="titulo" value="{{ $pelicula->titulo }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="text" name="titulo" value="{{ $pelicula->titulo }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Precio:
-                            <input type="number" name="precio" step="0.01" value="{{ $pelicula->precio }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="number" name="precio" step="0.01" value="{{ $pelicula->precio }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Género:
-                            <input type="text" name="genero" value="{{ $pelicula->genero }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="text" name="genero" value="{{ $pelicula->genero }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Directores:
-                            <input type="text" name="directores" value="{{ $pelicula->directores }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="text" name="directores" value="{{ $pelicula->directores }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Edad recomendada:
-                            <input type="text" name="edad_recomendada" value="{{ $pelicula->edad_recomendada }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="text" name="edad_recomendada" value="{{ $pelicula->edad_recomendada }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Duración (min):
-                            <input type="text" name="duracion" value="{{ old('duracion', $pelicula->duracion) }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="text" name="duracion" value="{{ old('duracion', $pelicula->duracion) }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Fecha de estreno:
-                            <input type="date" name="fecha_estreno" value="{{ $pelicula->fecha_estreno }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="date" name="fecha_estreno" value="{{ $pelicula->fecha_estreno }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Fecha de emisión:
-                            <input type="date" name="fecha_emision" value="{{ $pelicula->fecha_emision }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="date" name="fecha_emision" value="{{ $pelicula->fecha_emision }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Sinopsis:
-                            <textarea name="sinopsis" rows="4" class="w-full border rounded px-2 py-1" required>{{ $pelicula->sinopsis }}</textarea>
+                            <textarea name="sinopsis" rows="4" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>{{ $pelicula->sinopsis }}</textarea>
                         </label>
                         <label class="block mb-2">
                             Foto miniatura:
@@ -186,11 +186,11 @@
                         </label>
                         <label class="block mb-2">
                             Actores:
-                            <input type="text" name="actores" value="{{ $pelicula->actores }}" class="w-full border rounded px-2 py-1" required>
+                            <input type="text" name="actores" value="{{ $pelicula->actores }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
                         <label class="block mb-2">
                             Enlace del tráiler:
-                            <input type="url" name="enlace_trailer" value="{{ $pelicula->enlace_trailer }}" class="w-full border rounded px-2 py-1">
+                            <input type="url" name="enlace_trailer" value="{{ $pelicula->enlace_trailer }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
                         </label>
                         <label class="block mb-2">
                             Foto grande:
@@ -202,7 +202,6 @@
 
                         <!-- Acciones -->
                         <div class="flex justify-end gap-2 mt-4">
-                            {{-- <button type="button" onclick="closeModal('edit-{{ $pelicula->id }}')" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button> --}}
                             <button type="button" data-close-modal="edit-{{ $pelicula->id }}" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button>
                             <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded cursor-pointer">Actualizar</button>
                         </div>
@@ -218,15 +217,15 @@
                         <button type="button" data-close-modal="delete-{{ $pelicula->id }}" class="text-gray-500 cursor-pointer">X</button>
                     </div>
 
-                    <p>¿Estás seguro de que deseas eliminar <strong>{{ $pelicula->titulo }}</strong>?</p>
+                    <p>¿Estás seguro de que deseas eliminar <strong>{{ $pelicula->titulo }}</strong>? Se eliminarán las sesiones y sliders relacionados</p>
 
                     <form method="POST" action="{{ route('admin.peliculas.destroy', $pelicula->id) }}" class="mt-4">
                         @csrf
                         @method('DELETE')
 
                         <div class="flex justify-end gap-2 mt-4">
-                            <button type="button" data-close-modal="delete-{{ $pelicula->id }}" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
-                            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">Eliminar</button>
+                            <button type="button" data-close-modal="delete-{{ $pelicula->id }}" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button>
+                            <button type="submit" class="px-4 py-2 bg-red-600 cursor-pointer text-white rounded">Eliminar</button>
                         </div>
                     </form>
                 </dialog>
@@ -251,75 +250,75 @@
 
         <form method="POST" action="{{ route('admin.peliculas.store') }}" enctype="multipart/form-data">
             @csrf
-        
+
             <label class="block mb-2">
                 Título:
-                <input type="text" name="titulo" class="w-full border rounded px-2 py-1" required>
+                <input type="text" name="titulo" required maxlength="255" pattern="^[\pL0-9\s\-\:\,\.\'&quot;]+$" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Precio:
-                <input type="number" name="precio" step="0.01" class="w-full border rounded px-2 py-1" required>
+                <input type="number" name="precio" required min="0" max="999.99" step="0.01" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Género:
-                <input type="text" name="genero" class="w-full border rounded px-2 py-1" required>
+                <input type="text" name="genero" required maxlength="100" pattern="^[\pL\s\,\-]+$" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Directores:
-                <input type="text" name="directores" class="w-full border rounded px-2 py-1" required>
+                <input type="text" name="directores" required maxlength="255" pattern="^[\pL\s\,\-]+$" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Edad recomendada:
-                <input type="text" name="edad_recomendada" class="w-full border rounded px-2 py-1" required>
+                <input type="text" name="edad_recomendada" required maxlength="20" pattern="^[\pL0-9\+\s]+$" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Duración (min):
-                <input type="text" name="duracion" class="w-full border rounded px-2 py-1" required>
+                <input type="number" name="duracion" required maxlength="20" pattern="^(\d{1,3}|[0-9]+h\s[0-9]+m)$" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Fecha de estreno:
-                <input type="date" name="fecha_estreno" class="w-full border rounded px-2 py-1" required>
+                <input type="date" name="fecha_estreno" required class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Fecha de emisión:
-                <input type="date" name="fecha_emision" class="w-full border rounded px-2 py-1" required>
+                <input type="date" name="fecha_emision" required class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Sinopsis:
-                <textarea name="sinopsis" rows="4" class="w-full border rounded px-2 py-1" required></textarea>
+                <textarea name="sinopsis" rows="4" required minlength="10" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200 resize-none"></textarea>
             </label>
-        
+
             <label class="block mb-2">
                 Actores:
-                <input type="text" name="actores" class="w-full border rounded px-2 py-1" required>
+                <input type="text" name="actores" required maxlength="255" pattern="^[\pL\s\,\-]+$" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Enlace del tráiler:
-                <input type="url" name="enlace_trailer" class="w-full border rounded px-2 py-1">
+                <input type="url" name="enlace_trailer" maxlength="255" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200">
             </label>
-        
+
             <label class="block mb-2">
                 Foto miniatura:
-                <input type="file" name="foto_miniatura" accept="image/*" class="w-full">
+                <input type="file" name="foto_miniatura" accept=".jpg,.jpeg,.png,.webp" class="w-full">
             </label>
-        
+
             <label class="block mb-2">
                 Foto grande:
-                <input type="file" name="foto_grande" accept="image/*" class="w-full">
-            </label>        
+                <input type="file" name="foto_grande" accept=".jpg,.jpeg,.png,.webp" class="w-full">
+            </label>
 
             <!-- Acciones -->
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" data-close-modal="create" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button>                
+                <button type="button" data-close-modal="create" class="px-4 py-2 bg-gray-300 rounded cursor-pointer">Cancelar</button>
                 <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded cursor-pointer">Guardar</button>
             </div>
         </form>

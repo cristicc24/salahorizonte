@@ -14,12 +14,19 @@ use Illuminate\Validation\ValidationException;
 
 class NewPasswordController extends Controller
 {
+    public function create(Request $request, $token)
+    {
+        return view('auth.reset-password', [
+            'token' => $token,
+            'email' => $request->query('email'),
+        ]);
+    }
     /**
      * Handle an incoming new password request.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
         $request->validate([
             'token' => ['required'],
@@ -48,6 +55,6 @@ class NewPasswordController extends Controller
             ]);
         }
 
-        return response()->json(['status' => __($status)]);
+        return redirect(route('inicio'))->with('status', __($status));
     }
 }

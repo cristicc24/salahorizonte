@@ -38,20 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 p-2 hover:bg-text-color/80">
-                    <button id='comprarEntrada' data-idsesion='${idSesion}' class="cursor-pointer">Comprar entradas</button>
+                contenedor.innerHTML += `<div class="col-start-2 col-end-${+columnas + 2} text-center bg-text-color mt-4 hover:bg-text-color/80">
+                    <button id='comprarEntrada' data-idsesion='${idSesion}' class="cursor-pointer w-full h-full p-2">Comprar entradas</button>
                 </div>`;
 
                 document.getElementById('comprarEntrada').addEventListener('click', comprarEntradas);
 
                 // Scroll a mapa en móviles
-                if (window.innerWidth < 1024) {
-                    const destino = document.getElementById('vista-previa-mapa');
-                    if (destino) {
-                        setTimeout(() => {
-                            destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 500);
-                    }
+                const destino = document.getElementById('vista-previa-mapa');
+                if (destino) {
+                    setTimeout(() => {
+                        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 500);
                 }
             })
             .catch(error => {

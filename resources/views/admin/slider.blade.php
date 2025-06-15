@@ -6,7 +6,7 @@
     <button type="button" data-open-modal="create" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">+ Nuevo Slider</button>
 
     @if(session('success') || session('createError') || session('editError'))
-        <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
+        <div id="flash-message" class="fixed top-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
                     {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
 
             @if(session('success'))
@@ -114,7 +114,7 @@
         <input type="hidden" name="_method" id="sliderMethod" value="POST">
 
         <label class="block mb-4">Película:
-            <select name="idPelicula" id="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer" required>
+            <select name="idPelicula" id="idPelicula" class="w-full border rounded px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                 @foreach($peliculas as $pelicula)
                     <option value="{{ $pelicula->id }}">{{ $pelicula->titulo }}</option>
                 @endforeach
@@ -122,8 +122,8 @@
         </label>
 
         <div class="flex justify-end gap-2">
-            <button type="button" class="bg-gray-300 px-4 py-2 rounded" data-close-modal="create">Cancelar</button>
-            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Guardar</button>
+            <button type="button" class="bg-gray-300 px-4 py-2 rounded cursor-pointer" data-close-modal="create">Cancelar</button>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded cursor-pointer">Guardar</button>
         </div>
     </form>
 </dialog>

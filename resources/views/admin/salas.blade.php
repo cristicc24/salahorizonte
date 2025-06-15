@@ -6,7 +6,7 @@
     <button data-open-modal="create" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">+ Nueva Sala</button>
 
     @if(session('success') || session('createError') || session('editError'))
-        <div id="flash-message" class="fixed bottom-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
+        <div id="flash-message" class="fixed top-5 right-5 flex items-center gap-3 px-4 py-3 rounded shadow-lg z-50
                     {{ session('success') ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700' }}">
             
             @if(session('success'))
@@ -111,9 +111,11 @@
                 <!-- Modal editar -->
                 <dialog id="modal-edit-{{ $sala->id }}" class="rounded-md w-full max-w-md p-6 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg z-50">
                     <button type="button" data-close-modal="edit-{{ $sala->id }}" class="absolute top-3 right-3 text-xl font-bold text-gray-500 hover:text-black cursor-pointer" aria-label="Cerrar modal">&times;</button>
+                    
                     <form method="POST" action="{{ route('admin.salas.update', $sala->id) }}">
                         @csrf
                         @method('PUT')
+
                         <h3 class="text-lg font-bold mb-4">Editar Sala</h3>
 
                         @if (session('editError') && session('openModal') === 'edit-' . $sala->id)
@@ -123,12 +125,20 @@
                             </script>
                         @endif
 
-                        <label class="block mb-2">Cantidad de filas (mín 5 - máx 13): <input type="number" name="cantidadFilas" value="{{ old('cantidadFilas', $sala->cantidadFilas) }}" 
-                            class="w-full border rounded px-2 py-1" required min="5" max="13">
+                        <label class="block mb-2">ID de sala (1-50): 
+                            <input type="number" name="idSala" value="{{ old('idSala', $sala->idSala) }}" min="1" max="50"
+                                class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
                         </label>
 
-                        <label class="block mb-4">Cantidad de columnas (mín 5 - máx 13): <input type="number" name="cantidadColumnas" value="{{ old('cantidadColumnas', $sala->cantidadColumnas) }}" 
-                            class="w-full border rounded px-2 py-1" required min="5" max="13"></label>
+                        <label class="block mb-2">Cantidad de filas (mín 5 - máx 13): 
+                            <input type="number" name="cantidadFilas" value="{{ old('cantidadFilas', $sala->cantidadFilas) }}" min="5" max="13"
+                                class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
+                        </label>
+
+                        <label class="block mb-4">Cantidad de columnas (mín 5 - máx 13): 
+                            <input type="number" name="cantidadColumnas" value="{{ old('cantidadColumnas', $sala->cantidadColumnas) }}" min="5" max="13"
+                                class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required>
+                        </label>
 
                         <div class="flex justify-end gap-2">
                             <button type="button" data-close-modal="edit-{{ $sala->id }}" class="bg-gray-300 px-4 py-2 rounded cursor-pointer">Cancelar</button>
@@ -182,20 +192,20 @@
         <h3 class="text-lg font-bold mb-4">Crear Sala</h3>
 
         <label class="block mb-2">ID de sala (único): 
-            <input type="number" name="idSala" value="{{ old('idSala') }}" class="w-full border rounded px-2 py-1" required>
+            <input type="number" name="idSala" value="{{ old('idSala') }}" class="focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200 w-full border rounded px-2 py-1" required>
         </label>
 
         <label class="block mb-2">Cantidad de filas (mín 5 - máx 13): 
-            <input type="number" name="cantidadFilas" value="{{ old('cantidadFilas') }}"  class="w-full border rounded px-2 py-1" required min="5" max="13">
+            <input type="number" name="cantidadFilas" value="{{ old('cantidadFilas') }}"  class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required min="5" max="13">
         </label>
 
         <label class="block mb-4">Cantidad de columnas (mín 5 - máx 13): 
-            <input type="number" name="cantidadColumnas" value="{{ old('cantidadColumnas') }}" class="w-full border rounded px-2 py-1" required min="5" max="13">
+            <input type="number" name="cantidadColumnas" value="{{ old('cantidadColumnas') }}" class="w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-text-color focus:border-text-color transition duration-200" required min="5" max="13">
         </label>
 
         <div class="flex justify-end gap-2">
-            <button type="button" data-close-modal="create" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
-            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Guardar</button>
+            <button type="button" data-close-modal="create" class="bg-gray-300 px-4 py-2 cursor-pointer rounded">Cancelar</button>
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded cursor-pointer">Guardar</button>
         </div>
     </form>
 </dialog>

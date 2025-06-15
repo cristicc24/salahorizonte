@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // PELICULAS
 
-// Eventos DOMContentLoaded para modales y mensajes flash
 document.addEventListener('DOMContentLoaded', () => {
     // Abrir modal de creación
     document.getElementById('buttonNuevaPelicula')?.addEventListener('click', () => {
@@ -131,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ocultar mensajes flash automáticamente
     const flash = document.getElementById('flash-message');
     if (flash) {
-        setTimeout(() => flash.remove(), 5000);
+        setTimeout(() => flash.remove(), 4000);
     }
 
 
@@ -151,6 +150,26 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             form.submit();
         });
+    }
+
+    // Validar que la fecha de emisión no sea anterior a la de estreno
+    const estrenoInput = document.querySelector('input[name="fecha_estreno"]');
+    const emisionInput = document.querySelector('input[name="fecha_emision"]');
+
+    if (estrenoInput && emisionInput) {
+        // Actualiza el min del campo fecha_emision al seleccionar fecha_estreno
+        estrenoInput.addEventListener('change', () => {
+            emisionInput.min = estrenoInput.value;
+
+            if (emisionInput.value && emisionInput.value < estrenoInput.value) {
+                emisionInput.value = '';
+            }
+        });
+
+        // Al cargar por si ya hay valor
+        if (estrenoInput.value) {
+            emisionInput.min = estrenoInput.value;
+        }
     }
 });
 
@@ -213,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const flash = document.getElementById('flash-message');
     if (flash) {
-        setTimeout(() => flash.remove(), 5000);
+        setTimeout(() => flash.remove(), 4000);
     }
 
 });
@@ -267,10 +286,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const dateTimeInputs = document.querySelectorAll('input[type="datetime-local"]');
+
+        if (dateTimeInputs.length > 0) {
+            const now = new Date();
+            now.setSeconds(0, 0); 
+
+            const isoString = now.toISOString().slice(0, 16); // Formato: YYYY-MM-DDTHH:mm
+
+            dateTimeInputs.forEach(input => {
+                input.min = isoString;
+
+                if (input.value && input.value < isoString) {
+                    input.value = '';
+                }
+            });
+        }
+    });
+
+
     // Ocultar mensaje flash automáticamente
     const flash = document.getElementById('flash-message');
     if (flash) {
-        setTimeout(() => flash.remove(), 5000);
+        setTimeout(() => flash.remove(), 4000);
     }
 });
 
@@ -334,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     
     const flash = document.getElementById('flash-message')
-    if (flash) setTimeout(() => flash.remove(), 5000)
+    if (flash) setTimeout(() => flash.remove(), 4000)
 
     document.querySelectorAll('.toggle-activo').forEach(toggle => {
         toggle.addEventListener('change', function () {

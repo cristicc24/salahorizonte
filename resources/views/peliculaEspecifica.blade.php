@@ -64,7 +64,7 @@
                 @php
                     $dia = $hoy->copy()->addDays($i);
                     $fecha = $dia->format('Y-m-d');
-                    $etiqueta = $i == 0 ? 'Hoy' : $dia->format('D d/m');
+                    $etiqueta = $i == 0 ? 'Hoy' : ucfirst($dia->isoFormat('ddd D/M'));
                 @endphp
                 <button class="btn-dia px-4 py-2 rounded bg-text-color text-white hover:bg-text-color/80 transition duration-300"
                         data-fecha="{{ $fecha }}">
@@ -94,7 +94,7 @@
                     <p class="text-white"><strong>Hora:</strong> {{ $horaSesion }}</p>
                     <p class="text-white"><strong>Butacas Reservadas:</strong> {{ $ocupadas }}</p>
 
-                    <button class="btnMostrarMapa ml-auto w-full items-center mt-3 px-4 py-2 {{ $completa ? 'bg-gray-400 cursor-not-allowed' : 'bg-white/50 hover:bg-white/80 cursor-pointer' }} text-black rounded transition duration-300"
+                    <button class="btnMostrarMapa ml-auto w-full items-center mt-3 px-4 py-2 {{ $completa ? 'bg-white/50 cursor-not-allowed' : 'bg-white hover:bg-white/80 cursor-pointer' }} text-black rounded transition duration-300"
                         data-idsesion="{{ $completa ? '' : $sesion->id }}"
                         {{ $completa ? 'disabled' : '' }}>
                         {{ $completa ? 'Sala Completa' : 'Ver Detalles' }}

@@ -1,5 +1,28 @@
 import './bootstrap';
 
+document.addEventListener('DOMContentLoaded', () => {
+    const linkToRecover = document.getElementById('linkToRecover');
+    const backToLogin = document.getElementById('backToLogin');
+    const loginForm = document.getElementById('loginForm');
+    const recoverForm = document.getElementById('recoverForm');
+    const modalTitle = document.getElementById('modalTitle');
+
+    linkToRecover?.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.classList.add('hidden');
+        recoverForm.classList.remove('hidden');
+        modalTitle.textContent = 'Recuperar contraseña';
+    });
+
+    backToLogin?.addEventListener('click', (e) => {
+        e.preventDefault();
+        recoverForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        modalTitle.textContent = 'Iniciar sesión';
+    });
+});
+
+
 // CABECERA COMPLETA
 document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('hamburgerBtn');
@@ -51,6 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
             modalLogin.classList.add("hidden");
         });
     }
+
+    // Cerrar flash
+    document.querySelectorAll('[data-close-flash]').forEach(button => {
+        button.addEventListener('click', () => {
+            const flash = document.getElementById('flash-message');
+            if (flash) flash.remove();
+        });
+    });
+
+    // Ocultar mensajes flash automáticamente
+    const flash = document.getElementById('flash-message');
+    if (flash) {
+        setTimeout(() => flash.remove(), 4000);
+    }
 });
 
 // SLIDER PRINCIPAL
@@ -88,12 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.prevSlide = prevSlide;
         window.goToSlide = updateSlide;
 
-        autoplayInterval = setInterval(nextSlide, 5000);
+        autoplayInterval = setInterval(nextSlide, 4000);
 
         document.querySelectorAll('[onclick]').forEach(btn => {
             btn.addEventListener('click', () => {
                 clearInterval(autoplayInterval);
-                autoplayInterval = setInterval(nextSlide, 5000);
+                autoplayInterval = setInterval(nextSlide, 4000);
             });
         });
     }
@@ -293,6 +330,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             form.submit();
+        });
+    }
+});
+
+
+// REGISTRO - VALIDACIÓN CONTRASEÑA
+document.addEventListener('DOMContentLoaded', function () {
+    const passwordInput = document.getElementById('password_registro');
+
+    if(passwordInput) {
+        const rules = {
+            length: document.getElementById('rule-length'),
+            uppercase: document.getElementById('rule-uppercase'),
+            lowercase: document.getElementById('rule-lowercase'),
+            number: document.getElementById('rule-number'),
+            special: document.getElementById('rule-special'),
+        };
+
+        passwordInput.addEventListener('input', function () {
+            const value = passwordInput.value;
+            console.log('hola')
+
+            rules.length.classList.toggle('text-green-400', value.length >= 8);
+            rules.length.classList.toggle('text-red-400', value.length < 8);
+
+            rules.uppercase.classList.toggle('text-green-400', /[A-Z]/.test(value));
+            rules.uppercase.classList.toggle('text-red-400', !/[A-Z]/.test(value));
+
+            rules.lowercase.classList.toggle('text-green-400', /[a-z]/.test(value));
+            rules.lowercase.classList.toggle('text-red-400', !/[a-z]/.test(value));
+
+            rules.number.classList.toggle('text-green-400', /\d/.test(value));
+            rules.number.classList.toggle('text-red-400', !/\d/.test(value));
+
+            rules.special.classList.toggle('text-green-400', /[@$!%*#?&]/.test(value));
+            rules.special.classList.toggle('text-red-400', !/[@$!%*#?&]/.test(value));
         });
     }
 });

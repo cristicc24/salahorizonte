@@ -9,11 +9,10 @@
             <div>
                 <h4 class="text-white text-2xl font-semibold mb-2">Enlaces</h4>
                 <ul class="space-y-2 text-lg">
-                    <li><a href="#" class="hover:text-white transition">Cartelera</a></li>
-                    <li><a href="#" class="hover:text-white transition">Reservar entradas</a></li>
+                    <li><a href="{{ route('cartelera') }}" class="hover:text-white transition">Cartelera</a></li>
                     <li><a href="{{ route('contacto') }}" class="hover:text-white transition">Contacto</a></li>
-                    <li><a href="#" class="hover:text-white transition">Preguntas frecuentes</a></li>
-                    <li><a href="#" class="hover:text-white transition">Términos y condiciones</a></li>
+                    <li><a href="{{ route('faq') }}" class="hover:text-white transition">Preguntas frecuentes</a></li>
+                    <li><a href="{{ route('terminos') }}" class="hover:text-white transition">Términos y condiciones</a></li>
                 </ul>
             </div>
 

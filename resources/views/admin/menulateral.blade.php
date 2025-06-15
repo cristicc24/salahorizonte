@@ -1,4 +1,4 @@
-<aside id="sidebarMenu" class="fixed md:static top-0 left-0 z-10 w-64 md:w-[30%] lg:w-[20%] h-full bg-white border-r-2 border-black px-6 py-10 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:block min-h-screen">
+<aside id="sidebarMenu" class="fixed md:static top-0 left-0 z-10 w-64 md:w-[30%] lg:w-[20%] bg-white border-r-2 border-black px-6 py-10 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:block min-h-screen">
 
     <!-- Botón cerrar (solo visible en móvil) -->
     <button id="closeSidebar" class="md:hidden absolute top-4 right-4 text-gray-600 hover:text-black">

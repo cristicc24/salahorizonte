@@ -4,18 +4,18 @@
     "name": "index"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DhW-WM4E.css",
+    "file": "assets/app-6EYDkHh3.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app-back.js": {
-    "file": "assets/app-back-BoP5Q42M.js",
+    "file": "assets/app-back-BLEYGU0E.js",
     "name": "app-back",
     "src": "resources/js/app-back.js",
     "isEntry": true
   },
   "resources/js/app-front.js": {
-    "file": "assets/app-front-Cf0moMol.js",
+    "file": "assets/app-front-BNMa9Cpg.js",
     "name": "app-front",
     "src": "resources/js/app-front.js",
     "isEntry": true,
@@ -33,7 +33,7 @@
     ]
   },
   "resources/js/compra.js": {
-    "file": "assets/compra-BG1wb1gj.js",
+    "file": "assets/compra-BLnhM0Nh.js",
     "name": "compra",
     "src": "resources/js/compra.js",
     "isEntry": true

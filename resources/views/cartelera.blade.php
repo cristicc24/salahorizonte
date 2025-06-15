@@ -36,6 +36,19 @@
             @endforeach
         </select>
 
+        {{-- Día de la sesión --}}
+        <select name="dia" class="w-full sm:w-48 border border-gray-300 text-white p-2 rounded">
+            <option value="" class="text-black">Todos los días</option>
+            @for ($i = 0; $i <= 4; $i++)
+                @php
+                    $fecha = \Carbon\Carbon::now()->addDays($i);
+                @endphp
+                <option value="{{ $fecha->toDateString() }}" {{ request('dia') === $fecha->toDateString() ? 'selected' : '' }} class="text-black">
+                    {{ $i === 0 ? 'Hoy' : $fecha->translatedFormat('l d/m') }}
+                </option>
+            @endfor
+        </select>
+
         {{-- Botones --}}
         <button type="submit" class="bg-text-color text-white px-4 py-2 rounded hover:bg-text-color/80 transition">Filtrar</button>
         <a href="{{ route('cartelera') }}" id="resetFiltros" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">Resetear filtros</a>

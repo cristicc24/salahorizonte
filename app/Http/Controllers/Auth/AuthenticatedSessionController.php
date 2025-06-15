@@ -24,10 +24,12 @@ class AuthenticatedSessionController extends Controller
         // Recuperar la URL anterior del campo oculto (o redirigir a '/')
         $previousUrl = $request->input('previous_url', '/');
 
+        $mensaje = 'Inicio de sesión exitoso. ¡Bienvenido!';
+
         if(str_contains($previousUrl, 'registro'))
-            return redirect()->to('/');
+            return redirect('/')->with('status', $mensaje);
         else
-            return redirect()->to($previousUrl);
+            return redirect($previousUrl)->with('status', $mensaje);
     }
 
     /**
@@ -39,6 +41,7 @@ class AuthenticatedSessionController extends Controller
         // Solo eliminar la sesión del usuario, no invalidar toda la sesión (para no cerrar admin)
         $request->session()->forget(['_login_web_'.Auth::id(), 'user']);
         $request->session()->regenerateToken();
-        return redirect()->to(url()->previous());
+
+        return redirect()->to(url()->previous())->with('status', 'Sesión cerrada correctamente.');
     }
 }
